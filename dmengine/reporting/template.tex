@@ -1,0 +1,119 @@
+\documentclass[%
+	english,%
+	paper=a4,%
+	headings=small,%
+]{scrartcl}
+
+% input encoding
+\usepackage[tipa]{ucs}
+\usepackage[utf8x]{inputenc}
+
+% language support
+\usepackage{babel}
+
+% font encoding
+\usepackage[T1]{fontenc}
+\renewcommand{\encodingdefault}{T1}
+
+% serif font
+\usepackage{lmodern}
+
+% symbol fonts
+\usepackage{textcomp}
+
+% page margins
+\usepackage[scale={0.70,0.86},heightrounded]{geometry}
+
+% title info
+\title{$TITLE%
+\footnote{Distributed Morphology analysis calculated with \texttt{dmengine}}}
+\author{$AUTHOR}
+\date{}
+
+% page head, page foot
+\usepackage{scrpage2}
+\pagestyle{scrheadings}
+\clearscrheadfoot
+\cfoot[\pagemark]{\pagemark}\cehead{$AUTHOR}\cohead{$TITLE}
+
+% pdf settings
+\usepackage[%
+	pdftitle={$TITLE},%
+	pdfauthor={$AUTHOR},%
+	pdfsubject={Distributed Morphology analysis calculated with dmengine},%
+	breaklinks,%
+	hidelinks,%
+	bookmarks,%
+	bookmarksnumbered,%
+	bookmarksopen,%
+	bookmarksopenlevel=2,%
+	pdfpagelabels,%
+	pdfstartview=FitH,%
+	pdfpagemode=UseOutlines,%
+]{hyperref}
+
+% landscape pages
+\usepackage{pdflscape}
+
+% font styles
+\setkomafont{title}{\rmfamily\bfseries}
+\setkomafont{sectioning}{\rmfamily\bfseries}
+
+% examples
+\usepackage{linguex}
+
+% ipa
+\usepackage[T1]{tipa}
+\usepackage{tipx}
+
+% tables
+\usepackage{array}
+
+% paradigms
+\newcommand{\0}{$\emptyset$}
+
+
+\begin{document}
+
+
+\pdfbookmark[0]{$TITLE}{title}
+\maketitle
+
+	
+\section{Features}
+$FEATURES
+
+
+\section{Vocabulary Items}
+$VOCABULARY_ITEMS
+
+
+\section{Rules}
+$RULES
+
+
+\section{Readjustments}
+$READJUSTMENTS
+
+
+\section{Inputs}
+$INPUTS
+
+
+\section{Inputs (Rules applied)}
+$INPUTS_PROCESSED
+
+
+\begin{landscape}
+
+\section{Outputs}
+$OUTPUTS
+
+\end{landscape}
+
+
+\section{Log}
+$LOG
+
+
+\end{document}

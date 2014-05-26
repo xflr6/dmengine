@@ -1,0 +1,667 @@
+# thulung.yaml - unpublished analysis draft
+# data from Lahaussois, Aimée (2002), Aspects of the grammar of Thulung Rai: an endangered Himalayan language. Ph.D Dissertation. University of California.
+author: Sebastian Bank
+title: Thulung
+features:
+- value: V
+  category: pos
+  name: verbal
+- value: S
+  category: case
+  name: intransitive
+- value: A
+  category: case
+  name: ergative
+- value: P
+  category: case
+  name: accusative
+- value: SA
+  category: case
+  name: nominative
+- value: +1
+  category: person
+  specificity: 4
+- value: -1
+  category: person
+- value: +2
+  category: person
+  specificity: 3
+- value: -2
+  category: person
+- value: +3
+  category: person
+  specificity: 2
+- value: -3
+  category: person
+- value: +sg
+  category: number
+- value: -sg
+  category: number
+- value: +du
+  category: number
+  specificity: 1
+- value: -du
+  category: number
+- value: +pl
+  category: number
+- value: -pl
+  category: number
+- value: +past
+  category: tense
+- value: -past
+  category: tense
+vis:
+# stems
+- exponent: "on"
+  # unquoted on is True in yaml
+  features: [ V, S ]
+- exponent: jal
+  features: [ V, A ]
+# intransitive suffixes
+- exponent: -ŋu
+  features: [ +1, +sg ]
+  this_head: [ S ]
+  anywhere: [ -past ]
+- exponent: -ŋoro
+  features: [ +1, +sg ]
+  this_head: [ S ]
+  anywhere: [ +past ]
+- exponent: -ɖi
+  features: [ +1, +2, +pl ]
+  this_head: [ S ]
+- exponent: -ɖa
+  features: [ +3, +sg ]
+  this_head: [ S ]
+  anywhere: [ +past ]
+# ubiquitous suffixes
+- exponent: -na
+  features: [ -1, +2, -pl ]
+- exponent: -ni/2
+  features: [ -1, +2, +pl ]
+- exponent: -tsi
+  features: [ +du ]
+- exponent: -mi
+  features: [ +pl ]
+  any_head: [ -1, -2 ]
+# nominative suffixes
+- exponent: -tsuku
+  features: [ +1, -2, +du ]
+  this_head: [ SA ]
+  anywhere: [ -past ]
+- exponent: -tsoko
+  features: [ +1, -2, +du ]
+  this_head: [ SA ]
+  anywhere: [ +past ]
+- exponent: -ku
+  features: [ +1, -2, +pl ]
+  this_head: [ SA ]
+  anywhere: [ -past ]
+- exponent: -toko
+  features: [ +1, -2, +pl ]
+  this_head: [ SA ]
+  anywhere: [ +past ]
+- exponent: -miri
+  features: [ +3, +pl ]
+  this_head: [ SA ]
+  anywhere: [ +past ]
+# ergative suffixes
+- exponent: -ni/1
+  features: [ +1, +sg ]
+  this_head: [ A ]
+- exponent: -u
+  features: [ +1, +sg ]
+  this_head: [ A ]
+  other_head: [ -2 ]
+  anywhere: [ -past ]
+- exponent: -to
+  features: [ +1, +sg ]
+  this_head: [ A ]
+  other_head: [ -2 ]
+  anywhere: [ +past ]
+- exponent: -i
+  features: [ +1, +2, +pl]
+  this_head: [ A ]
+  anywhere: [ -past ]
+- exponent: -li
+  features: [ +1, +2, +pl ]
+  this_head: [ A ]
+  anywhere: [ +past ]
+- exponent: -y
+  features: [ +3, -pl ]
+  this_head: [ A ]
+  anywhere: [ -past ]
+- exponent: -ly
+  features: [ +3, -pl ]
+  this_head: [ A ]
+  anywhere: [ +past ]
+# accusative suffixes
+- exponent: -ki
+  features: [ +1 ] # -sg?
+  this_head: [ P ]
+- exponent: -ŋi
+  features: [ +1, +sg ]
+  this_head: [ P ]
+  anywhere: [ -past ]
+- exponent: -ŋiri
+  features: [ +1, +sg ]
+  this_head: [ P ]
+  anywhere: [ +past ]
+- exponent: -tiki
+  features: [ +1, -2, +pl ]
+  this_head: [ P ]
+  anywhere: [ +past ]
+- exponent: -sa
+  features: [ +1, +2 ] #changed
+  this_head: [ P ]
+  anywhere: [ -past ]
+- exponent: -saɖɖa
+  features: [ +1, +2 ]
+  this_head: [ P ]
+  anywhere: [ +past ]
+- exponent: -ni/3
+  features: [ +pl ]
+  this_head: [ P, +1, -2 ]
+  other_head: [ A, -1, -2, -sg ]
+rules:
+# add subject case features to the tense right adjacent head
+- kind: add
+  features: [ S, SA ]
+  left_head: [ -past ]
+  other_head: [ V, S ]
+- kind: add
+  features: [ S, SA ]
+  left_head: [ +past ]
+  other_head: [ V, S ]
+- kind: add
+  features: [ A, SA ]
+  left_head: [ -past ]
+  other_head: [ V, A ]
+- kind: add
+  features: [ A, SA ]
+  left_head: [ +past ]
+  other_head: [ V, A ]
+# add object case features to the transitive subject right adjacent head
+- kind: add
+  features: [ P ]
+  left_head: [ A, SA ]
+
+
+# fuse transitive subject and object head into the subject head slot
+- kind: fusion
+  first_head: [ A, SA ]
+  second_head:  [ P ]
+
+
+
+# impoverish object with 1de 1pe subject
+- kind: impoverishment
+  features: [ +1,-1,+2,-2,+3,-3,+sg,-sg,+du,-du,+pl,-pl ]
+  this_head: [ P ]
+  other_head: [ A, +1, -2, -sg ]
+  
+#1->3 2->3 3->3
+# impoverish 3 object number with 1di 2du subject
+- kind: impoverishment
+  features: [ +sg,-sg,+du,-du,+pl,-pl ]
+  this_head: [ P, +3 ]
+  other_head: [ A, +2, +du ]
+# impoverish 3 object number with 3pl subject
+- kind: impoverishment
+  features: [ +sg,-sg,+du,-du,+pl,-pl ]
+  this_head: [ P, +3 ]
+  other_head: [ A, +3, +pl ]
+# impoverish nonpast 3 object number with 2 subject
+- kind: impoverishment
+  features: [ +sg,-sg,+du,-du,+pl,-pl ]
+  this_head: [ P, 3 ]
+  other_head: [ A, -1, +2 ]
+  anywhere: [ -past ]
+# impoverish nonpast 3pl object number with 1pi subject
+- kind: impoverishment
+  features: [ +sg,-sg,+du,-du,+pl,-pl ]
+  this_head: [ P, +3, +pl ]
+  other_head: [ A, +1, +2 , +pl ]
+  anywhere: [ -past ]
+# impoverish past 3 object number with 1pi subject
+- kind: impoverishment
+  features: [ +sg,-sg,+du,-du,+pl,-pl ]
+  this_head: [ P, +3 ]
+  other_head: [ A, +1, +2, +pl ]
+  anywhere: [ +past ]
+# impoverish nonpast 3 object number with 3 du subject
+- kind: impoverishment
+  features: [ +sg,-sg,+du,-du,+pl,-pl ]
+  this_head: [ P, +3 ]
+  other_head: [ A, +3, +du ]
+  anywhere: [ -past ]
+
+# impoverish past 3 du subject number with non-singular 3 object
+- kind: impoverishment
+  features: [ +sg,-sg,+du,-du,+pl,-pl ]
+  this_head: [ A, +3, +du ]
+  other_head: [ P, +3, -sg ]
+  anywhere: [ +past ]
+
+
+#3 inverse
+# impoverish 3 person with other head 1 2 (counterbleeding)
+- kind: impoverishment
+  features: [ +3 ]
+  this_head: [ +3 ]
+  other_head: [ -3 ]
+
+
+#2 inverse
+# impoverish 2sg person with other argument 1sg
+- kind: impoverishment
+  features: [ +2 ]
+  this_head: [ +2, -pl ]
+  other_head: [ +1, -2, +sg ]
+
+
+#1 object
+# impoverish past non plural subject with 1 non sg object
+- kind: impoverishment
+  features: [ +1,-1,+2,-2,+3,-3,+sg,-sg,+du,-du,+pl,-pl ]
+  this_head: [ A, -pl ]
+  other_head: [ P, +1, -sg ]
+  anywhere: [ +past ]
+# impoverish past 2pl subject with 1de 1pe object
+- kind: impoverishment
+  features: [ +1,-1,+2,-2,+3,-3,+sg,-sg,+du,-du,+pl,-pl ]
+  this_head: [ A, +2, +pl ]
+  other_head: [ P, +1, -sg ]
+  anywhere: [ +past ]
+
+# impoverish 1di 1pi object dual/plural with 3pl subject
+- kind: impoverishment
+  features: [ +du,+pl ]
+  this_head: [ P, +1, +2 ]
+  other_head: [ A, -1, -2, +pl ]
+
+# impoverish nonpast 3du->1di object dual
+- kind: impoverishment
+  features: [ +du ]
+  this_head: [ P, +1, +2 ,+du ]
+  other_head: [ A, -1, -2, +du ]
+  anywhere: [ -past ]
+# impoverish nonpast 1pe 1pi object plural with 3sg subject
+- kind: impoverishment
+  features: [ +pl ]
+  this_head: [ P, +1, +pl ]
+  other_head: [ A, -1, -2, +sg ]
+  anywhere: [ -past ]
+# impoverish nonpast 1de object number with 2du/2pl subject
+- kind: impoverishment
+  features: [ +du, ]
+  this_head: [ P, +1, -2, +du ]
+  other_head: [ A, -1, +2, -sg ]
+  anywhere: [ -past ]
+  
+# impoverish nonpast 3du subject dual with 1de 1pe 1di 1pi object
+- kind: impoverishment
+  features: [ +du ]
+  this_head: [ A, -1, -2, +du ]
+  other_head: [ P, +1, -sg ]
+  anywhere: [ -past ]
+# impoverish nonpast 3pl subject number with 1de 1pe object
+- kind: impoverishment
+  features: [ +sg,-sg,+du,-du,+pl,-pl ]
+  this_head: [ A, -1, -2, +pl ]
+  other_head: [ P, +1, -2, -sg ]
+  anywhere: [ -past ]
+# impoverish nonpast 2sg subject person with 1de 1pe object
+- kind: impoverishment
+  features: [ +2 ]
+  this_head: [ A, +2, +sg ]
+  other_head: [ P, +1, -2, -sg ] 
+  anywhere: [ -past ]
+
+# nonpast 3sg->1di -sa -> -tsi-ki
+- kind: impoverishment
+  features: [ +2 ] #changed
+  this_head: [ P, +1, +2, +du ]
+  other_head: [ A, -1, -2, +sg ]
+  anywhere: [ -past ]
+
+
+# impoverish 1di 2du (in)transitive subject person -na-tsi -> -tsi (counterbleeding)
+- kind: impoverishment
+  features: [ +1,-1,+2,-2,+3,-3 ]
+  this_head: [ SA, +2, +du ]
+
+
+#3->2
+# impoverish 3du->2du subject dual (*tsi-tsi)
+- kind: impoverishment
+  features: [ +du ]
+  this_head: [ A, -1, -2, +du ]
+  other_head: [ P, -1, +2, +du ]
+# impoverish nonpast 3sg->2du object dual
+- kind: impoverishment
+  features: [ +du ]
+  this_head: [ P, -1, +2, +du ]
+  other_head: [ A, -1, -2, +sg ]
+  anywhere: [ -past ]
+
+
+# Extend 3pl->2pl /-mi/ to 3sg->2pl and past 3du->2pl
+- kind: add
+  features: [ +pl ]
+  this_head: [ A, -1, -2 , +sg ]
+  other_head: [ P, -1, +2, +pl ]
+- kind: impoverishment
+  features: [ +sg ]
+  this_head: [ +sg, +pl ]
+- kind: add
+  features: [ +pl ]
+  this_head: [ A, -1, -2 , +du ]
+  other_head: [ P, -1, +2, +pl ]
+  anywhere: [ +past ]
+- kind: impoverishment
+  features: [ +du ]
+  this_head: [ +du, +pl ]
+readjustments:
+# metathese dual -tsi before 1 object -ki
+- kind: metathesis
+  first_exponent: -tsi
+  second_exponent: -ki
+paradigms:
+- name: Intransitive Npst
+  headers: [ [1sg, 1de, 1pe, 1di, 1pi, 2sg, 2du, 2pl, 3sg, 3du, 3pl], [] ]
+  inputs:
+  - [ [V,S], [-past], [+1, -2, -3, +sg, -du, -pl] ]
+  - [ [V,S], [-past], [+1, -2, -3, -sg, +du, -pl] ]
+  - [ [V,S], [-past], [+1, -2, -3, -sg, -du, +pl] ]
+  - [ [V,S], [-past], [+1, +2, -3, -sg, +du, -pl] ]
+  - [ [V,S], [-past], [+1, +2, -3, -sg, -du, +pl] ]
+  - [ [V,S], [-past], [-1, +2, -3, +sg, -du, -pl] ]
+  - [ [V,S], [-past], [-1, +2, -3, -sg, +du, -pl] ]
+  - [ [V,S], [-past], [-1, +2, -3, -sg, -du, +pl] ]
+  - [ [V,S], [-past], [-1, -2, +3, +sg, -du, -pl] ]
+  - [ [V,S], [-past], [-1, -2, +3, -sg, +du, -pl] ]
+  - [ [V,S], [-past], [-1, -2, +3, -sg, -du, +pl] ]
+- name: Intransitive Pst
+  headers: [ [1sg, 1de, 1pe, 1di, 1pi, 2sg, 2du, 2pl, 3sg, 3du, 3pl], [] ]
+  inputs:
+  - [ [V,S], [+past], [+1, -2, -3, +sg, -du, -pl] ]
+  - [ [V,S], [+past], [+1, -2, -3, -sg, +du, -pl] ]
+  - [ [V,S], [+past], [+1, -2, -3, -sg, -du, +pl] ]
+  - [ [V,S], [+past], [+1, +2, -3, -sg, +du, -pl] ]
+  - [ [V,S], [+past], [+1, +2, -3, -sg, -du, +pl] ]
+  - [ [V,S], [+past], [-1, +2, -3, +sg, -du, -pl] ]
+  - [ [V,S], [+past], [-1, +2, -3, -sg, +du, -pl] ]
+  - [ [V,S], [+past], [-1, +2, -3, -sg, -du, +pl] ]
+  - [ [V,S], [+past], [-1, -2, +3, +sg, -du, -pl] ]
+  - [ [V,S], [+past], [-1, -2, +3, -sg, +du, -pl] ]
+  - [ [V,S], [+past], [-1, -2, +3, -sg, -du, +pl] ]
+- name: Transitive Npst
+  headers: [ [1sg, 1de, 1pe, 1di, 1pi, 2sg, 2du, 2pl, 3sg, 3du, 3pl], [1sg, 1de, 1pe, 1di, 1pi, 2sg, 2du, 2pl, 3sg, 3du, 3pl] ]
+  inputs:
+  # 1sg
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ [V,A], [-past], [+1, -2, -3, +sg, -du, -pl], [-1, +2, -3, +sg, -du, -pl] ]
+  - [ [V,A], [-past], [+1, -2, -3, +sg, -du, -pl], [-1, +2, -3, -sg, +du, -pl] ]
+  - [ [V,A], [-past], [+1, -2, -3, +sg, -du, -pl], [-1, +2, -3, -sg, -du, +pl] ]
+  - [ [V,A], [-past], [+1, -2, -3, +sg, -du, -pl], [-1, -2, +3, +sg, -du, -pl] ]
+  - [ [V,A], [-past], [+1, -2, -3, +sg, -du, -pl], [-1, -2, +3, -sg, +du, -pl] ]
+  - [ [V,A], [-past], [+1, -2, -3, +sg, -du, -pl], [-1, -2, +3, -sg, -du, +pl] ]
+  # 1de
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ [V,A], [-past], [+1, -2, -3, -sg, +du, -pl], [-1, +2, -3, +sg, -du, -pl] ]
+  - [ [V,A], [-past], [+1, -2, -3, -sg, +du, -pl], [-1, +2, -3, -sg, +du, -pl] ]
+  - [ [V,A], [-past], [+1, -2, -3, -sg, +du, -pl], [-1, +2, -3, -sg, -du, +pl] ]
+  - [ [V,A], [-past], [+1, -2, -3, -sg, +du, -pl], [-1, -2, +3, +sg, -du, -pl] ]
+  - [ [V,A], [-past], [+1, -2, -3, -sg, +du, -pl], [-1, -2, +3, -sg, +du, -pl] ]
+  - [ [V,A], [-past], [+1, -2, -3, -sg, +du, -pl], [-1, -2, +3, -sg, -du, +pl] ]
+  # 1pe
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ [V,A], [-past], [+1, -2, -3, -sg, -du, +pl], [-1, +2, -3, +sg, -du, -pl] ]
+  - [ [V,A], [-past], [+1, -2, -3, -sg, -du, +pl], [-1, +2, -3, -sg, +du, -pl] ]
+  - [ [V,A], [-past], [+1, -2, -3, -sg, -du, +pl], [-1, +2, -3, -sg, -du, +pl] ]
+  - [ [V,A], [-past], [+1, -2, -3, -sg, -du, +pl], [-1, -2, +3, +sg, -du, -pl] ]
+  - [ [V,A], [-past], [+1, -2, -3, -sg, -du, +pl], [-1, -2, +3, -sg, +du, -pl] ]
+  - [ [V,A], [-past], [+1, -2, -3, -sg, -du, +pl], [-1, -2, +3, -sg, -du, +pl] ]
+  # 1di
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ [V,A], [-past], [+1, +2, -3, -sg, +du, -pl], [-1, -2, +3, +sg, -du, -pl] ]
+  - [ [V,A], [-past], [+1, +2, -3, -sg, +du, -pl], [-1, -2, +3, -sg, +du, -pl] ]
+  - [ [V,A], [-past], [+1, +2, -3, -sg, +du, -pl], [-1, -2, +3, -sg, -du, +pl] ]
+  # 1pi
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ [V,A], [-past], [+1, +2, -3, -sg, -du, +pl], [-1, -2, +3, +sg, -du, -pl] ]
+  - [ [V,A], [-past], [+1, +2, -3, -sg, -du, +pl], [-1, -2, +3, -sg, +du, -pl] ]
+  - [ [V,A], [-past], [+1, +2, -3, -sg, -du, +pl], [-1, -2, +3, -sg, -du, +pl] ]
+  # 2sg
+  - [ [V,A], [-past], [-1, +2, -3, +sg, -du, -pl], [+1, -2, -3, +sg, -du, -pl] ]
+  - [ [V,A], [-past], [-1, +2, -3, +sg, -du, -pl], [+1, -2, -3, -sg, +du, -pl] ]
+  - [ [V,A], [-past], [-1, +2, -3, +sg, -du, -pl], [+1, -2, -3, -sg, -du, +pl] ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ [V,A], [-past], [-1, +2, -3, +sg, -du, -pl], [-1, -2, +3, +sg, -du, -pl] ]
+  - [ [V,A], [-past], [-1, +2, -3, +sg, -du, -pl], [-1, -2, +3, -sg, +du, -pl] ]
+  - [ [V,A], [-past], [-1, +2, -3, +sg, -du, -pl], [-1, -2, +3, -sg, -du, +pl] ]
+  # 2du
+  - [ [V,A], [-past], [-1, +2, -3, -sg, +du, -pl], [+1, -2, -3, +sg, -du, -pl] ]
+  - [ [V,A], [-past], [-1, +2, -3, -sg, +du, -pl], [+1, -2, -3, -sg, +du, -pl] ]
+  - [ [V,A], [-past], [-1, +2, -3, -sg, +du, -pl], [+1, -2, -3, -sg, -du, +pl] ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ [V,A], [-past], [-1, +2, -3, -sg, +du, -pl], [-1, -2, +3, +sg, -du, -pl] ]
+  - [ [V,A], [-past], [-1, +2, -3, -sg, +du, -pl], [-1, -2, +3, -sg, +du, -pl] ]
+  - [ [V,A], [-past], [-1, +2, -3, -sg, +du, -pl], [-1, -2, +3, -sg, -du, +pl] ]
+  # 2pl
+  - [ [V,A], [-past], [-1, +2, -3, -sg, -du, +pl], [+1, -2, -3, +sg, -du, -pl] ]
+  - [ [V,A], [-past], [-1, +2, -3, -sg, -du, +pl], [+1, -2, -3, -sg, +du, -pl] ]
+  - [ [V,A], [-past], [-1, +2, -3, -sg, -du, +pl], [+1, -2, -3, -sg, -du, +pl] ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ [V,A], [-past], [-1, +2, -3, -sg, -du, +pl], [-1, -2, +3, +sg, -du, -pl] ]
+  - [ [V,A], [-past], [-1, +2, -3, -sg, -du, +pl], [-1, -2, +3, -sg, +du, -pl] ]
+  - [ [V,A], [-past], [-1, +2, -3, -sg, -du, +pl], [-1, -2, +3, -sg, -du, +pl] ]
+  # 3sg
+  - [ [V,A], [-past], [-1, -2, +3, +sg, -du, -pl], [+1, -2, -3, +sg, -du, -pl] ]
+  - [ [V,A], [-past], [-1, -2, +3, +sg, -du, -pl], [+1, -2, -3, -sg, +du, -pl] ]
+  - [ [V,A], [-past], [-1, -2, +3, +sg, -du, -pl], [+1, -2, -3, -sg, -du, +pl] ]
+  - [ [V,A], [-past], [-1, -2, +3, +sg, -du, -pl], [+1, +2, -3, -sg, +du, -pl] ]
+  - [ [V,A], [-past], [-1, -2, +3, +sg, -du, -pl], [+1, +2, -3, -sg, -du, +pl] ]
+  - [ [V,A], [-past], [-1, -2, +3, +sg, -du, -pl], [-1, +2, -3, +sg, -du, -pl] ]
+  - [ [V,A], [-past], [-1, -2, +3, +sg, -du, -pl], [-1, +2, -3, -sg, +du, -pl] ]
+  - [ [V,A], [-past], [-1, -2, +3, +sg, -du, -pl], [-1, +2, -3, -sg, -du, +pl] ]
+  - [ [V,A], [-past], [-1, -2, +3, +sg, -du, -pl], [-1, -2, +3, +sg, -du, -pl] ]
+  - [ [V,A], [-past], [-1, -2, +3, +sg, -du, -pl], [-1, -2, +3, -sg, +du, -pl] ]
+  - [ [V,A], [-past], [-1, -2, +3, +sg, -du, -pl], [-1, -2, +3, -sg, -du, +pl] ]
+  # 3du
+  - [ [V,A], [-past], [-1, -2, +3, -sg, +du, -pl], [+1, -2, -3, +sg, -du, -pl] ]
+  - [ [V,A], [-past], [-1, -2, +3, -sg, +du, -pl], [+1, -2, -3, -sg, +du, -pl] ]
+  - [ [V,A], [-past], [-1, -2, +3, -sg, +du, -pl], [+1, -2, -3, -sg, -du, +pl] ]
+  - [ [V,A], [-past], [-1, -2, +3, -sg, +du, -pl], [+1, +2, -3, -sg, +du, -pl] ]
+  - [ [V,A], [-past], [-1, -2, +3, -sg, +du, -pl], [+1, +2, -3, -sg, -du, +pl] ]
+  - [ [V,A], [-past], [-1, -2, +3, -sg, +du, -pl], [-1, +2, -3, +sg, -du, -pl] ]
+  - [ [V,A], [-past], [-1, -2, +3, -sg, +du, -pl], [-1, +2, -3, -sg, +du, -pl] ]
+  - [ [V,A], [-past], [-1, -2, +3, -sg, +du, -pl], [-1, +2, -3, -sg, -du, +pl] ]
+  - [ [V,A], [-past], [-1, -2, +3, -sg, +du, -pl], [-1, -2, +3, +sg, -du, -pl] ]
+  - [ [V,A], [-past], [-1, -2, +3, -sg, +du, -pl], [-1, -2, +3, -sg, +du, -pl] ]
+  - [ [V,A], [-past], [-1, -2, +3, -sg, +du, -pl], [-1, -2, +3, -sg, -du, +pl] ]
+  # 3pl
+  - [ [V,A], [-past], [-1, -2, +3, -sg, -du, +pl], [+1, -2, -3, +sg, -du, -pl] ]
+  - [ [V,A], [-past], [-1, -2, +3, -sg, -du, +pl], [+1, -2, -3, -sg, +du, -pl] ]
+  - [ [V,A], [-past], [-1, -2, +3, -sg, -du, +pl], [+1, -2, -3, -sg, -du, +pl] ]
+  - [ [V,A], [-past], [-1, -2, +3, -sg, -du, +pl], [+1, +2, -3, -sg, +du, -pl] ]
+  - [ [V,A], [-past], [-1, -2, +3, -sg, -du, +pl], [+1, +2, -3, -sg, -du, +pl] ]
+  - [ [V,A], [-past], [-1, -2, +3, -sg, -du, +pl], [-1, +2, -3, +sg, -du, -pl] ]
+  - [ [V,A], [-past], [-1, -2, +3, -sg, -du, +pl], [-1, +2, -3, -sg, +du, -pl] ]
+  - [ [V,A], [-past], [-1, -2, +3, -sg, -du, +pl], [-1, +2, -3, -sg, -du, +pl] ]
+  - [ [V,A], [-past], [-1, -2, +3, -sg, -du, +pl], [-1, -2, +3, +sg, -du, -pl] ]
+  - [ [V,A], [-past], [-1, -2, +3, -sg, -du, +pl], [-1, -2, +3, -sg, +du, -pl] ]
+  - [ [V,A], [-past], [-1, -2, +3, -sg, -du, +pl], [-1, -2, +3, -sg, -du, +pl] ]
+- name: Transitive Pst
+  headers: [ [1sg, 1de, 1pe, 1di, 1pi, 2sg, 2du, 2pl, 3sg, 3du, 3pl], [1sg, 1de, 1pe, 1di, 1pi, 2sg, 2du, 2pl, 3sg, 3du, 3pl] ]
+  inputs:
+  # 1sg
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ [V,A], [+past], [+1, -2, -3, +sg, -du, -pl], [-1, +2, -3, +sg, -du, -pl] ]
+  - [ [V,A], [+past], [+1, -2, -3, +sg, -du, -pl], [-1, +2, -3, -sg, +du, -pl] ]
+  - [ [V,A], [+past], [+1, -2, -3, +sg, -du, -pl], [-1, +2, -3, -sg, -du, +pl] ]
+  - [ [V,A], [+past], [+1, -2, -3, +sg, -du, -pl], [-1, -2, +3, +sg, -du, -pl] ]
+  - [ [V,A], [+past], [+1, -2, -3, +sg, -du, -pl], [-1, -2, +3, -sg, +du, -pl] ]
+  - [ [V,A], [+past], [+1, -2, -3, +sg, -du, -pl], [-1, -2, +3, -sg, -du, +pl] ]
+  # 1de
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ [V,A], [+past], [+1, -2, -3, -sg, +du, -pl], [-1, +2, -3, +sg, -du, -pl] ]
+  - [ [V,A], [+past], [+1, -2, -3, -sg, +du, -pl], [-1, +2, -3, -sg, +du, -pl] ]
+  - [ [V,A], [+past], [+1, -2, -3, -sg, +du, -pl], [-1, +2, -3, -sg, -du, +pl] ]
+  - [ [V,A], [+past], [+1, -2, -3, -sg, +du, -pl], [-1, -2, +3, +sg, -du, -pl] ]
+  - [ [V,A], [+past], [+1, -2, -3, -sg, +du, -pl], [-1, -2, +3, -sg, +du, -pl] ]
+  - [ [V,A], [+past], [+1, -2, -3, -sg, +du, -pl], [-1, -2, +3, -sg, -du, +pl] ]
+  # 1pe
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ [V,A], [+past], [+1, -2, -3, -sg, -du, +pl], [-1, +2, -3, +sg, -du, -pl] ]
+  - [ [V,A], [+past], [+1, -2, -3, -sg, -du, +pl], [-1, +2, -3, -sg, +du, -pl] ]
+  - [ [V,A], [+past], [+1, -2, -3, -sg, -du, +pl], [-1, +2, -3, -sg, -du, +pl] ]
+  - [ [V,A], [+past], [+1, -2, -3, -sg, -du, +pl], [-1, -2, +3, +sg, -du, -pl] ]
+  - [ [V,A], [+past], [+1, -2, -3, -sg, -du, +pl], [-1, -2, +3, -sg, +du, -pl] ]
+  - [ [V,A], [+past], [+1, -2, -3, -sg, -du, +pl], [-1, -2, +3, -sg, -du, +pl] ]
+  # 1di
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ [V,A], [+past], [+1, +2, -3, -sg, +du, -pl], [-1, -2, +3, +sg, -du, -pl] ]
+  - [ [V,A], [+past], [+1, +2, -3, -sg, +du, -pl], [-1, -2, +3, -sg, +du, -pl] ]
+  - [ [V,A], [+past], [+1, +2, -3, -sg, +du, -pl], [-1, -2, +3, -sg, -du, +pl] ]
+  # 1pi
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ [V,A], [+past], [+1, +2, -3, -sg, -du, +pl], [-1, -2, +3, +sg, -du, -pl] ]
+  - [ [V,A], [+past], [+1, +2, -3, -sg, -du, +pl], [-1, -2, +3, -sg, +du, -pl] ]
+  - [ [V,A], [+past], [+1, +2, -3, -sg, -du, +pl], [-1, -2, +3, -sg, -du, +pl] ]
+  # 2sg
+  - [ [V,A], [+past], [-1, +2, -3, +sg, -du, -pl], [+1, -2, -3, +sg, -du, -pl] ]
+  - [ [V,A], [+past], [-1, +2, -3, +sg, -du, -pl], [+1, -2, -3, -sg, +du, -pl] ]
+  - [ [V,A], [+past], [-1, +2, -3, +sg, -du, -pl], [+1, -2, -3, -sg, -du, +pl] ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ [V,A], [+past], [-1, +2, -3, +sg, -du, -pl], [-1, -2, +3, +sg, -du, -pl] ]
+  - [ [V,A], [+past], [-1, +2, -3, +sg, -du, -pl], [-1, -2, +3, -sg, +du, -pl] ]
+  - [ [V,A], [+past], [-1, +2, -3, +sg, -du, -pl], [-1, -2, +3, -sg, -du, +pl] ]
+  # 2du
+  - [ [V,A], [+past], [-1, +2, -3, -sg, +du, -pl], [+1, -2, -3, +sg, -du, -pl] ]
+  - [ [V,A], [+past], [-1, +2, -3, -sg, +du, -pl], [+1, -2, -3, -sg, +du, -pl] ]
+  - [ [V,A], [+past], [-1, +2, -3, -sg, +du, -pl], [+1, -2, -3, -sg, -du, +pl] ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ [V,A], [+past], [-1, +2, -3, -sg, +du, -pl], [-1, -2, +3, +sg, -du, -pl] ]
+  - [ [V,A], [+past], [-1, +2, -3, -sg, +du, -pl], [-1, -2, +3, -sg, +du, -pl] ]
+  - [ [V,A], [+past], [-1, +2, -3, -sg, +du, -pl], [-1, -2, +3, -sg, -du, +pl] ]
+  # 2pl
+  - [ [V,A], [+past], [-1, +2, -3, -sg, -du, +pl], [+1, -2, -3, +sg, -du, -pl] ]
+  - [ [V,A], [+past], [-1, +2, -3, -sg, -du, +pl], [+1, -2, -3, -sg, +du, -pl] ]
+  - [ [V,A], [+past], [-1, +2, -3, -sg, -du, +pl], [+1, -2, -3, -sg, -du, +pl] ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ ]
+  - [ [V,A], [+past], [-1, +2, -3, -sg, -du, +pl], [-1, -2, +3, +sg, -du, -pl] ]
+  - [ [V,A], [+past], [-1, +2, -3, -sg, -du, +pl], [-1, -2, +3, -sg, +du, -pl] ]
+  - [ [V,A], [+past], [-1, +2, -3, -sg, -du, +pl], [-1, -2, +3, -sg, -du, +pl] ]
+  # 3sg
+  - [ [V,A], [+past], [-1, -2, +3, +sg, -du, -pl], [+1, -2, -3, +sg, -du, -pl] ]
+  - [ [V,A], [+past], [-1, -2, +3, +sg, -du, -pl], [+1, -2, -3, -sg, +du, -pl] ]
+  - [ [V,A], [+past], [-1, -2, +3, +sg, -du, -pl], [+1, -2, -3, -sg, -du, +pl] ]
+  - [ [V,A], [+past], [-1, -2, +3, +sg, -du, -pl], [+1, +2, -3, -sg, +du, -pl] ]
+  - [ [V,A], [+past], [-1, -2, +3, +sg, -du, -pl], [+1, +2, -3, -sg, -du, +pl] ]
+  - [ [V,A], [+past], [-1, -2, +3, +sg, -du, -pl], [-1, +2, -3, +sg, -du, -pl] ]
+  - [ [V,A], [+past], [-1, -2, +3, +sg, -du, -pl], [-1, +2, -3, -sg, +du, -pl] ]
+  - [ [V,A], [+past], [-1, -2, +3, +sg, -du, -pl], [-1, +2, -3, -sg, -du, +pl] ]
+  - [ [V,A], [+past], [-1, -2, +3, +sg, -du, -pl], [-1, -2, +3, +sg, -du, -pl] ]
+  - [ [V,A], [+past], [-1, -2, +3, +sg, -du, -pl], [-1, -2, +3, -sg, +du, -pl] ]
+  - [ [V,A], [+past], [-1, -2, +3, +sg, -du, -pl], [-1, -2, +3, -sg, -du, +pl] ]
+  # 3du
+  - [ [V,A], [+past], [-1, -2, +3, -sg, +du, -pl], [+1, -2, -3, +sg, -du, -pl] ]
+  - [ [V,A], [+past], [-1, -2, +3, -sg, +du, -pl], [+1, -2, -3, -sg, +du, -pl] ]
+  - [ [V,A], [+past], [-1, -2, +3, -sg, +du, -pl], [+1, -2, -3, -sg, -du, +pl] ]
+  - [ [V,A], [+past], [-1, -2, +3, -sg, +du, -pl], [+1, +2, -3, -sg, +du, -pl] ]
+  - [ [V,A], [+past], [-1, -2, +3, -sg, +du, -pl], [+1, +2, -3, -sg, -du, +pl] ]
+  - [ [V,A], [+past], [-1, -2, +3, -sg, +du, -pl], [-1, +2, -3, +sg, -du, -pl] ]
+  - [ [V,A], [+past], [-1, -2, +3, -sg, +du, -pl], [-1, +2, -3, -sg, +du, -pl] ]
+  - [ [V,A], [+past], [-1, -2, +3, -sg, +du, -pl], [-1, +2, -3, -sg, -du, +pl] ]
+  - [ [V,A], [+past], [-1, -2, +3, -sg, +du, -pl], [-1, -2, +3, +sg, -du, -pl] ]
+  - [ [V,A], [+past], [-1, -2, +3, -sg, +du, -pl], [-1, -2, +3, -sg, +du, -pl] ]
+  - [ [V,A], [+past], [-1, -2, +3, -sg, +du, -pl], [-1, -2, +3, -sg, -du, +pl] ]
+  # 3pl
+  - [ [V,A], [+past], [-1, -2, +3, -sg, -du, +pl], [+1, -2, -3, +sg, -du, -pl] ]
+  - [ [V,A], [+past], [-1, -2, +3, -sg, -du, +pl], [+1, -2, -3, -sg, +du, -pl] ]
+  - [ [V,A], [+past], [-1, -2, +3, -sg, -du, +pl], [+1, -2, -3, -sg, -du, +pl] ]
+  - [ [V,A], [+past], [-1, -2, +3, -sg, -du, +pl], [+1, +2, -3, -sg, +du, -pl] ]
+  - [ [V,A], [+past], [-1, -2, +3, -sg, -du, +pl], [+1, +2, -3, -sg, -du, +pl] ]
+  - [ [V,A], [+past], [-1, -2, +3, -sg, -du, +pl], [-1, +2, -3, +sg, -du, -pl] ]
+  - [ [V,A], [+past], [-1, -2, +3, -sg, -du, +pl], [-1, +2, -3, -sg, +du, -pl] ]
+  - [ [V,A], [+past], [-1, -2, +3, -sg, -du, +pl], [-1, +2, -3, -sg, -du, +pl] ]
+  - [ [V,A], [+past], [-1, -2, +3, -sg, -du, +pl], [-1, -2, +3, +sg, -du, -pl] ]
+  - [ [V,A], [+past], [-1, -2, +3, -sg, -du, +pl], [-1, -2, +3, -sg, +du, -pl] ]
+  - [ [V,A], [+past], [-1, -2, +3, -sg, -du, +pl], [-1, -2, +3, -sg, -du, +pl] ]

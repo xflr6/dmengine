@@ -1,0 +1,34 @@
+# example.yaml - simple demonstration of the analysis definition syntax
+title: English verbal agreement
+features:
+- value: V
+  category: pos
+- value: Nom
+  category: case
+- value: +1
+  category: person
+- value: +2
+  category: person
+- value: +3
+  category: person
+- value: -pl
+  category: number
+- value: +pl
+  category: number
+vis:
+- exponent: sleep
+  features: [ V ]
+- exponent: -s
+  features: [ Nom, +3, -pl ]
+- exponent: -Ø
+  features: [ Nom ]
+paradigms:
+- name: Intransitive paradigm
+  headers: [ [1, 2, 3], [sg, pl] ]
+  inputs:
+  - [ [V], [Nom, +1, -pl] ]
+  - [ [V], [Nom, +1, +pl] ]
+  - [ [V], [Nom, +2, -pl] ]
+  - [ [V], [Nom, +2, +pl] ]
+  - [ [V], [Nom, +3, -pl] ]
+  - [ [V], [Nom, +3, +pl] ]

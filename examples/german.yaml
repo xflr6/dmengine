@@ -1,0 +1,194 @@
+# german.yaml - mock-up analysis illustrating some advanced features
+title: (Pseudo-)German
+features:
+- value: N
+  category: pos
+  name: nominal
+  specificity: 2
+- value: V
+  category: pos
+  name: verbal
+- value: Nom
+  category: case
+  name: nominative
+  specificity: 1
+- value: Akk
+  category: case
+  name: accusative
+  specificity: 1
+- value: +1
+  category: person
+- value: -1
+  category: person
+- value: +2
+  category: person
+- value: -2
+  category: person
+- value: +3
+  category: person
+- value: -3
+  category: person
+- value: +pl
+  category: number
+- value: -pl
+  category: number
+vis:
+- exponent: ich-
+  features: [ N, Nom, +1, -pl ]
+- exponent: du-
+  features: [ N, Nom, +2, -pl ]
+- exponent: er-
+  features: [ N, Nom, +3, -pl ]
+- exponent: sie-
+  features: [ N, Nom, +3 ]
+- exponent: es-
+  features: [ N, Nom, +3, -pl ]
+- exponent: wir-
+  features: [ N, Nom, +1, +pl ]
+- exponent: ihr-
+  features: [ N, Nom, +2, +pl ]
+- exponent: schnarch
+  features: [ V ]
+- exponent: lieb
+  features: [ V ]
+  other_head: [ Akk ]
+- exponent: -e
+  features: [ Nom, +1, -pl ]
+- exponent: -st
+  features: [ Nom, +2, -pl ]
+- exponent: -t
+  features: [ Nom, +3, -pl ]
+- exponent: -en
+  features: [ Nom, -2, +pl ]
+- exponent: -t
+  features: [ Nom, +2, +pl ]
+- exponent: -mich
+  features: [ N, Akk, +1, -pl ]
+- exponent: -dich
+  features: [ N, Akk, +2, -pl ]
+- exponent: -ihn
+  features: [ N, Akk, +3, -pl ]
+- exponent: -es
+  features: [ N, Akk, +3, -pl ]
+- exponent: -sie
+  features: [ N, Akk, +3 ]
+- exponent: -uns
+  features: [ N, Akk, +1, +pl ]
+- exponent: -euch
+  features: [ N, Akk, +2, +pl ]
+#- exponent: -test
+#  features: [ +pl ]
+#  this_head: [ +Akk,-1,-2,+3,+N ]
+rules:
+- kind: copy
+  this_head: [ Nom ]
+  left_head: [ V ]
+- kind: add
+  features: [ N ]
+  this_head: [ Nom ]
+  left_head: [ Nom ]
+- kind: add
+  features: [ N ]
+  this_head: [ Akk ]
+  left_head: [ Nom ]
+- kind: fusion
+  first_head: [ Nom ]
+  second_head: [ Nom ]
+readjustments:
+- kind: transform
+  search: "([aeiou])([aeiou])"
+  replace: \2\1
+  features: [ V ]
+paradigms:
+- name: Intransitive
+  headers: [ [ 1sg, 1pl, 2sg, 2pl, 3sg, 3pl ], [] ]
+  inputs:
+  - [ [V], [Nom, +1, -2, -3, -pl] ]
+  - [ [V], [Nom, +1, -2, -3, +pl] ]
+  - [ [V], [Nom, -1, +2, -3, -pl] ]
+  - [ [V], [Nom, -1, +2, -3, +pl] ]
+  - [ [V], [Nom, -1, -2, +3, -pl] ]
+  - [ [V], [Nom, -1, -2, +3, +pl] ]
+  spellouts_expected:
+  - ich-schnarch-e
+  - du-schnarch-st
+  - er-schnarch-t
+  - wir-schnarch-en
+  - ihr-schnarch-t
+  - sie-schnarch-en  
+- name: Transitive
+  headers: [ [ 1sg, 1pl, 2sg, 2pl, 3sg, 3pl ], [ 1sg, 1pl, 2sg, 2pl, 3sg, 3pl ] ]
+  inputs:
+  - [ [V], [Nom, +1, -2, -3, -pl], [Akk, +1, -2, -3, -pl] ]
+  - [ [V], [Nom, +1, -2, -3, -pl], [Akk, +1, -2, -3, +pl] ]
+  - [ [V], [Nom, +1, -2, -3, -pl], [Akk, -1, +2, -3, -pl] ]
+  - [ [V], [Nom, +1, -2, -3, -pl], [Akk, -1, +2, -3, +pl] ]
+  - [ [V], [Nom, +1, -2, -3, -pl], [Akk, -1, -2, +3, -pl] ]
+  - [ [V], [Nom, +1, -2, -3, -pl], [Akk, -1, -2, +3, +pl] ]
+  - [ [V], [Nom, +1, -2, -3, +pl], [Akk, +1, -2, -3, -pl] ]
+  - [ [V], [Nom, +1, -2, -3, +pl], [Akk, +1, -2, -3, +pl] ]
+  - [ [V], [Nom, +1, -2, -3, +pl], [Akk, -1, +2, -3, -pl] ]
+  - [ [V], [Nom, +1, -2, -3, +pl], [Akk, -1, +2, -3, +pl] ]
+  - [ [V], [Nom, +1, -2, -3, +pl], [Akk, -1, -2, +3, -pl] ]
+  - [ [V], [Nom, +1, -2, -3, +pl], [Akk, -1, -2, +3, +pl] ]
+  - [ [V], [Nom, -1, +2, -3, -pl], [Akk, +1, -2, -3, -pl] ]
+  - [ [V], [Nom, -1, +2, -3, -pl], [Akk, +1, -2, -3, +pl] ]
+  - [ [V], [Nom, -1, +2, -3, -pl], [Akk, -1, +2, -3, -pl] ]
+  - [ [V], [Nom, -1, +2, -3, -pl], [Akk, -1, +2, -3, +pl] ]
+  - [ [V], [Nom, -1, +2, -3, -pl], [Akk, -1, -2, +3, -pl] ]
+  - [ [V], [Nom, -1, +2, -3, -pl], [Akk, -1, -2, +3, +pl] ]
+  - [ [V], [Nom, -1, +2, -3, +pl], [Akk, +1, -2, -3, -pl] ]
+  - [ [V], [Nom, -1, +2, -3, +pl], [Akk, +1, -2, -3, +pl] ]
+  - [ [V], [Nom, -1, +2, -3, +pl], [Akk, -1, +2, -3, -pl] ]
+  - [ [V], [Nom, -1, +2, -3, +pl], [Akk, -1, +2, -3, +pl] ]
+  - [ [V], [Nom, -1, +2, -3, +pl], [Akk, -1, -2, +3, -pl] ]
+  - [ [V], [Nom, -1, +2, -3, +pl], [Akk, -1, -2, +3, +pl] ]
+  - [ [V], [Nom, -1, -2, +3, -pl], [Akk, +1, -2, -3, -pl] ]
+  - [ [V], [Nom, -1, -2, +3, -pl], [Akk, +1, -2, -3, +pl] ]
+  - [ [V], [Nom, -1, -2, +3, -pl], [Akk, -1, +2, -3, -pl] ]
+  - [ [V], [Nom, -1, -2, +3, -pl], [Akk, -1, +2, -3, +pl] ]
+  - [ [V], [Nom, -1, -2, +3, -pl], [Akk, -1, -2, +3, -pl] ]
+  - [ [V], [Nom, -1, -2, +3, -pl], [Akk, -1, -2, +3, +pl] ]
+  - [ [V], [Nom, -1, -2, +3, +pl], [Akk, +1, -2, -3, -pl] ]
+  - [ [V], [Nom, -1, -2, +3, +pl], [Akk, +1, -2, -3, +pl] ]
+  - [ [V], [Nom, -1, -2, +3, +pl], [Akk, -1, +2, -3, -pl] ]
+  - [ [V], [Nom, -1, -2, +3, +pl], [Akk, -1, +2, -3, +pl] ]
+  - [ [V], [Nom, -1, -2, +3, +pl], [Akk, -1, -2, +3, -pl] ]
+  - [ [V], [Nom, -1, -2, +3, +pl], [Akk, -1, -2, +3, +pl] ]
+  spellouts_expected:
+  - ich-lieb-e-mich
+  - ich-lieb-e-und
+  - ich-lieb-e-dich
+  - ich-lieb-e-euch
+  - ich-lieb-e-ihn
+  - ich-lieb-e-sie
+  - wir-lieb-en-mich
+  - wir-lieb-en-und
+  - wir-lieb-en-dich
+  - wir-lieb-en-euch
+  - wir-lieb-en-ihn
+  - wir-lieb-en-sie
+  - du-lieb-st-mich
+  - du-lieb-st-und
+  - du-lieb-st-dich
+  - du-lieb-st-euch
+  - du-lieb-st-ihn
+  - du-lieb-st-sie
+  - ihr-lieb-t-mich
+  - ihr-lieb-t-und
+  - ihr-lieb-t-dich
+  - ihr-lieb-t-euch
+  - ihr-lieb-t-ihn
+  - ihr-lieb-t-sie
+  - er-lieb-t-mich
+  - er-lieb-t-und
+  - er-lieb-t-dich
+  - er-lieb-t-euch
+  - er-lieb-t-ihn
+  - er-lieb-t-sie
+  - sie-lieb-en-mich
+  - sie-lieb-en-und
+  - sie-lieb-en-dich
+  - sie-lieb-en-euch
+  - sie-lieb-en-ihn
+  - sie-lieb-en-sie

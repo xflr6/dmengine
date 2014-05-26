@@ -1,0 +1,7 @@
+dmengine TODO
+=============
+
+- check expected spellout for each input
+- delete_matching: yes/no
+- delete_other: all, given, none
+- set_delete: global, slot, vi
