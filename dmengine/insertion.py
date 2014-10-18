@@ -8,11 +8,11 @@ Cyclic, Single, Flat, Once
 import operator
 import logging
 
-log = logging.getLogger()
-
 from . import vis, meta, tools
 
 __all__ = ['Insertion']
+
+log = logging.getLogger()
 
 
 class Insertion(object):

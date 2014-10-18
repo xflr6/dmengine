@@ -1,4 +1,4 @@
-# pdflatex.py - render LaTeX file to PDF
+# pdflatex.py - render LaTeX file to PDF and optionally open in viewer
 
 import sys
 import os
@@ -11,33 +11,30 @@ __all__ = ['render', 'viewer']
 VIEW = False
 
 
+def no_compile(filename, view=VIEW):
+    raise NotImplementedError('unsupported platform')
+
+
 def texlive_compile(filename, view=VIEW):
-    command = ['pdflatex', '-halt-on-error', '-interaction=batchmode']
+    pdflatex = ['pdflatex', '-pdf', '-interaction=batchmode', '-halt-on-error']
     compile_dir = os.path.dirname(filename)
     if compile_dir:
-        command.append('-output-directory=%s' % compile_dir)
-    command.append(filename)
+        pdflatex.append('-output-directory=%s' % compile_dir)
+    pdflatex.append(filename)
     for i in range(3):
-        subprocess.Popen(command).wait()
+        subprocess.Popen(pdflatex).wait()
     if view:
         viewer(tools.swapext(filename, 'pdf'))
 
 
 def miktex_compile(filename, view=VIEW):
-    command = ['texify', '--pdf', '--batch', '--verbose', '--quiet']
+    compile_dir, filename = os.path.split(filename)  # texify has issues with remote directory
+    texify = ['texify', '--pdf', '--batch', '--verbose', '--quiet']
     if view:
-        command.append('--run-viewer')
-    if os.path.dirname(filename):  # texify has issues with remote directory
-        compile_dir, filename = os.path.split(filename)
-    else:
-        compile_dir = None
-    command.append(filename)
+        texify.append('--run-viewer')
+    texify.append(filename)
     with tools.chdir(compile_dir):
-        return subprocess.Popen(command).wait()
-
-
-def no_compile(filename, view=VIEW):
-    raise NotImplementedError
+        subprocess.Popen(texify).wait()
 
 
 @apply
@@ -50,20 +47,24 @@ def render(platform=sys.platform):
     return compile_funcs.get(platform, no_compile)
 
 
+def no_view(filepath):
+    raise NotImplementedError('unsupported platform')
+
+
+def darwin_view(filepath):
+    subprocess.Popen(['open', filepath], shell=True)
+
+
+def linux2_view(filepath):
+    subprocess.Popen(['xdg-open', filepath], shell=True)
+
+
+def win32_view(filepath):
+    os.startfile(os.path.normpath(filepath))
+
+
 @apply
 def viewer(platform=sys.platform):
-    def darwin_view(filepath):
-        subprocess.Popen(['open', filepath], shell=True)
-
-    def linux2_view(filepath):
-        subprocess.Popen(['xdg-open', filepath], shell=True)
-
-    def win32_view(filepath):
-        os.startfile(os.path.normpath(filepath))
-
-    def no_view(filepath):
-        raise NotImplementedError
-
     view_funcs = {
         'darwin': darwin_view,
         'linux2': linux2_view,

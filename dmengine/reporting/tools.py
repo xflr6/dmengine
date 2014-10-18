@@ -25,19 +25,20 @@ def swapext(filename, extension, delimiter='.'):
 
 @contextlib.contextmanager
 def chdir(path):
-    if path is None:
+    """Change the current working directory, restore on context exit."""
+    if not path:
         try:
             yield
         finally:
             pass
         return
 
-    cwd = os.getcwd()
+    oldwd = os.getcwd()
     os.chdir(path)
     try:
         yield path
     finally:
-        os.chdir(cwd)
+        os.chdir(oldwd)
 
 
 def current_path(*names):

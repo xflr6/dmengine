@@ -5,8 +5,7 @@ import collections
 from .common import translate
 from .features import render_features
 
-CONTEXTS = collections.OrderedDict((key, translate(tmpl))
-    for key, tmpl in [
+CONTEXTS = collections.OrderedDict((key, translate(tmpl)) for key, tmpl in [
     ('this_head', '[__,%s]'),
     ('left_head', '[%s][__]'),
     ('right_head', '[__][%s]'),
@@ -15,8 +14,7 @@ CONTEXTS = collections.OrderedDict((key, translate(tmpl))
     ('anywhere', '%s'),
 ])
 
-EXPCONTEXTS = collections.OrderedDict((key, translate(tmpl))
-    for key, tmpl in [
+EXPCONTEXTS = collections.OrderedDict((key, translate(tmpl)) for key, tmpl in [
     ('exponent', '%s'),
     ('left_exponent', '%s__'),
     ('right_exponent', '__%s'),

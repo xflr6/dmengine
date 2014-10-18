@@ -4,11 +4,10 @@ import codecs
 import string
 import logging
 
-log = logging.getLogger()
-
 import yaml
 
 from . import pdflatex, tools
+
 from .features import render_featureconfig
 from .vis import render_vis
 from .rules import render_rules
@@ -16,8 +15,9 @@ from .readjustments import render_readjustments
 from .paradigms import paradigms, input_paradigms, input_paradigms_processed
 from .log import render_log
 
-
 __all__ = ['Report']
+
+log = logging.getLogger()
 
 
 class Report(object):

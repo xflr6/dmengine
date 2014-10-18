@@ -1,7 +1,7 @@
 dmengine
 ========
 
-|PyPI version| |License| |Wheel| |Downloads|
+|PyPI version| |License| |Supported Python| |Format| |Downloads|
 
 DM-engine is a Python implementation of **Distributed Morphology** (DM_).
 
@@ -16,7 +16,7 @@ list of insertable **vocabulary items** (VIs), and a list of **inputs** to be
 processed (see the example below). The ``dmengine`` command-line tool calculates
 the results and generates a detailed transcript of all calculations for later
 inspection. The resulting YAML file can be converted into a LaTeX-based report
-that optionally is directly compiled into a PDF file.
+that can directly be compiled into a PDF file.
 
 
 Installation
@@ -212,9 +212,12 @@ License
 .. |License| image:: https://pypip.in/license/dmengine/badge.svg
     :target: https://pypi.python.org/pypi/dmengine
     :alt: License
-.. |Wheel| image:: https://pypip.in/wheel/dmengine/badge.svg
+.. |Supported Python| image:: https://pypip.in/py_versions/dmengine/badge.svg
     :target: https://pypi.python.org/pypi/dmengine
-    :alt: Wheel Status
+    :alt: Supported Python Versions
+.. |Format| image:: https://pypip.in/format/dmengine/badge.svg
+    :target: https://pypi.python.org/pypi/dmengine
+    :alt: Format
 .. |Downloads| image:: https://pypip.in/d/dmengine/badge.svg
     :target: https://pypi.python.org/pypi/dmengine
     :alt: Downloads

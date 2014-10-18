@@ -6,13 +6,13 @@ from itertools import imap
 import collections
 import logging
 
-log = logging.getLogger()
-
 import yaml
 
 from . import features, vis, rules, readjustments, calculation, types, tools
 
 __all__ = ['Analysis']
+
+log = logging.getLogger()
 
 
 class Analysis(object):
@@ -52,8 +52,8 @@ class Analysis(object):
             ('name', p['name']),
             ('headers', types.FlowList(p['headers'])),
             ('inputs', map(types.FlowList, p['inputs'])),
-            ('spellouts_expected', types.List(p.get('spellouts_expected', [])))])
-            for p in cfg['paradigms']]
+            ('spellouts_expected', types.List(p.get('spellouts_expected', []))),
+            ]) for p in cfg['paradigms']]
 
         inputs = (i for p in self.paradigms for i in p['inputs'])
         self.inputs = map(SlotList.from_heads, inputs)
@@ -70,6 +70,7 @@ class Analysis(object):
 
     def save(self):
         log.info('\tsave to %r..' % self.results)
+
         data = collections.OrderedDict([
             ('author', self.author),
             ('title', self.title),
@@ -82,6 +83,7 @@ class Analysis(object):
             ('paradigms', self.paradigms),
             ('worklog', self.worklog),
         ])
+
         with open(self.results, 'wb') as fd:
             yaml.dump(data, fd)
 
