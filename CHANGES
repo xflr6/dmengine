@@ -2,6 +2,13 @@ dmengine Changelog
 ==================
 
 
+Version 0.1.3
+-------------
+
+Fixed broken manual install due to setuptools automatic zip_safe analysis not
+working as expected.
+
+
 Version 0.1.2
 -------------
 

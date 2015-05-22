@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='dmengine',
-    version='0.1.2',
+    version='0.1.3',
     author='Sebastian Bank',
     author_email='sebastian.bank@uni-leipzig.de',
     description='Distributed Morphology calculator',
@@ -13,6 +13,7 @@ setup(
     url='http://github.com/xflr6/dmengine',
     packages=find_packages(),
     package_data={'dmengine': ['reporting/template.tex']},
+    zip_safe=False,
     entry_points={'console_scripts': ['dmengine=dmengine.__main__:main']},
     install_requires=[
         'oset',
