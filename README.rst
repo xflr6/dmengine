@@ -215,18 +215,18 @@ License
 .. |--| unicode:: U+2013
 
 
-.. |PyPI version| image:: https://pypip.in/v/dmengine/badge.svg
+.. |PyPI version| image:: https://img.shields.io/pypi/v/dmengine.svg
     :target: https://pypi.python.org/pypi/dmengine
     :alt: Latest PyPI Version
-.. |License| image:: https://pypip.in/license/dmengine/badge.svg
+.. |License| image:: https://img.shields.io/pypi/l/dmengine.svg
     :target: https://pypi.python.org/pypi/dmengine
     :alt: License
-.. |Supported Python| image:: https://pypip.in/py_versions/dmengine/badge.svg
+.. |Supported Python| image:: https://img.shields.io/pypi/pyversions/dmengine.svg
     :target: https://pypi.python.org/pypi/dmengine
     :alt: Supported Python Versions
-.. |Format| image:: https://pypip.in/format/dmengine/badge.svg
+.. |Format| image:: https://img.shields.io/pypi/format/dmengine.svg
     :target: https://pypi.python.org/pypi/dmengine
     :alt: Format
-.. |Downloads| image:: https://pypip.in/d/dmengine/badge.svg
+.. |Downloads| image:: https://img.shields.io/pypi/dm/dmengine.svg
     :target: https://pypi.python.org/pypi/dmengine
     :alt: Downloads

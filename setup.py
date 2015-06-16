@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='dmengine',
-    version='0.1.3',
+    version='0.1.4.dev0',
     author='Sebastian Bank',
     author_email='sebastian.bank@uni-leipzig.de',
     description='Distributed Morphology calculator',
