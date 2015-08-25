@@ -24,8 +24,8 @@ Links
 
 - GitHub: http://github.com/xflr6/dmengine
 - PyPI: http://pypi.python.org/pypi/dmengine
-- Download: http://pypi.python.org/pypi/dmengine#downloads
 - Issue Tracker: http://github.com/xflr6/dmengine/issues
+- Download: http://pypi.python.org/pypi/dmengine#downloads
 
 
 Installation

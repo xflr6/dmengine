@@ -85,8 +85,8 @@ class LeftHead(HeadContext):
         return '[%s][__]' % self.features
 
     def match(self, head, left_context, right_context, up_context):
-        return (left_context
-            and any(imap(self.features.issubset, left_context[-1])))
+        return (left_context and
+            any(imap(self.features.issubset, left_context[-1])))
 
 
 class RightHead(HeadContext):
@@ -98,8 +98,8 @@ class RightHead(HeadContext):
         return '[__][%s]' % self.features
 
     def match(self, head, left_context, right_context, up_context):
-        return (right_context
-            and any(imap(self.features.issubset, right_context[0])))
+        return (right_context and
+            any(imap(self.features.issubset, right_context[0])))
 
 
 class OtherHead(HeadContext):

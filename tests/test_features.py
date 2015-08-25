@@ -20,3 +20,6 @@ class TestFeatureSystem(unittest.TestCase):
             {'value': '-sg', 'category': 'number'},
             {'value': '-pl', 'category': 'number'},
         ])
+        self.assertEqual(
+            [(f.value, f.category) for f in fs.FeatureSet('+1 +sg').features],
+            [('+1', 'person'), ('+sg', 'number')])

@@ -72,8 +72,8 @@ class Exponent(object):
         return unicode(self).encode('ascii', 'backslashreplace')
 
     def __eq__(self, other):
-        return (isinstance(other, Exponent)
-            and self.kind == other.kind and self.value == other.value)
+        return (isinstance(other, Exponent) and
+            self.kind == other.kind and self.value == other.value)
 
     def __ne__(self, other):
         return not self == other

@@ -158,8 +158,8 @@ class LeftFeatures(FeaturesContext):
         return '[%s]__' % self.features
 
     def match(self, vi, left_context, right_context):
-        return (left_context
-            and self.features.issubset(left_context[-1].features))
+        return (left_context and
+            self.features.issubset(left_context[-1].features))
 
 
 class RightFeatures(FeaturesContext):
@@ -171,8 +171,8 @@ class RightFeatures(FeaturesContext):
         return '__[%s]' % self.features
 
     def match(self, vi, left_context, right_context):
-        return (right_context
-            and self.features.issubset(right_context[0].features))
+        return (right_context and
+            self.features.issubset(right_context[0].features))
 
 
 class OtherFeatures(FeaturesContext):
