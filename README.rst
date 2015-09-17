@@ -187,10 +187,8 @@ be restricted to the following context types:
 See also
 --------
 
-Raphael Finkel provides `web-based engines`__ for calculating Paradigm Function
+Raphael Finkel provides `web-based engines`_ for calculating Paradigm Function
 Morphology and Network Morphology analyses.
-
-.. __: http://www.cs.uky.edu/~raphael/linguistics/claw.html
 
 
 License
@@ -208,6 +206,7 @@ License
 .. _TeX Live: https://www.tug.org/texlive/
 .. _MikTeX: http://miktex.org
 
+.. _web-based engines: http://www.cs.uky.edu/~raphael/linguistics/claw.html
 
 .. _MIT license: http://opensource.org/licenses/MIT
 
