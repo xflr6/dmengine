@@ -2,6 +2,8 @@
 
 """Command-line interface."""
 
+import os
+import sys
 import argparse
 
 from . import __version__, calculate
@@ -15,7 +17,7 @@ def main():
         description='Calculates a given Distributed Morphology (DM) analysis')
 
     parser.add_argument('--version', action='version',
-        version='%%(prog)s %s' % __version__)
+        version='%%(prog)s %s' % _version())
 
     parser.add_argument('filename',
         help='dm analysis .yaml definition file')
@@ -31,6 +33,11 @@ def main():
 
     args = parser.parse_args()
     calculate(args.filename, args.directory, args.report, args.pdf, args.view)
+
+
+def _version():
+    pkg_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    return '%s from %s (python %s)' % (__version__, pkg_dir, sys.version[:3])
 
 
 if __name__ == '__main__':
