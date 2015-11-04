@@ -5,7 +5,7 @@ dmengine Changelog
 Version 0.1.4 (in development)
 ------------------------------
 
-
+Fixed PDF-viewer opening functions on Linux and Darwin.
 
 
 Version 0.1.3

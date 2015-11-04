@@ -70,7 +70,7 @@ class VocabularyItems(types.Instances):
     new_item = VocabularyItem
 
     def filter(self, predicate=None):
-        return ViList(self if predicate is None else ifilter(predicate, self))
+        return ViList(ifilter(predicate, self) if predicate is not None else self)
 
     def matching(self, head, left_context, right_context, up_context):
         matching = operator.methodcaller('match', head, left_context, right_context, up_context)

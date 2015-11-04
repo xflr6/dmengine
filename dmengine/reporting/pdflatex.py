@@ -52,11 +52,11 @@ def no_view(filepath):
 
 
 def darwin_view(filepath):
-    subprocess.Popen(['open', filepath], shell=True)
+    subprocess.Popen(['open', filepath])
 
 
 def linux2_view(filepath):
-    subprocess.Popen(['xdg-open', filepath], shell=True)
+    subprocess.Popen(['xdg-open', filepath])
 
 
 def win32_view(filepath):
