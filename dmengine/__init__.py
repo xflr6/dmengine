@@ -3,7 +3,7 @@
 """Distributed Morphology (DM) analyses with LaTeX report output."""
 
 __title__ = 'dmengine'
-__version__ = '0.1.4'
+__version__ = '0.1.5.dev0'
 __author__ = 'Sebastian Bank <sebastian.bank@uni-leipzig.de>'
 __license__ = 'MIT, see LICENSE'
 __copyright__ = 'Copyright (c) 2011-2015 Sebastian Bank'
