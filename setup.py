@@ -19,10 +19,6 @@ setup(
         'oset',
         'PyYAML',
     ],
-    extras_require={
-        'test': ['nose', 'coverage', 'flake8', 'pep8-naming'],
-        'dev': ['wheel'],
-    },
     platforms='any',
     long_description=open('README.rst').read(),
     classifiers=[
