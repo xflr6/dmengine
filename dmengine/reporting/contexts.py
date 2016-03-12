@@ -2,6 +2,8 @@
 
 import collections
 
+from .._compat import iteritems
+
 from .common import translate
 from .features import render_features
 
@@ -30,11 +32,11 @@ def render_contexts(item):
     if not any(key in item for key in CONTEXTS):
         return ''
     return ' $/$ %s' % ' \\& '.join(tmpl % render_features(item[key])
-        for key, tmpl in CONTEXTS.iteritems() if key in item)
+        for key, tmpl in iteritems(CONTEXTS) if key in item)
 
 
 def render_expcontexts(item):
     if not any(key in item for key in EXPCONTEXTS):
         return ''
     return ' $/$ %s' % ' \\& '.join(tmpl % item[key]
-        for key, tmpl in EXPCONTEXTS.iteritems() if key in item)
+        for key, tmpl in iteritems(EXPCONTEXTS) if key in item)

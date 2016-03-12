@@ -1,6 +1,6 @@
 # rules.py
 
-from itertools import izip
+from .._compat import zip
 
 from .common import translate
 from .examples import render_example
@@ -15,8 +15,8 @@ def render_rules(rules):
         return ''
     example_refs = (render_example(MAP[r['kind']](r), labelize=True)
         for r in rules)
-    examples, refs = izip(*example_refs)
-    for r, ref in izip(rules, refs):
+    examples, refs = zip(*example_refs)
+    for r, ref in zip(rules, refs):
         r['ref'] = ref
     return ''.join(examples)
 

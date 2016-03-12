@@ -9,18 +9,18 @@ InsertContext
     LastInsert, AnyInsert
 """
 
-from itertools import chain, imap
+from itertools import chain
 import collections
+
+from ._compat import map, with_metaclass
 
 from . import features, meta, types
 
 __all__ = ['Context', 'Contexts']
 
 
-class Context(object):
+class Context(with_metaclass(meta.FactoryMeta('scope', collections.OrderedDict), object)):
     """Abstract base class and factory for contexts matching features under defined conditions."""
-
-    __metaclass__ = meta.FactoryMeta('scope', collections.OrderedDict)
 
     Features = features.FeatureSet
 
@@ -43,20 +43,22 @@ class Contexts(types.Instances):
     new_item = Context
 
     def __init__(self, **kwcontexts):
-        scopes = self.new_item.subclasses.keys()
+        scopes = iter(self.new_item.subclasses)
         items = (self.new_item(s, kwcontexts[s])
             for s in scopes if s in kwcontexts)
         super(types.Instances, self).__init__(items)
 
-    def iteritems(self):
+    def items(self):
         return ((c.scope, c.features) for c in self)
+
+    iteritems = items
 
     def _kwstr(self, plain=False):
         ctx = ', '.join('%s=%r' % (c.scope, str(c.features)) for c in self)
         return ctx if plain else ', %s' % ctx if ctx else ''
 
     def __str__(self):
-        ctx = ' & '.join(imap(str, self))
+        ctx = ' & '.join(map(str, self))
         return ' / %s' % ctx if ctx else ''
 
 
@@ -86,7 +88,7 @@ class LeftHead(HeadContext):
 
     def match(self, head, left_context, right_context, up_context):
         return (left_context and
-            any(imap(self.features.issubset, left_context[-1])))
+            any(map(self.features.issubset, left_context[-1])))
 
 
 class RightHead(HeadContext):
@@ -99,7 +101,7 @@ class RightHead(HeadContext):
 
     def match(self, head, left_context, right_context, up_context):
         return (right_context and
-            any(imap(self.features.issubset, right_context[0])))
+            any(map(self.features.issubset, right_context[0])))
 
 
 class OtherHead(HeadContext):
@@ -113,7 +115,7 @@ class OtherHead(HeadContext):
     def match(self, head, left_context, right_context, up_context):
         contexts = left_context + [up_context] + right_context
         other_heads = chain.from_iterable(contexts)
-        return any(imap(self.features.issubset, other_heads))
+        return any(map(self.features.issubset, other_heads))
 
 
 class AnyHead(HeadContext):
@@ -127,7 +129,7 @@ class AnyHead(HeadContext):
     def match(self, head, left_context, right_context, up_context):
         contexts = left_context + [[head]] + [up_context] + right_context
         all_heads = chain.from_iterable(contexts)
-        return any(imap(self.features.issubset, all_heads))
+        return any(map(self.features.issubset, all_heads))
 
 
 class Anywhere(HeadContext):

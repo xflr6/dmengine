@@ -2,6 +2,8 @@
 
 import collections
 
+from ._compat import iteritems
+
 import yaml
 
 __all__ = ['serializable', 'lazyproperty', 'EmptySlotsMeta', 'FactoryMeta']
@@ -18,7 +20,7 @@ def serializes(data_type):
 @serializes(collections.OrderedDict)
 def odict_representer(dumper, self):
     """Serialize OrderedDict items in their order."""
-    return dumper.represent_mapping('tag:yaml.org,2002:map', self.iteritems())
+    return dumper.represent_mapping('tag:yaml.org,2002:map', iteritems(self))
 
 
 def serializable(cls):

@@ -1,6 +1,6 @@
 # readjustments.py
 
-from itertools import izip
+from .._compat import zip
 
 from .common import translate
 from .contexts import render_expcontexts
@@ -14,8 +14,8 @@ def render_readjustments(readjustments):
         return ''
     examples_refs = (render_example(MAP[r['kind']](r), labelize=True)
         for r in readjustments)
-    examples, refs = izip(*examples_refs)
-    for r, ref in izip(readjustments, refs):
+    examples, refs = zip(*examples_refs)
+    for r, ref in zip(readjustments, refs):
         r['ref'] = ref
     return ''.join(examples)
 

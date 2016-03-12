@@ -1,6 +1,8 @@
 # types.py - customized collection classes
 
-from itertools import imap, starmap
+from itertools import starmap
+
+from ._compat import map, with_metaclass
 
 from . import meta
 
@@ -8,10 +10,8 @@ __all__ = ['List', 'FlowList', 'Instances', 'StarInstances']
 
 
 @meta.serializable
-class List(list):
+class List(with_metaclass(meta.EmptySlotsMeta, list)):
     """YAML serializable list with type-preserving copy and getslice."""
-
-    __metaclass__ = meta.EmptySlotsMeta
 
     @staticmethod
     def _multi_representer(dumper, self):
@@ -50,7 +50,7 @@ class Instances(List):
         super(Instances, self).__init__(items)
 
     def __repr__(self):
-        return '[%s]' % ',\n '.join(imap(repr, self))
+        return '[%s]' % ',\n '.join(map(repr, self))
 
 
 class StarInstances(List):
@@ -63,4 +63,4 @@ class StarInstances(List):
         super(StarInstances, self).__init__(items)
 
     def __repr__(self):
-        return '[%s]' % ',\n '.join(imap(repr, self))
+        return '[%s]' % ',\n '.join(map(repr, self))

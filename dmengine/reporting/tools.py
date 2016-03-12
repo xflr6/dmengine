@@ -3,7 +3,9 @@
 import os
 import sys
 import contextlib
-from itertools import tee, izip, izip_longest
+from itertools import tee
+
+from .._compat import zip, zip_longest
 
 __all__ = ['pairwise', 'grouper', 'swapext', 'chdir', 'current_path']
 
@@ -11,11 +13,11 @@ __all__ = ['pairwise', 'grouper', 'swapext', 'chdir', 'current_path']
 def pairwise(iterable):
     a, b = tee(iterable)
     next(b, None)
-    return izip(a, b)
+    return zip(a, b)
 
 
 def grouper(n, iterable, fillvalue=None):
-    return izip_longest(*[iter(iterable)] * n, fillvalue=fillvalue)
+    return zip_longest(*[iter(iterable)] * n, fillvalue=fillvalue)
 
 
 def swapext(filename, extension, delimiter='.'):

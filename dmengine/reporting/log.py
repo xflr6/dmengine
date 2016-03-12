@@ -1,6 +1,8 @@
 # log.py
 
-from itertools import repeat, izip, product
+from itertools import repeat, product
+
+from .._compat import zip
 
 from .tools import pairwise
 from .features import render_features
@@ -20,8 +22,8 @@ def lines(paradigms, worklog, rules, readjustments):
         if is_transitive(paradigm):
             sub_obj = product(*paradigm['headers'])
         else:
-            sub_obj = izip(paradigm['headers'][0], repeat(''))
-        for log, (sub, obj) in izip(logs, sub_obj):
+            sub_obj = zip(paradigm['headers'][0], repeat(''))
+        for log, (sub, obj) in zip(logs, sub_obj):
             if obj:
                 yield '\\minisec{%s:%s}' % (sub, obj)
             else:
@@ -38,10 +40,10 @@ def lines(paradigms, worklog, rules, readjustments):
                 continue
             yield 'Matches'
             yield '\\begin{itemize}'
-            for slt, slt_match in izip(log['input_pst'], log['matches']):
+            for slt, slt_match in zip(log['input_pst'], log['matches']):
                 yield '\\item %s' % render_slot(slt)
                 yield '\\begin{itemize}'
-                for hd, hd_match in izip(slt, slt_match):
+                for hd, hd_match in zip(slt, slt_match):
                     yield '\\item %s' % render_head(hd)
                     yield '\\begin{itemize}'
                     for match in hd_match:

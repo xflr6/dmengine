@@ -6,9 +6,11 @@ DeleteExponent, CopyExponent, MetatheseExponents, TransformExponent
 """
 
 import re
-from itertools import imap, permutations
+from itertools import permutations
 import operator
 import collections
+
+from ._compat import map, iteritems, with_metaclass
 
 from . import exponents, outcontexts, meta, types, tools
 
@@ -16,10 +18,8 @@ __all__ = ['Readjustment', 'Readjustments']
 
 
 @meta.serializable
-class Readjustment(object):
+class Readjustment(with_metaclass(meta.FactoryMeta('kind'), object)):
     """Abtstract base class and factory for post-insertion operations on a vi sequence."""
-
-    __metaclass__ = meta.FactoryMeta('kind')
 
     Exponent = exponents.Exponent
 
@@ -31,8 +31,8 @@ class Readjustment(object):
         fields = ('exponent', 'first_exponent', 'second_exponent', 'search', 'replace')
         result.update((f, self.__dict__[f]) for f in fields if f in self.__dict__)
         if 'contexts' in self.__dict__:
-            result.update(self.contexts.iteritems())
-        return dumper.represent_mapping('tag:yaml.org,2002:map', result.iteritems())
+            result.update(iteritems(self.contexts))
+        return dumper.represent_mapping('tag:yaml.org,2002:map', iteritems(result))
 
     def __init__(self, exponent, **kwcontexts):
         self.exponent = self.Exponent(exponent)
@@ -46,13 +46,13 @@ class Readjustment(object):
     def all_contexts_and_exp_match(self, vis):
         for i, (vi, left, right) in enumerate(tools.curr_pred_succ(vis)):
             matching = operator.methodcaller('match', vi, left, right)
-            if self.exponent == vi.exponent and all(imap(matching, self.contexts)):
+            if self.exponent == vi.exponent and all(map(matching, self.contexts)):
                 yield i, vi
 
     def all_contexts_match(self, vis):
         for i, (vi, left, right) in enumerate(tools.curr_pred_succ(vis)):
             matching = operator.methodcaller('match', vi, left, right)
-            if all(imap(matching, self.contexts)):
+            if all(map(matching, self.contexts)):
                 yield i, vi
 
     def __call__(self, vis):

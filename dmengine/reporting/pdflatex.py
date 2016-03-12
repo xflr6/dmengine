@@ -4,6 +4,8 @@ import sys
 import os
 import subprocess
 
+from .._compat import apply, range
+
 from . import tools
 
 __all__ = ['render', 'viewer']

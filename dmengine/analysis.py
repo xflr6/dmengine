@@ -2,9 +2,11 @@
 
 """Load an analysis config file, calculate it, and save the results."""
 
-from itertools import imap
+import io
 import collections
 import logging
+
+from ._compat import map
 
 import yaml
 
@@ -28,13 +30,13 @@ class Analysis(object):
 
     Calculator = calculation.Calculator
 
-    def __init__(self, filename, directory=None):
+    def __init__(self, filename, directory=None, encoding='utf-8'):
         self.filename = filename
         self.results = tools.derive_filename(filename, '-results', 'yaml', directory)
 
         log.info('%r' % self)
 
-        with open(self.filename, 'rb') as fd:
+        with io.open(self.filename, encoding=encoding) as fd:
             cfg = yaml.safe_load(fd)
 
         self.author = cfg.get('author', 'Anomymous')
@@ -51,12 +53,12 @@ class Analysis(object):
         self.paradigms = [collections.OrderedDict([
             ('name', p['name']),
             ('headers', types.FlowList(p['headers'])),
-            ('inputs', map(types.FlowList, p['inputs'])),
+            ('inputs', list(map(types.FlowList, p['inputs']))),
             ('spellouts_expected', types.List(p.get('spellouts_expected', []))),
             ]) for p in cfg['paradigms']]
 
         inputs = (i for p in self.paradigms for i in p['inputs'])
-        self.inputs = map(SlotList.from_heads, inputs)
+        self.inputs = list(map(SlotList.from_heads, inputs))
 
         self.calculator = self.Calculator(cfg.get('insertion', 'cyclic'),
             self.inputs, self.rules, self.vis, self.readjustments)
@@ -68,7 +70,7 @@ class Analysis(object):
         log.info('\tcalculate..')
         self.worklog, self.outputs, self.spellouts = self.calculator()
 
-    def save(self):
+    def save(self, encoding='utf-8', newline=''):
         log.info('\tsave to %r..' % self.results)
 
         data = collections.OrderedDict([
@@ -84,7 +86,7 @@ class Analysis(object):
             ('worklog', self.worklog),
         ])
 
-        with open(self.results, 'wb') as fd:
+        with io.open(self.results, 'w', encoding=encoding, newline=newline) as fd:
             yaml.dump(data, fd)
 
 
@@ -96,14 +98,14 @@ class SlotList(types.FlowList):
         return cls(Slot([Head(h)]) for h in heads)
 
     def __str__(self):
-        return '%s' % ' '.join(imap(str, self))
+        return '%s' % ' '.join(map(str, self))
 
 
 class Slot(types.List):
     """Sequence of heads that have been fused."""
 
     def __str__(self):
-        return '#%s#' % ' '.join(imap(str, self))
+        return '#%s#' % ' '.join(map(str, self))
 
 
 class Head(features.FeatureSet):

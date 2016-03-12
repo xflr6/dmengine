@@ -8,6 +8,8 @@ Cyclic, Single, Flat, Once
 import operator
 import logging
 
+from ._compat import with_metaclass
+
 from . import vis, meta, tools
 
 __all__ = ['Insertion']
@@ -15,10 +17,8 @@ __all__ = ['Insertion']
 log = logging.getLogger()
 
 
-class Insertion(object):
+class Insertion(with_metaclass(meta.FactoryMeta('kind'), object)):
     """Insertion of vocabulary items into hierarchies of potentially fused heads."""
-
-    __metaclass__ = meta.FactoryMeta('kind')
 
     single = False
 

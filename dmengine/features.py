@@ -2,9 +2,11 @@
 
 """Sets and multisets of predefined feature values."""
 
-from itertools import chain, imap, groupby
+from itertools import chain, groupby
 import operator
 import collections
+
+from ._compat import PY2, string_types, apply, map, itervalues, with_metaclass
 
 import oset
 
@@ -27,10 +29,8 @@ class FeatureMeta(type):
         return super(FeatureMeta, self).__call__()
 
 
-class Feature(object):
+class Feature(with_metaclass(FeatureMeta, object)):
     """Hideable morphosyntactic feature."""
-
-    __metaclass__ = FeatureMeta
 
     __slots__ = ('visible',)
 
@@ -71,19 +71,17 @@ class FeatureSetMeta(type):
         if isinstance(values, self):
             return values.copy()
 
-        if isinstance(values, basestring):
+        if isinstance(values, string_types):
             values = values.replace(',', ' ').split()
-        keys = imap(self.system.get_key, values)
-        features = imap(apply, imap(self.system.mapping.__getitem__, keys))
+        keys = map(self.system.get_key, values)
+        features = map(apply, map(self.system.mapping.__getitem__, keys))
         features = sorted(features, key=sortkey)
         return super(FeatureSetMeta, self).__call__(features)
 
 
 @meta.serializable
-class FeatureSet(object):
+class FeatureSet(with_metaclass(FeatureSetMeta, object)):
     """Ordered set of morphosyntactic features."""
-
-    __metaclass__ = FeatureSetMeta
 
     features = oset.oset
 
@@ -93,7 +91,7 @@ class FeatureSet(object):
 
     @classmethod
     def from_features(cls, features):
-        return super(cls.__metaclass__, cls).__call__(features)
+        return super(cls.__class__, cls).__call__(features)
 
     @classmethod
     def from_featuresets(cls, featuresets):
@@ -110,7 +108,7 @@ class FeatureSet(object):
         return '%s(%r)' % (self.__class__.__name__, ' '.join(self.values))
 
     def __str__(self):
-        return ' '.join(imap(str, self.features))
+        return ' '.join(map(str, self.features))
 
     def __nonzero__(self):
         return bool(self.features)
@@ -183,13 +181,13 @@ class FeatureBag(FeatureSet):
     features = list
 
     def issubset(self, other):
-        return all(imap(other.features.__contains__, self.features))
+        return all(map(other.features.__contains__, self.features))
 
     def issubset_visible(self, other):
-        return all(imap(other.visible.__contains__, self.features))
+        return all(map(other.visible.__contains__, self.features))
 
     def hascommon(self, other):
-        return any(imap(other.features.__contains__, self.features))
+        return any(map(other.features.__contains__, self.features))
 
     def add(self, other):
         self._clearlazy()
@@ -243,7 +241,7 @@ class FeatureSystem(object):
             ('category', f.category),
             ('specificity', f.specificity),
             ('name', f.name)])
-            for f in self.mapping.itervalues()]
+            for f in itervalues(self.mapping)]
         return dumper.represent_sequence('tag:yaml.org,2002:seq', result)
 
     def __init__(self, features_kwargs=(), always_bag=False):
@@ -261,10 +259,10 @@ class FeatureSystem(object):
             raise ValueError('%r no uniqueness.')
 
         self.specificities = sorted(set(f.specificity
-            for f in self.mapping.itervalues()), reverse=True)
+            for f in itervalues(self.mapping)), reverse=True)
 
         self.categories = tools.uniqued(f.category
-            for f in self.mapping.itervalues())
+            for f in itervalues(self.mapping))
 
         class FeatureSet(self.FeatureSet):
             system = self
@@ -287,16 +285,19 @@ class FeatureSystem(object):
         return len(self.mapping)
 
     def __iter__(self):
-        return self.mapping.itervalues()
+        return itervalues(self.mapping)
 
     def __getitem__(self, index):
-        return self.mapping.values()[index]
+        return list(self.mapping.values())[index]
+
+    _tdrop = ' ,;'
+    _trans = (None, _tdrop) if PY2 else (str.maketrans('', '', _tdrop),)
 
     @staticmethod
-    def create_value(value):
+    def create_value(value, _trans=_trans):
         if isinstance(value, int):
             return '%+d' % value
-        return str(value).translate(None, ' ,;')
+        return str(value).translate(*_trans)
 
     @staticmethod
     def get_key(value):

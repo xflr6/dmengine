@@ -1,6 +1,6 @@
 # report.py
 
-import codecs
+import io
 import string
 import logging
 
@@ -25,7 +25,7 @@ class Report(object):
 
     template = tools.current_path('template.tex')
 
-    def __init__(self, analysis, filename=None, pdfname=None):
+    def __init__(self, analysis, filename=None, pdfname=None, encoding='utf-8'):
         self.analysis = analysis
         if filename is None:
             filename = tools.swapext(analysis, 'tex')
@@ -36,7 +36,7 @@ class Report(object):
 
         log.info('%r' % self)
 
-        with open(self.analysis, 'rb') as fd:
+        with io.open(self.analysis, encoding=encoding) as fd:
             analysis = yaml.safe_load(fd)
 
         log.info('\tcreate..')
@@ -62,15 +62,15 @@ class Report(object):
     def __repr__(self):
         return '%s(%r)' % (self.__class__.__name__, self.analysis)
 
-    def save(self):
+    def save(self, encoding='utf-8', newline=''):
         log.info('\tsave to %r..' % self.filename)
-        with codecs.open(self.template, 'rU', 'utf-8') as fd:
+        with io.open(self.template, encoding=encoding) as fd:
             template = fd.read()
 
         template = string.Template(template)
         document = template.safe_substitute(self.sections)
 
-        with codecs.open(self.filename, 'w', 'utf-8') as fd:
+        with io.open(self.filename, 'w', encoding=encoding, newline=newline) as fd:
             fd.write(document)
 
     def render(self, view=False):

@@ -1,6 +1,6 @@
 # paradigms.py
 
-from itertools import izip
+from .._compat import range, map, zip
 
 from .tools import grouper
 from .common import tabular
@@ -15,7 +15,7 @@ def is_transitive(paradigm):
 
 
 def intrans_paradigm(headers, cells, center=False):
-    table = zip(headers[0], cells)
+    table = list(zip(headers[0], cells))
     return tabular(table, col_headings=False, cnt_table=center)
 
 
@@ -24,7 +24,7 @@ def trans_paradigm(headers, cells, caption='', center=False):
     ncols = len(hcols)
     table = [[caption] + hcols]
     table.extend([head] + list(row)
-        for head, row in izip(hrows, grouper(ncols, cells)))
+        for head, row in zip(hrows, grouper(ncols, cells)))
     return tabular(table, cnt_table=center)
 
 
@@ -37,8 +37,8 @@ def collumns(cells, n_cols, n_rows):
 def folded_paradigm(headers, cells, center=False):
     r_headers, c_headers = headers
     n_rows, n_cols = map(len, headers)
-    tabs = (tabular([['', h]] + zip(r_headers, col), cnt_table=center)
-        for h, col in izip(c_headers, collumns(cells, n_rows, n_cols)))
+    tabs = (tabular([['', h]] + list(zip(r_headers, col)), cnt_table=center)
+        for h, col in zip(c_headers, collumns(cells, n_rows, n_cols)))
     return '\n'.join(tabs)
 
 
@@ -57,7 +57,7 @@ def paradigms(paradigms, worklog):
         para_func = trans_paradigm if is_transitive(paradigm) else intrans_paradigm
         tabs.append('\\subsection{%s}\n' % paradigm['name'])
         tabs.append(para_func(paradigm['headers'],
-            map(render_exponent, spellouts)))
+            list(map(render_exponent, spellouts))))
     return ''.join(tabs)
 
 
@@ -71,7 +71,7 @@ def input_paradigms(paradigms):
         tab = ['\\subsection{%s}\n' % paradigm['name']]
         para_func = folded_paradigm if is_transitive(paradigm) else intrans_paradigm
         tab.append(para_func(paradigm['headers'],
-            map(trans_inp, paradigm['inputs']), center=True))
+            list(map(trans_inp, paradigm['inputs'])), center=True))
         tabs.append(''.join(tab))
     return ''.join(tabs)
 

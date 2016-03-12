@@ -2,8 +2,9 @@
 
 """Prefix, Stem, Suffix."""
 
-from itertools import imap
 import operator
+
+from ._compat import text_type, map, with_metaclass, py3_unicode_to_str
 
 from . import meta, types
 
@@ -40,16 +41,15 @@ class ExponentMeta(type):
 
 
 @meta.serializable
-class Exponent(object):
+@py3_unicode_to_str
+class Exponent(with_metaclass(ExponentMeta, object)):
     """Prefix, stem, and suffix identified by value hyphen-position."""
-
-    __metaclass__ = ExponentMeta
 
     kind = None
 
     @staticmethod
     def _multi_representer(dumper, self):
-        return dumper.represent_scalar('tag:yaml.org,2002:str', self.value)
+        return dumper.represent_scalar('tag:yaml.org,2002:str', text_type(self.value))
 
     def __init__(self, value, form):
         self.value = value
@@ -69,7 +69,7 @@ class Exponent(object):
         return u'/%s/' % self.value
 
     def __str__(self):
-        return unicode(self).encode('ascii', 'backslashreplace')
+        return text_type(self).encode('ascii', 'backslashreplace')
 
     def __eq__(self, other):
         return (isinstance(other, Exponent) and
@@ -85,7 +85,7 @@ class ExponentList(types.List):
     sortkey = operator.attrgetter('_sortslot')
 
     def __str__(self):
-        return ' '.join(imap(str, self))
+        return ' '.join(map(str, self))
 
     @property
     def spellout(self):

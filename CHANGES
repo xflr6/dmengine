@@ -2,8 +2,10 @@ dmengine Changelog
 ==================
 
 
-Version 0.1.5 (in development)
-------------------------------
+Version 0.2 (in development)
+----------------------------
+
+Added Python 3 support.
 
 More detailed --version information.
 

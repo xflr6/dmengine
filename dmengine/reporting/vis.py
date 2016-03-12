@@ -1,7 +1,8 @@
 # vis.py
 
 import re
-from itertools import izip
+
+from .._compat import zip
 
 from .examples import render_example
 from .features import render_features
@@ -26,7 +27,7 @@ def render_vi(vi, tmpl=VI):
 def render_vis(vis):
     example_refs = (render_example(render_vi(vi), labelize=True)
         for vi in vis)
-    examples, refs = izip(*example_refs)
-    for vi, ref in izip(vis, refs):
+    examples, refs = zip(*example_refs)
+    for vi, ref in zip(vis, refs):
         vi['ref'] = ref
     return ''.join(examples)

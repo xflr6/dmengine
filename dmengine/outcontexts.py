@@ -9,18 +9,18 @@ FeaturesContext
     ThisFeatures, LeftFeatures, RightFeatures, OtherFeatures
 """
 
-from itertools import chain, imap
+from itertools import chain
 import collections
+
+from ._compat import map, with_metaclass
 
 from . import exponents, features, meta, types
 
 __all__ = ['ViContext', 'ViContexts']
 
 
-class ViContext(object):
+class ViContext(with_metaclass(meta.FactoryMeta('scope', collections.OrderedDict), object)):
     """Context matching vis under defined conditions."""
-
-    __metaclass__ = meta.FactoryMeta('scope', collections.OrderedDict)
 
     def match(self, vi, left_context, right_context):
         raise NotImplementedError
@@ -32,20 +32,22 @@ class ViContexts(types.Instances):
     new_item = ViContext
 
     def __init__(self, **kwcontexts):
-        scopes = self.new_item.subclasses.keys()
+        scopes = iter(self.new_item.subclasses)
         items = (self.new_item(s, kwcontexts[s])
             for s in scopes if s in kwcontexts)
         super(types.Instances, self).__init__(items)
 
-    def iteritems(self):
+    def items(self):
         return ((c.scope, c.target) for c in self)
+
+    iteritems = items
 
     def _kwstr(self, plain=False):
         ctx = ', '.join(c._kwstr() for c in self)
         return ctx if plain else ', %s' % ctx if ctx else ''
 
     def __str__(self):
-        ctx = ' & '.join(imap(str, self))
+        ctx = ' & '.join(map(str, self))
         return ' / %s' % ctx if ctx else ''
 
 

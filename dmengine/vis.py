@@ -2,9 +2,11 @@
 
 """Vocabulary items: exponent, features, contexts."""
 
-from itertools import imap, ifilter, groupby
+from itertools import groupby
 import operator
 import collections
+
+from ._compat import map, filter, iteritems, text_type, py3_unicode_to_str
 
 from . import exponents, features, contexts, meta, types, tools
 
@@ -12,6 +14,7 @@ __all__ = ['VocabularyItem', 'VocabularyItems', 'ViList']
 
 
 @meta.serializable
+@py3_unicode_to_str
 class VocabularyItem(object):
     """Holds the exponent, its substantial features, and other contexts for insertion."""
 
@@ -25,8 +28,8 @@ class VocabularyItem(object):
     def _representer(dumper, self):
         result = collections.OrderedDict([
             ('exponent', self.exponent), ('features', self.features)])
-        result.update(self.contexts.iteritems())
-        return dumper.represent_mapping('tag:yaml.org,2002:map', result.iteritems())
+        result.update(iteritems(self.contexts))
+        return dumper.represent_mapping('tag:yaml.org,2002:map', iteritems(result))
 
     def __init__(self, exponent, features, **kwcontexts):
         self.exponent = self.Exponent(exponent)
@@ -52,15 +55,15 @@ class VocabularyItem(object):
         return u'%s <-> %s%s' % (self.exponent, self.features, self.contexts)
 
     def __str__(self):
-        return unicode(self).encode('ascii', 'backslashreplace')
+        return text_type(self).encode('ascii', 'backslashreplace')
 
     def match(self, head, left_context, right_context, up_context):
         matching = operator.methodcaller('match', head, left_context, right_context, up_context)
-        return self.features.issubset_visible(head) and all(imap(matching, self.contexts))
+        return self.features.issubset_visible(head) and all(map(matching, self.contexts))
 
     @meta.lazyproperty
     def specificity(self):
-        mueller_specificity = tuple(imap(len, self.features.by_specificity))
+        mueller_specificity = tuple(map(len, self.features.by_specificity))
         return mueller_specificity + (sum(len(c.features) for c in self.contexts),)
 
 
@@ -70,7 +73,7 @@ class VocabularyItems(types.Instances):
     new_item = VocabularyItem
 
     def filter(self, predicate=None):
-        return ViList(ifilter(predicate, self) if predicate is not None else self)
+        return ViList(filter(predicate, self) if predicate is not None else self)
 
     def matching(self, head, left_context, right_context, up_context):
         matching = operator.methodcaller('match', head, left_context, right_context, up_context)
@@ -80,7 +83,7 @@ class VocabularyItems(types.Instances):
     def matching_(self, slot, left_context, right_context):
         return Matching((head, vi)
             for head, up_context in tools.curr_other(slot)
-            for vi in ifilter(
+            for vi in filter(
                 operator.methodcaller('match', head, left_context, right_context, up_context),
                 self))
 
@@ -93,7 +96,7 @@ class ViList(types.List):
     sortkey = operator.attrgetter('specificity')
 
     def __str__(self):
-        return ' '.join(imap(str, (vi.exponent for vi in self)))
+        return ' '.join(map(str, (vi.exponent for vi in self)))
 
     def sort(self, key=sortkey, reverse=True):
         super(ViList, self).sort(key=key, reverse=reverse)

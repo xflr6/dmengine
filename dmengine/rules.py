@@ -5,9 +5,11 @@
 Impoverishment, Obliteration, Fission, Fusion, CopyHead, AddFeatures, Metathesis
 """
 
-from itertools import chain, imap, islice
+from itertools import chain, islice
 import operator
 import collections
+
+from ._compat import map, iteritems, with_metaclass
 
 from . import features, contexts, meta, types, tools
 
@@ -15,10 +17,8 @@ __all__ = ['Rule', 'Rules']
 
 
 @meta.serializable
-class Rule(object):
+class Rule(with_metaclass(meta.FactoryMeta('kind'), object)):
     """Abtstract base class and factory for operations on a sequence of slots containing heads."""
-
-    __metaclass__ = meta.FactoryMeta('kind')
 
     Features = features.FeatureSet
     Contexts = contexts.Contexts
@@ -29,8 +29,8 @@ class Rule(object):
         fields = ('features', 'this_head', 'first_head', 'second_head', 'into_first')
         result.update((f, self.__dict__[f]) for f in fields if f in self.__dict__)
         if 'contexts' in self.__dict__:
-            result.update(self.contexts.iteritems())
-        return dumper.represent_mapping('tag:yaml.org,2002:map', result.iteritems())
+            result.update(iteritems(self.contexts))
+        return dumper.represent_mapping('tag:yaml.org,2002:map', iteritems(result))
 
     @staticmethod
     def loop_heads(slots):
@@ -50,7 +50,7 @@ class Rule(object):
         for (i_s, (slot, left, right)) in enumerate(tools.curr_pred_succ(slots)):
             for (i_h, (head, up)) in enumerate(tools.curr_other(slot)):
                 matching = operator.methodcaller('match', head, left, right, up)
-                if all(imap(matching, self.contexts)):
+                if all(map(matching, self.contexts)):
                     yield i_s, i_h, slot, head
 
     def __call__(self, slots):
