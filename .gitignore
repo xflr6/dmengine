@@ -8,6 +8,7 @@ __pycache__/
 /*.egg
 /.eggs/
 
+/.venv/
 /.coverage
 /cover/
 /htmlcov/

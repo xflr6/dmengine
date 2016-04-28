@@ -200,7 +200,7 @@ License
 .. _DM: http://www.ling.upenn.edu/~rnoyer/dm/
 
 .. _YAML: http://en.wikipedia.org/wiki/YAML
-.. _pip: http://pip.readthedocs.org
+.. _pip: http://pip.readthedocs.io
 .. _PyYAML: http://pypi.python.org/pypi/PyYAML
 .. _oset: http://pypi.python.org/pypi/oset
 .. _TeX Live: https://www.tug.org/texlive/
