@@ -5,7 +5,7 @@ dmengine Changelog
 Version 0.2.1 (in development)
 ------------------------------
 
-
+Fixed PDF rendering on Linux under Python 3.
 
 
 Version 0.2

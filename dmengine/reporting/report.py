@@ -6,7 +6,7 @@ import logging
 
 import yaml
 
-from . import pdflatex, tools
+from . import backend, tools
 
 from .features import render_featureconfig
 from .vis import render_vis
@@ -75,4 +75,4 @@ class Report(object):
 
     def render(self, view=False):
         log.info('\trender to %r..' % self.pdfname)
-        pdflatex.render(self.filename, view=view)
+        backend.compile(self.filename, view=view)
