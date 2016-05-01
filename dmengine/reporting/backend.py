@@ -19,7 +19,7 @@ def no_compile(filename, view=False):
 
 def pdflatex_compile(filename, view=False):
     """Compile LaTeX file by running pdflatex three times."""
-    pdflatex = ['pdflatex', '-pdf', '-interaction=batchmode', '-halt-on-error']
+    pdflatex = ['pdflatex', '-output-format=pdf', '-interaction=batchmode', '-halt-on-error']
     compile_dir = os.path.dirname(filename)
     if compile_dir:
         pdflatex.append('-output-directory=%s' % compile_dir)
