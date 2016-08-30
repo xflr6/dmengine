@@ -157,37 +157,37 @@ paradigms:
   - [ [V], [Nom, -1, -2, +3, +pl], [Akk, -1, -2, +3, +pl] ]
   spellouts_expected:
   - ich-lieb-e-mich
-  - ich-lieb-e-und
+  - ich-lieb-e-uns
   - ich-lieb-e-dich
   - ich-lieb-e-euch
   - ich-lieb-e-ihn
   - ich-lieb-e-sie
   - wir-lieb-en-mich
-  - wir-lieb-en-und
+  - wir-lieb-en-uns
   - wir-lieb-en-dich
   - wir-lieb-en-euch
   - wir-lieb-en-ihn
   - wir-lieb-en-sie
   - du-lieb-st-mich
-  - du-lieb-st-und
+  - du-lieb-st-uns
   - du-lieb-st-dich
   - du-lieb-st-euch
   - du-lieb-st-ihn
   - du-lieb-st-sie
   - ihr-lieb-t-mich
-  - ihr-lieb-t-und
+  - ihr-lieb-t-uns
   - ihr-lieb-t-dich
   - ihr-lieb-t-euch
   - ihr-lieb-t-ihn
   - ihr-lieb-t-sie
   - er-lieb-t-mich
-  - er-lieb-t-und
+  - er-lieb-t-uns
   - er-lieb-t-dich
   - er-lieb-t-euch
   - er-lieb-t-ihn
   - er-lieb-t-sie
   - sie-lieb-en-mich
-  - sie-lieb-en-und
+  - sie-lieb-en-uns
   - sie-lieb-en-dich
   - sie-lieb-en-euch
   - sie-lieb-en-ihn
