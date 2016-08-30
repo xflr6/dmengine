@@ -25,7 +25,7 @@ def pdflatex_compile(filename, view=False):
         pdflatex.append('-output-directory=%s' % compile_dir)
     pdflatex.append(filename)
 
-    for i in range(3):
+    for _ in range(3):
         subprocess.call(pdflatex)
     if view:
         open_viewer(tools.swapext(filename, 'pdf'))
