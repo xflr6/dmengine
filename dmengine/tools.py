@@ -1,8 +1,9 @@
 # tools.py
 
 import os
-import errno
 from collections import Sequence
+
+from . import _compat
 
 __all__ = ['uniqued', 'curr_pred_succ', 'curr_other', 'derive_filename']
 
@@ -41,13 +42,7 @@ def derive_filename(filename, suffix=None, extension=None, directory=None):
     filename = '%s%s%s' % (name, delim, ext)
 
     if directory:
-        try:
-            os.makedirs(directory, 0o777)
-        except OSError as e:
-            if e.errno == errno.EEXIST and os.path.isdir(directory):
-                pass
-            else:
-                raise
+        _compat.makedirs(directory, exist_ok=True)
         filename = os.path.join(directory, filename)
 
     return filename

@@ -1,5 +1,6 @@
 # _compat.py - Python 2/3 compatibility
 
+import os
 import sys
 
 PY2 = sys.version_info[0] == 2
@@ -25,6 +26,13 @@ if PY2:  # pragma: no cover
     def py3_unicode_to_str(cls):
         return cls
 
+    def makedirs(name, mode=0o777, exist_ok=False):
+        try:
+            os.makedirs(name, mode)
+        except OSError:
+            if not exist_ok or not os.path.isdir(name):
+                raise
+
 
 else:  # pragma: no cover
     text_type = string_types = str
@@ -47,6 +55,8 @@ else:  # pragma: no cover
         cls.__str__ = cls.__unicode__
         del cls.__unicode__
         return cls
+
+    makedirs = os.makedirs
 
 
 def with_metaclass(meta, *bases):
