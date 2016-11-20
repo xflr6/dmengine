@@ -2,8 +2,8 @@
 oset==0.1.3
 PyYAML==3.12
 # dependencies for testing and building
+nose
 coverage
 flake8
-nose
 pep8-naming
 wheel
