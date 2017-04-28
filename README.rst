@@ -1,7 +1,7 @@
 dmengine
 ========
 
-|PyPI version| |License| |Supported Python| |Format| |Downloads|
+|PyPI version| |License| |Supported Python| |Format|
 
 DM-engine is a Python implementation of **Distributed Morphology** (DM_).
 
@@ -22,10 +22,10 @@ that can directly be compiled into a PDF file.
 Links
 -----
 
-- GitHub: http://github.com/xflr6/dmengine
-- PyPI: http://pypi.python.org/pypi/dmengine
-- Issue Tracker: http://github.com/xflr6/dmengine/issues
-- Download: http://pypi.python.org/pypi/dmengine#downloads
+- GitHub: https://github.com/xflr6/dmengine
+- PyPI: https://pypi.python.org/pypi/dmengine
+- Issue Tracker: https://github.com/xflr6/dmengine/issues
+- Download: https://pypi.python.org/pypi/dmengine#downloads
 
 
 Installation
@@ -197,18 +197,18 @@ License
 ``dmengine`` is distributed under the `MIT license`_.
 
 
-.. _DM: http://www.ling.upenn.edu/~rnoyer/dm/
+.. _DM: https://www.ling.upenn.edu/~rnoyer/dm/
 
-.. _YAML: http://en.wikipedia.org/wiki/YAML
-.. _pip: http://pip.readthedocs.io
-.. _PyYAML: http://pypi.python.org/pypi/PyYAML
-.. _oset: http://pypi.python.org/pypi/oset
+.. _YAML: https://en.wikipedia.org/wiki/YAML
+.. _pip: https://pip.readthedocs.io
+.. _PyYAML: https://pypi.python.org/pypi/PyYAML
+.. _oset: https://pypi.python.org/pypi/oset
 .. _TeX Live: https://www.tug.org/texlive/
-.. _MikTeX: http://miktex.org
+.. _MikTeX: https://miktex.org
 
-.. _web-based engines: http://www.cs.uky.edu/~raphael/linguistics/claw.html
+.. _web-based engines: https://www.cs.uky.edu/~raphael/linguistics/claw.html
 
-.. _MIT license: http://opensource.org/licenses/MIT
+.. _MIT license: https://opensource.org/licenses/MIT
 
 
 .. |--| unicode:: U+2013
