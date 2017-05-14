@@ -1,6 +1,6 @@
 include README.rst LICENSE CHANGES
 include requirements.txt
 include run-tests.py try-examples.py
-recursive-include docs *.png
-recursive-include examples *.yaml
 recursive-include tests *.py
+recursive-include examples *.yaml
+recursive-include docs *.png

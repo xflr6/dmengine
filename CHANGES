@@ -1,11 +1,17 @@
-dmengine Changelog
-==================
+Changelog
+=========
 
 
-Version 0.2.2 (in development)
-------------------------------
+Version 0.2.2
+-------------
 
+Fixed typo in expected spellouts of german.yaml example.
 
+Ported tests from nose/unittest to pytest.
+
+Use os.makedirs(.., exist_ok=True) on Python 3.
+
+Update meta data, tag Python 3.6 support.
 
 
 Version 0.2.1
