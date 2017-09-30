@@ -11,7 +11,7 @@ Drop Python 3.3 support.
 Version 0.2.3
 -------------
 
-Tag wheel as universal.
+Tag wheel as universal, include license file.
 
 
 Version 0.2.2
