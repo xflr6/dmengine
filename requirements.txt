@@ -4,7 +4,7 @@ PyYAML==3.12
 # dependencies for testing and building
 pytest>=3.1
 pytest-cov
-coverage
 flake8
 pep8-naming
 wheel
+twine
