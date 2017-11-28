@@ -12,14 +12,19 @@ setup(
     license='MIT',
     url='https://github.com/xflr6/dmengine',
     packages=find_packages(),
+    entry_points={'console_scripts': ['dmengine=dmengine.__main__:main']},
     package_data={'dmengine': ['reporting/template.tex']},
     zip_safe=False,
-    entry_points={'console_scripts': ['dmengine=dmengine.__main__:main']},
+    platforms='any',
+    python_requires='>=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*',
     install_requires=[
         'oset',
         'PyYAML',
     ],
-    platforms='any',
+    extras_require={
+        'dev': ['flake8', 'pep8-naming', 'wheel', 'twine'],
+        'test': ['pytest>=3.3', 'pytest-cov'],
+    },
     long_description=open('README.rst').read(),
     classifiers=[
         'Development Status :: 4 - Beta',
