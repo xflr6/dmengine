@@ -12,7 +12,7 @@ __all__ = ['Analysis', 'Report', 'calculate', 'texify']
 __title__ = 'dmengine'
 __version__ = '0.2.4.dev0'
 __author__ = 'Sebastian Bank <sebastian.bank@uni-leipzig.de>'
-__license__ = 'MIT, see LICENSE'
+__license__ = 'MIT, see LICENSE.txt'
 __copyright__ = 'Copyright (c) 2011-2017 Sebastian Bank'
 
 logging.basicConfig(format='%(message)s', level=logging.INFO)

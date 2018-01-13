@@ -2,6 +2,14 @@ Changelog
 =========
 
 
+TODO:
+
+- check expected spellout for each input
+- delete_matching: yes/no
+- delete_other: all, given, none
+- set_delete: global, slot, vi
+
+
 Version 0.2.4 (in development)
 ------------------------------
 

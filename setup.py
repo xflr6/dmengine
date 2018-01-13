@@ -1,5 +1,6 @@
 # setup.py
 
+import io
 from setuptools import setup, find_packages
 
 setup(
@@ -25,7 +26,7 @@ setup(
         'dev': ['flake8', 'pep8-naming', 'wheel', 'twine'],
         'test': ['pytest>=3.3', 'pytest-cov'],
     },
-    long_description=open('README.rst').read(),
+    long_description=io.open('README.rst', encoding='utf-8').read(),
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Console',
