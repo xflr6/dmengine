@@ -55,7 +55,7 @@ class Analysis(object):
             ('headers', types.FlowList(p['headers'])),
             ('inputs', list(map(types.FlowList, p['inputs']))),
             ('spellouts_expected', types.List(p.get('spellouts_expected', []))),
-            ]) for p in cfg['paradigms']]
+        ]) for p in cfg['paradigms']]
 
         inputs = (i for p in self.paradigms for i in p['inputs'])
         self.inputs = list(map(SlotList.from_heads, inputs))

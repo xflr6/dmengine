@@ -29,10 +29,7 @@ def swapext(filename, extension, delimiter='.'):
 def chdir(path):
     """Change the current working directory, restore on context exit."""
     if not path:
-        try:
-            yield
-        finally:
-            pass
+        yield
         return
 
     oldwd = os.getcwd()
