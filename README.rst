@@ -23,9 +23,9 @@ Links
 -----
 
 - GitHub: https://github.com/xflr6/dmengine
-- PyPI: https://pypi.python.org/pypi/dmengine
+- PyPI: https://pypi.org/project/dmengine/
 - Issue Tracker: https://github.com/xflr6/dmengine/issues
-- Download: https://pypi.python.org/pypi/dmengine#downloads
+- Download: https://pypi.org/project/dmengine/#files
 
 
 Installation
@@ -201,8 +201,8 @@ License
 
 .. _YAML: https://en.wikipedia.org/wiki/YAML
 .. _pip: https://pip.readthedocs.io
-.. _PyYAML: https://pypi.python.org/pypi/PyYAML
-.. _oset: https://pypi.python.org/pypi/oset
+.. _PyYAML: https://pypi.org/project/PyYAML/
+.. _oset: https://pypi.org/project/oset/
 .. _TeX Live: https://www.tug.org/texlive/
 .. _MikTeX: https://miktex.org
 
@@ -215,17 +215,14 @@ License
 
 
 .. |PyPI version| image:: https://img.shields.io/pypi/v/dmengine.svg
-    :target: https://pypi.python.org/pypi/dmengine
+    :target: https://pypi.org/project/dmengine/
     :alt: Latest PyPI Version
 .. |License| image:: https://img.shields.io/pypi/l/dmengine.svg
-    :target: https://pypi.python.org/pypi/dmengine
+    :target: https://pypi.org/project/dmengine/
     :alt: License
 .. |Supported Python| image:: https://img.shields.io/pypi/pyversions/dmengine.svg
-    :target: https://pypi.python.org/pypi/dmengine
+    :target: https://pypi.org/project/dmengine/
     :alt: Supported Python Versions
 .. |Format| image:: https://img.shields.io/pypi/format/dmengine.svg
-    :target: https://pypi.python.org/pypi/dmengine
+    :target: https://pypi.org/project/dmengine/
     :alt: Format
-.. |Downloads| image:: https://img.shields.io/pypi/dm/dmengine.svg
-    :target: https://pypi.python.org/pypi/dmengine
-    :alt: Downloads
