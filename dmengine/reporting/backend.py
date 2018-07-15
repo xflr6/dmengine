@@ -26,7 +26,7 @@ def pdflatex_compile(filename, view=False):
     pdflatex.append(filename)
 
     for _ in range(3):
-        subprocess.call(pdflatex)
+        subprocess.check_call(pdflatex)
     if view:
         open_viewer(tools.swapext(filename, 'pdf'))
 
@@ -41,7 +41,7 @@ def latexmk_compile(filename, view=False):
     latexmk.append(filename)
 
     with tools.chdir(compile_dir):
-        subprocess.call(latexmk)
+        subprocess.check_call(latexmk)
 
 
 def texify_compile(filename, view=False):
@@ -54,7 +54,7 @@ def texify_compile(filename, view=False):
     texify.append(filename)
 
     with tools.chdir(compile_dir):
-        subprocess.call(texify)
+        subprocess.check_call(texify)
 
 
 @apply

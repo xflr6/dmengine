@@ -13,6 +13,8 @@ TODO:
 Version 0.2.5 (in development)
 ------------------------------
 
+Raise on non-empty exit code when compiling LaTeX report.
+
 Tag Python 3.7 support.
 
 
