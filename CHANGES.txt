@@ -10,8 +10,8 @@ TODO:
 - set_delete: global, slot, vi
 
 
-Version 0.2.5 (in development)
-------------------------------
+Version 0.2.5
+-------------
 
 Raise on non-empty exit code when compiling LaTeX report.
 
