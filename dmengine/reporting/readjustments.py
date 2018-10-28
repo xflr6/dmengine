@@ -45,7 +45,7 @@ def metathesis(read, tmpl=translate('%s...%s-> %s...%s')):
 
 
 @register
-def transform(read, tmpl=translate('%s $\sim$> %s%s')):
+def transform(read, tmpl=translate('%s $\\sim$> %s%s')):
     search = read['search']
     replace = read['replace'].replace('\\', '\\textbackslash')
     contexts = render_expcontexts(read)
