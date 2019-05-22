@@ -38,7 +38,7 @@ def folded_paradigm(headers, cells, center=False):
     r_headers, c_headers = headers
     n_rows, n_cols = map(len, headers)
     tabs = (tabular([['', h]] + list(zip(r_headers, col)), cnt_table=center)
-        for h, col in zip(c_headers, collumns(cells, n_rows, n_cols)))
+            for h, col in zip(c_headers, collumns(cells, n_rows, n_cols)))
     return '\n'.join(tabs)
 
 
@@ -57,7 +57,7 @@ def paradigms(paradigms, worklog):
         para_func = trans_paradigm if is_transitive(paradigm) else intrans_paradigm
         tabs.append('\\subsection{%s}\n' % paradigm['name'])
         tabs.append(para_func(paradigm['headers'],
-            list(map(render_exponent, spellouts))))
+                              list(map(render_exponent, spellouts))))
     return ''.join(tabs)
 
 
@@ -71,7 +71,8 @@ def input_paradigms(paradigms):
         tab = ['\\subsection{%s}\n' % paradigm['name']]
         para_func = folded_paradigm if is_transitive(paradigm) else intrans_paradigm
         tab.append(para_func(paradigm['headers'],
-            list(map(trans_inp, paradigm['inputs'])), center=True))
+                             list(map(trans_inp, paradigm['inputs'])),
+                             center=True))
         tabs.append(''.join(tab))
     return ''.join(tabs)
 
@@ -82,6 +83,7 @@ def input_paradigms_processed(paradigms, worklog):
         tab = ['\\subsection{%s}\n' % paradigm['name']]
         para_func = folded_paradigm if is_transitive(paradigm) else intrans_paradigm
         tab.append(para_func(paradigm['headers'],
-            [render_slotlist(log['input_pst']) for log in logs], center=True))
+                             [render_slotlist(log['input_pst']) for log in logs],
+                             center=True))
         tabs.append(''.join(tab))
     return ''.join(tabs)

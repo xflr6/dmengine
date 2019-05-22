@@ -147,14 +147,14 @@ class FeatureSet(with_metaclass(FeatureSetMeta, object)):
     def by_category(self, groupkey=operator.attrgetter('category')):
         features = sorted(self.features, key=groupkey)
         mapping = {k: [f.value for f in g]
-            for k, g in groupby(features, groupkey)}
+                   for k, g in groupby(features, groupkey)}
         return [mapping.get(c, []) for c in self.__class__.system.categories]
 
     @property
     def by_specificity(self, groupkey=operator.attrgetter('specificity')):
         features = sorted(self.features, key=groupkey)
         mapping = {k: [f.value for f in g]
-            for k, g in groupby(features, groupkey)}
+                   for k, g in groupby(features, groupkey)}
         return [mapping.get(c, []) for c in self.__class__.system.specificities]
 
     def add(self, other):
@@ -236,12 +236,11 @@ class FeatureSystem(object):
 
     @staticmethod
     def _representer(dumper, self):
-        result = [collections.OrderedDict([
-            ('value', f.value),
-            ('category', f.category),
-            ('specificity', f.specificity),
-            ('name', f.name)])
-            for f in itervalues(self.mapping)]
+        result = [collections.OrderedDict([('value', f.value),
+                                           ('category', f.category),
+                                           ('specificity', f.specificity),
+                                           ('name', f.name)])
+                  for f in itervalues(self.mapping)]
         return dumper.represent_sequence('tag:yaml.org,2002:seq', result)
 
     def __init__(self, features_kwargs=(), always_bag=False):

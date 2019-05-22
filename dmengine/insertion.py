@@ -69,10 +69,8 @@ class Cyclic(Insertion):
             while True:
                 matching = self.vis.filter(is_matching)
                 matching.sort()
-                head_matches.append({
-                    'head': head.values_visible,
-                    'matches': matching
-                })
+                head_matches.append({'head': head.values_visible,
+                                     'matches': matching})
 
                 if not matching:
                     log.debug(' %s inserted %s no more matches'

@@ -21,7 +21,8 @@ class List(with_metaclass(meta.EmptySlotsMeta, list)):
         super(List, self).__init__(items)
 
     def __repr__(self):
-        return '%s(%s)' % (self.__class__.__name__, super(List, self).__repr__())
+        return '%s(%s)' % (self.__class__.__name__,
+                           super(List, self).__repr__())
 
     def __getslice__(self, start, end):
         return self.__class__(super(List, self).__getslice__(start, end))
@@ -36,7 +37,8 @@ class FlowList(List):
 
     @staticmethod
     def _multi_representer(dumper, self):
-        return dumper.represent_sequence('tag:yaml.org,2002:seq', self, flow_style=True)
+        return dumper.represent_sequence('tag:yaml.org,2002:seq', self,
+                                         flow_style=True)
 
 
 class Instances(List):

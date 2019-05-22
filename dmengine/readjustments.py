@@ -86,7 +86,8 @@ class CopyExponent(Readjustment):
     kind = 'copy'
 
     def __str__(self):
-        return '%s -> %s %s%s' % (self.exponent, self.exponent, self.exponent, self.contexts)
+        return '%s -> %s %s%s' % (self.exponent, self.exponent, self.exponent,
+                                  self.contexts)
 
     def __call__(self, vis):
         for i, vi in self.all_contexts_and_exp_match(vis):
@@ -107,12 +108,12 @@ class MetatheseExponents(Readjustment):
     def __repr__(self):
         first = self.first_exponent.value
         second = self.second_exponent.value
-        return '%s(first_exponent=%r, second_exponent=%r)' % (self.__class__.__name__,
-            first, second)
+        tmpl = '%s(first_exponent=%r, second_exponent=%r)'
+        return tmpl % (self.__class__.__name__, first, second)
 
     def __str__(self):
         return '%s...%s-> %s...%s' % (self.first_exponent, self.second_exponent,
-            self.second_exponent, self.first_exponent)
+                                      self.second_exponent, self.first_exponent)
 
     def __call__(self, vis):
         fe, se = self.first_exponent, self.second_exponent
@@ -137,7 +138,8 @@ class TransformExponent(Readjustment):
     def __repr__(self):
         contexts = self.contexts._kwstr()
         return '%s(search=%r, replace=%r%s)' % (self.__class__.__name__,
-            self.search, self.replace, contexts)
+                                                self.search, self.replace,
+                                                contexts)
 
     def __str__(self):
         return '%s ~> %s%s' % (self.search, self.replace, self.contexts)

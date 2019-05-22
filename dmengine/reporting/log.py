@@ -81,10 +81,10 @@ def explist(exponents):
 
 def insertlist(slots):
     return '\\quad '.join(
-            ('\\#%s\\#' % ','.join(
+            '\\#%s\\#' % ','.join(
                 '%s %s' % (render_exponent(vi['exponent']), vi['ref'].rstrip())
-                for vi in slot))
-        for slot in slots)
+                for vi in slot)
+           for slot in slots)
 
 
 def vilist(vis):

@@ -165,7 +165,8 @@ class Fusion(Rule):
         second_head = str(self.second_head)
         into_first = '' if not self.into_first else ', into_first=False'
         return '%s(first_head=%r, second_head=%r%s)' % (self.__class__.__name__,
-            first_head, second_head, into_first)
+                                                        first_head, second_head,
+                                                        into_first)
 
     def __str__(self):
         tmpl = '[%s]...[%s] -> '
@@ -222,7 +223,8 @@ class AddFeatures(Rule):
     def __repr__(self):
         features = str(self.features)
         contexts = self.contexts._kwstr()
-        return '%s(features=%r%s)' % (self.__class__.__name__, features, contexts)
+        return '%s(features=%r%s)' % (self.__class__.__name__, features,
+                                      contexts)
 
     def __str__(self):
         return '[...] -> [...,%s]%s' % (self.features, self.contexts)
@@ -253,7 +255,7 @@ class Metathesis(Rule):
 
     def __str__(self):
         return '[%s]...[%s] -> [%s]...[%s]' % (self.first_head, self.second_head,
-            self.second_head, self.first_head)
+                                               self.second_head, self.first_head)
 
     def __call__(self, slots):
         for i_s, i_h, head, o_s, o_h, other_head in self.two_candidates(slots):

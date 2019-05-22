@@ -26,10 +26,11 @@ class VocabularyItem(object):
 
     @staticmethod
     def _representer(dumper, self):
-        result = collections.OrderedDict([
-            ('exponent', self.exponent), ('features', self.features)])
+        result = collections.OrderedDict([('exponent', self.exponent),
+                                          ('features', self.features)])
         result.update(iteritems(self.contexts))
-        return dumper.represent_mapping('tag:yaml.org,2002:map', iteritems(result))
+        return dumper.represent_mapping('tag:yaml.org,2002:map',
+                                        iteritems(result))
 
     def __init__(self, exponent, features, **kwcontexts):
         self.exponent = self.Exponent(exponent)
@@ -49,7 +50,7 @@ class VocabularyItem(object):
         features = str(self.features)
         contexts = self.contexts._kwstr()
         return '%s(exponent=%r, features=%r%s)' % (self.__class__.__name__,
-            exponent, features, contexts)
+                                                   exponent, features, contexts)
 
     def __unicode__(self):
         return u'%s <-> %s%s' % (self.exponent, self.features, self.contexts)
@@ -58,8 +59,11 @@ class VocabularyItem(object):
         return text_type(self).encode('ascii', 'backslashreplace')
 
     def match(self, head, left_context, right_context, up_context):
-        matching = operator.methodcaller('match', head, left_context, right_context, up_context)
-        return self.features.issubset_visible(head) and all(map(matching, self.contexts))
+        matching = operator.methodcaller('match', head,
+                                         left_context, right_context,
+                                         up_context)
+        return (self.features.issubset_visible(head)
+                and all(map(matching, self.contexts)))
 
     @meta.lazyproperty
     def specificity(self):
@@ -76,7 +80,9 @@ class VocabularyItems(types.Instances):
         return ViList(filter(predicate, self) if predicate is not None else self)
 
     def matching(self, head, left_context, right_context, up_context):
-        matching = operator.methodcaller('match', head, left_context, right_context, up_context)
+        matching = operator.methodcaller('match', head,
+                                         left_context, right_context,
+                                         up_context)
         return self.filter(matching)
 
     # TODO: finish this

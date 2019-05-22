@@ -14,7 +14,7 @@ def render_rules(rules):
     if not rules:
         return ''
     example_refs = (render_example(MAP[r['kind']](r), labelize=True)
-        for r in rules)
+                    for r in rules)
     examples, refs = zip(*example_refs)
     for r, ref in zip(rules, refs):
         r['ref'] = ref

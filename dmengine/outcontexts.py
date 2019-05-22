@@ -34,7 +34,7 @@ class ViContexts(types.Instances):
     def __init__(self, **kwcontexts):
         scopes = iter(self.new_item.subclasses)
         items = (self.new_item(s, kwcontexts[s])
-            for s in scopes if s in kwcontexts)
+                 for s in scopes if s in kwcontexts)
         super(types.Instances, self).__init__(items)
 
     def items(self):
@@ -67,7 +67,7 @@ class ExponentContext(ViContext):
     def __repr__(self):
         exponent = self.exponent.value
         return '%s(scope=%r, exponent=%r)' % (self.__class__.__base__.__name__,
-            self.scope, exponent)
+                                              self.scope, exponent)
 
 
 class ThisExponent(ExponentContext):
@@ -160,8 +160,8 @@ class LeftFeatures(FeaturesContext):
         return '[%s]__' % self.features
 
     def match(self, vi, left_context, right_context):
-        return (left_context and
-            self.features.issubset(left_context[-1].features))
+        return (left_context
+                and self.features.issubset(left_context[-1].features))
 
 
 class RightFeatures(FeaturesContext):
@@ -173,8 +173,8 @@ class RightFeatures(FeaturesContext):
         return '__[%s]' % self.features
 
     def match(self, vi, left_context, right_context):
-        return (right_context and
-            self.features.issubset(right_context[0].features))
+        return (right_context
+                and self.features.issubset(right_context[0].features))
 
 
 class OtherFeatures(FeaturesContext):

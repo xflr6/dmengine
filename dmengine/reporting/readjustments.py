@@ -13,7 +13,7 @@ def render_readjustments(readjustments):
     if not readjustments:
         return ''
     examples_refs = (render_example(MAP[r['kind']](r), labelize=True)
-        for r in readjustments)
+                     for r in readjustments)
     examples, refs = zip(*examples_refs)
     for r, ref in zip(readjustments, refs):
         r['ref'] = ref
@@ -41,7 +41,8 @@ def copy(read, tmpl=translate('%s -> %s %s%s')):
 def metathesis(read, tmpl=translate('%s...%s-> %s...%s')):
     first_exponent = read['first_exponent']
     second_exponent = read['second_exponent']
-    return tmpl % (first_exponent, second_exponent, second_exponent, first_exponent)
+    return tmpl % (first_exponent, second_exponent,
+                   second_exponent, first_exponent)
 
 
 @register

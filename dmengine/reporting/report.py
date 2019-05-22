@@ -50,12 +50,14 @@ class Report(object):
             'OUTPUTS': paradigms(analysis['paradigms'], analysis['worklog']),
             'INPUTS': input_paradigms(analysis['paradigms']),
             'INPUTS_PROCESSED': input_paradigms_processed(analysis['paradigms'],
-                analysis['worklog']),
+                                                          analysis['worklog']),
         }
 
         if analysis['insertion'] != 'flat':
             self.sections['LOG'] = render_log(analysis['paradigms'],
-                analysis['worklog'], analysis['rules'], analysis['readjustments'])
+                                              analysis['worklog'],
+                                              analysis['rules'],
+                                              analysis['readjustments'])
         else:
             self.sections['LOG'] = ''
 
