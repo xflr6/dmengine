@@ -14,7 +14,7 @@ __all__ = ['Exponent', 'ExponentList']
 class ExponentMeta(type):
     """Pick and verify Prefix/Stem/Suffix by hypen position in value."""
 
-    def __call__(self, value):
+    def __call__(self, value):  # noqa: N804
         if isinstance(value, self):
             return value
 

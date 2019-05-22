@@ -125,7 +125,7 @@ class Matching(types.StarInstances):
 
     new_item = collections.namedtuple('Match', ['head', 'vi'])
 
-    sortkey = lambda m: m.vi.specificity
+    sortkey = lambda m: m.vi.specificity  # noqa: E731
 
     def sort(self, key=sortkey, reverse=True):
         super(Matching, self).sort(key=key, reverse=reverse)

@@ -34,7 +34,7 @@ def serializable(cls):
     return cls
 
 
-class lazyproperty(object):
+class lazyproperty(object):  # noqa: N801
     """Non-data descriptor caching the computed result as instance attribute.
 
     >>> class Spam(object):
@@ -75,11 +75,11 @@ class EmptySlotsMeta(type):
         return super(EmptySlotsMeta, cls).__new__(cls, name, bases, dct)
 
 
-def FactoryMeta(key_attr, mapping_type=dict):
+def FactoryMeta(key_attr, mapping_type=dict):  # noqa: N802
     """Return a metaclass that registers and retrieves subclasses by nonempty key_attr class attribute."""
     class FactoryMeta(type):
 
-        def __init__(self, name, bases, dct):
+        def __init__(self, name, bases, dct):  # noqa: N804
             if not hasattr(self, '_FactoryMeta__factory'):
                 self.__factory = self
                 self.__mapping = mapping_type()
@@ -89,7 +89,7 @@ def FactoryMeta(key_attr, mapping_type=dict):
                     self.__mapping[key] = self
             super(FactoryMeta, self).__init__(name, bases, dct)
 
-        def __call__(self, *args, **kwargs):
+        def __call__(self, *args, **kwargs):  # noqa: N804
             if self is self.__factory:
                 try:
                     key, args = args[0], args[1:]
@@ -112,7 +112,7 @@ def FactoryMeta(key_attr, mapping_type=dict):
             return super(FactoryMeta, self).__call__(*args, **kwargs)
 
         @property
-        def subclasses(self):
+        def subclasses(self):  # noqa: N804
             if self is self.__factory:
                 return self.__mapping
             raise NotImplementedError

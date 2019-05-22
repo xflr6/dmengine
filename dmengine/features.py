@@ -22,7 +22,7 @@ class FeatureMeta(type):
 
     system = None
 
-    def __call__(self, value=None):
+    def __call__(self, value=None):  # noqa: N804
         if value:
             key = self.system.get_key(value)
             self = self.system.mapping[key]
@@ -67,7 +67,7 @@ class FeatureSetMeta(type):
 
     system = None
 
-    def __call__(self, values, sortkey=operator.attrgetter('index')):
+    def __call__(self, values, sortkey=operator.attrgetter('index')):  # noqa: N804
         if isinstance(values, self):
             return values.copy()
 
