@@ -20,8 +20,9 @@ if PY2:  # pragma: no cover
     def iteritems(d):
         return d.iteritems()
 
-    from itertools import imap as map, izip as zip, ifilter as filter,\
-        izip_longest as zip_longest
+    from itertools import (imap as map, izip as zip,
+                           ifilter as filter,
+                           izip_longest as zip_longest)
 
     def py3_unicode_to_str(cls):
         return cls
