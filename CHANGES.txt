@@ -10,8 +10,8 @@ TODO:
 - set_delete: global, slot, vi
 
 
-Version 0.2.6 (in development)
-------------------------------
+Version 0.2.6
+-------------
 
 Drop Python 3.4 support.
 
