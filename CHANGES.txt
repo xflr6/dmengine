@@ -13,7 +13,7 @@ TODO:
 Version 0.2.7 (in development)
 ------------------------------
 
-
+Tag Python 3.8 support.
 
 
 Version 0.2.6
