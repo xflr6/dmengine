@@ -10,8 +10,8 @@ TODO:
 - set_delete: global, slot, vi
 
 
-Version 0.2.7 (in development)
-------------------------------
+Version 0.2.7
+-------------
 
 Tag Python 3.8 support.
 

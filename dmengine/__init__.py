@@ -10,10 +10,10 @@ from .reporting import Report, texify
 __all__ = ['Analysis', 'Report', 'calculate', 'texify']
 
 __title__ = 'dmengine'
-__version__ = '0.2.7.dev0'
+__version__ = '0.2.7'
 __author__ = 'Sebastian Bank <sebastian.bank@uni-leipzig.de>'
 __license__ = 'MIT, see LICENSE.txt'
-__copyright__ = 'Copyright (c) 2011-2018 Sebastian Bank'
+__copyright__ = 'Copyright (c) 2011-2019 Sebastian Bank'
 
 logging.basicConfig(format='%(message)s', level=logging.INFO)
 
