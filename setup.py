@@ -12,6 +12,9 @@ setup(
     keywords='DM Halle Marantz impoverishment fission linguistics',
     license='MIT',
     url='https://github.com/xflr6/dmengine',
+    project_urls={
+        'Issue Tracker': 'https://github.com/xflr6/dmengine/issues',
+    },
     packages=find_packages(),
     entry_points={'console_scripts': ['dmengine=dmengine.__main__:main']},
     package_data={'dmengine': ['reporting/template.tex']},
