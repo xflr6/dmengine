@@ -15,4 +15,4 @@ if 'idlelib' in sys.modules:
 elif sys.version_info.major == 2 and 'win_unicode_console' in sys.modules:
     ARGS.append('--capture=sys')
 
-pytest.main(ARGS + sys.argv[1:])
+sys.exit(pytest.main(ARGS + sys.argv[1:]))
