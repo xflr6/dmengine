@@ -13,7 +13,7 @@ TODO:
 Version 0.2.8 (in development)
 ------------------------------
 
-
+Drop Python 3.5 support.
 
 
 Version 0.2.7
