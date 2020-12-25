@@ -184,6 +184,15 @@ be restricted to the following context types:
 - ``anywhere`` |--| features must be matched somewhere in the input
 
 
+TODO
+----
+
+- check expected spell-out for each input
+- delete_matching: yes/no
+- delete_other: all, given, none
+- set_delete: global, slot, vi
+
+
 See also
 --------
 
