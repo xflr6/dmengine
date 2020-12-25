@@ -1,21 +1,23 @@
 # report.py
 
 import io
-import string
 import logging
+import string
 
 import yaml
 
-from . import backend, tools
+from . import backend
+from . import tools
 
 from .features import render_featureconfig
-from .vis import render_vis
+from .log import render_log
+from .paradigms import paradigms, input_paradigms, input_paradigms_processed
 from .rules import render_rules
 from .readjustments import render_readjustments
-from .paradigms import paradigms, input_paradigms, input_paradigms_processed
-from .log import render_log
+from .vis import render_vis
 
 __all__ = ['Report']
+
 
 log = logging.getLogger()
 

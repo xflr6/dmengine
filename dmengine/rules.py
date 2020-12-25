@@ -5,13 +5,17 @@
 Impoverishment, Obliteration, Fission, Fusion, CopyHead, AddFeatures, Metathesis
 """
 
+import collections
 from itertools import chain, islice
 import operator
-import collections
 
 from ._compat import map, iteritems, with_metaclass
 
-from . import features, contexts, meta, types, tools
+from . import contexts
+from . import features
+from . import meta
+from . import tools
+from . import types
 
 __all__ = ['Rule', 'Rules']
 

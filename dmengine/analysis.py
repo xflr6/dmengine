@@ -2,17 +2,24 @@
 
 """Load an analysis config file, calculate it, and save the results."""
 
-import io
 import collections
+import io
 import logging
 
 from ._compat import map
 
 import yaml
 
-from . import features, vis, rules, readjustments, calculation, types, tools
+from . import calculation
+from . import features
+from . import readjustments
+from . import rules
+from . import tools
+from . import types
+from . import vis
 
 __all__ = ['Analysis']
+
 
 log = logging.getLogger()
 

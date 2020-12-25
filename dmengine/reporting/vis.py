@@ -4,9 +4,9 @@ import re
 
 from .._compat import zip
 
+from .contexts import render_contexts
 from .examples import render_example
 from .features import render_features
-from .contexts import render_contexts
 
 SUBSCRIPT = re.compile(r'/(\d+)')
 

@@ -2,11 +2,11 @@
 
 from .._compat import range, map, zip
 
-from .tools import grouper
 from .common import tabular
-from .vis import render_exponent
 from .features import render_features
 from .inputs import render_slotlist
+from .tools import grouper
+from .vis import render_exponent
 
 
 def is_transitive(paradigm):

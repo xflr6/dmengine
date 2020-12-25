@@ -2,15 +2,16 @@
 
 """Sets and multisets of predefined feature values."""
 
+import collections
 from itertools import chain, groupby
 import operator
-import collections
 
 from ._compat import PY2, string_types, apply, map, itervalues, with_metaclass
 
 import oset
 
-from . import meta, tools
+from . import meta
+from . import tools
 
 __all__ = ['FeatureSystem', 'FeatureSet', 'FeatureBag']
 

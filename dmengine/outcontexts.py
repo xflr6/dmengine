@@ -9,12 +9,15 @@ FeaturesContext
     ThisFeatures, LeftFeatures, RightFeatures, OtherFeatures
 """
 
-from itertools import chain
 import collections
+from itertools import chain
 
 from ._compat import map, with_metaclass
 
-from . import exponents, features, meta, types
+from . import exponents
+from . import features
+from . import meta
+from . import types
 
 __all__ = ['ViContext', 'ViContexts']
 

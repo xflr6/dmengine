@@ -1,9 +1,9 @@
 # tools.py
 
-import os
-import sys
 import contextlib
 from itertools import tee
+import os
+import sys
 
 from .._compat import zip, zip_longest
 

@@ -2,9 +2,9 @@
 
 """Command-line interface."""
 
+import argparse
 import os
 import sys
-import argparse
 
 from . import __version__, calculate
 

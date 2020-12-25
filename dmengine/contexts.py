@@ -9,12 +9,14 @@ InsertContext
     LastInsert, AnyInsert
 """
 
-from itertools import chain
 import collections
+from itertools import chain
 
 from ._compat import map, with_metaclass
 
-from . import features, meta, types
+from . import features
+from . import meta
+from . import types
 
 __all__ = ['Context', 'Contexts']
 

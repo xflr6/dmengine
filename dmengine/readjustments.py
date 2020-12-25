@@ -5,14 +5,18 @@
 DeleteExponent, CopyExponent, MetatheseExponents, TransformExponent
 """
 
-import re
+import collections
 from itertools import permutations
 import operator
-import collections
+import re
 
 from ._compat import map, iteritems, with_metaclass
 
-from . import exponents, outcontexts, meta, types, tools
+from . import exponents
+from . import meta
+from . import outcontexts
+from . import tools
+from . import types
 
 __all__ = ['Readjustment', 'Readjustments']
 

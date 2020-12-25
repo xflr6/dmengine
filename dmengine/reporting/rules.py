@@ -3,9 +3,9 @@
 from .._compat import zip
 
 from .common import translate
+from .contexts import render_contexts
 from .examples import render_example
 from .features import render_features
-from .contexts import render_contexts
 
 MAP = {}
 

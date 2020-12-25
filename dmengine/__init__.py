@@ -15,6 +15,7 @@ __author__ = 'Sebastian Bank <sebastian.bank@uni-leipzig.de>'
 __license__ = 'MIT, see LICENSE.txt'
 __copyright__ = 'Copyright (c) 2011-2019 Sebastian Bank'
 
+
 logging.basicConfig(format='%(message)s', level=logging.INFO)
 
 

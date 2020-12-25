@@ -8,6 +8,7 @@ from . import insertion
 
 __all__ = ['Calculator']
 
+
 log = logging.getLogger()
 
 

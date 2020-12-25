@@ -1,7 +1,7 @@
 # tools.py
 
-import os
 from collections import Sequence
+import os
 
 from . import _compat
 

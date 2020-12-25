@@ -5,14 +5,17 @@
 Cyclic, Single, Flat, Once
 """
 
-import operator
 import logging
+import operator
 
 from ._compat import with_metaclass
 
-from . import vis, meta, tools
+from . import meta
+from . import tools
+from . import vis
 
 __all__ = ['Insertion']
+
 
 log = logging.getLogger()
 

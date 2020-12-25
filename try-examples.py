@@ -6,9 +6,10 @@ import glob
 import dmengine
 
 EXAMPLES = 'examples/*.yaml'
-DIRECTORY = 'examples-output'
-PDF = True
 
+DIRECTORY = 'examples-output'
+
+PDF = True
 
 for filename in glob.glob(EXAMPLES):
     analysis = dmengine.calculate(filename, DIRECTORY, pdf=PDF)

@@ -2,13 +2,18 @@
 
 """Vocabulary items: exponent, features, contexts."""
 
+import collections
 from itertools import groupby
 import operator
-import collections
 
 from ._compat import map, filter, iteritems, text_type, py3_unicode_to_str
 
-from . import exponents, features, contexts, meta, types, tools
+from . import contexts
+from . import exponents
+from . import features
+from . import meta
+from . import tools
+from . import types
 
 __all__ = ['VocabularyItem', 'VocabularyItems', 'ViList']
 

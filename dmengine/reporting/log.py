@@ -4,11 +4,11 @@ from itertools import repeat, product
 
 from .._compat import zip
 
-from .tools import pairwise
 from .features import render_features
 from .inputs import render_slotlist, render_slot, render_head
-from .vis import render_exponent, render_vi
 from .paradigms import is_transitive, para_logs
+from .tools import pairwise
+from .vis import render_exponent, render_vi
 
 
 def render_log(paradigms, worklog, rules, readjustments):

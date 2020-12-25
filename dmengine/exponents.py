@@ -6,7 +6,8 @@ import operator
 
 from ._compat import text_type, map, with_metaclass, py3_unicode_to_str
 
-from . import meta, types
+from . import meta
+from . import types
 
 __all__ = ['Exponent', 'ExponentList']
 
