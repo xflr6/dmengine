@@ -1,11 +1,9 @@
 # tools.py
 
 import contextlib
-from itertools import tee
+from itertools import tee, zip_longest
 import os
 import sys
-
-from .._compat import zip, zip_longest
 
 __all__ = ['pairwise', 'grouper', 'swapext', 'chdir', 'current_path']
 
@@ -21,8 +19,8 @@ def grouper(n, iterable, fillvalue=None):
 
 
 def swapext(filename, extension, delimiter='.'):
-    f_name, f_delim, f_ext = filename.rpartition(delimiter)
-    return '%s%s%s' % (f_name, f_delim, extension)
+    f_name, f_delim, _ = filename.rpartition(delimiter)
+    return f'{f_name}{f_delim}{extension}'
 
 
 @contextlib.contextmanager

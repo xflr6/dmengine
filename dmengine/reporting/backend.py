@@ -4,13 +4,15 @@ import os
 import platform
 import subprocess
 
-from .._compat import apply, range
-
 from . import tools
 
 __all__ = ['compile']
 
 PLATFORM = platform.system().lower()
+
+
+def apply(f, *args, **kwargs):
+    return f(*args, **kwargs)
 
 
 def no_compile(filename, view=False):
@@ -22,7 +24,7 @@ def pdflatex_compile(filename, view=False):
     pdflatex = ['pdflatex', '-output-format=pdf', '-interaction=batchmode', '-halt-on-error']
     compile_dir = os.path.dirname(filename)
     if compile_dir:
-        pdflatex.append('-output-directory=%s' % compile_dir)
+        pdflatex.append(f'-output-directory={compile_dir}')
     pdflatex.append(filename)
 
     for _ in range(3):

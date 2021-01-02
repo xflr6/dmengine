@@ -3,8 +3,6 @@
 from collections import Sequence
 import os
 
-from . import _compat
-
 __all__ = ['uniqued', 'curr_pred_succ', 'curr_other', 'derive_filename']
 
 
@@ -39,10 +37,10 @@ def derive_filename(filename, suffix=None, extension=None, directory=None):
         name += suffix
     if extension:
         ext = extension
-    filename = '%s%s%s' % (name, delim, ext)
+    filename = f'{name}{delim}{ext}'
 
     if directory:
-        _compat.makedirs(directory, exist_ok=True)
+        os.makedirs(directory, exist_ok=True)
         filename = os.path.join(directory, filename)
 
     return filename

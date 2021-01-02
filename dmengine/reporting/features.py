@@ -12,12 +12,12 @@ def render_feature(f):
 def render_features(features, brackets=False):
     result = ','.join(render_feature(f) for f in features)
     if brackets:
-        result = '$[$%s$]$' % result
+        result = f'$[${result}$]$'
     return result
 
 
 def render_number(integer):
-    return ('%-d' % integer).replace('-', '$-$')
+    return f'{integer:-d}'.replace('-', '$-$')
 
 
 def config_row(feature):

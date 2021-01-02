@@ -8,8 +8,6 @@ Cyclic, Single, Flat, Once
 import logging
 import operator
 
-from ._compat import with_metaclass
-
 from . import meta
 from . import tools
 from . import vis
@@ -20,7 +18,7 @@ __all__ = ['Insertion']
 log = logging.getLogger()
 
 
-class Insertion(with_metaclass(meta.FactoryMeta('kind'), object)):
+class Insertion(metaclass=meta.FactoryMeta('kind')):
     """Insertion of vocabulary items into hierarchies of potentially fused heads."""
 
     single = False
@@ -51,7 +49,7 @@ class Insertion(with_metaclass(meta.FactoryMeta('kind'), object)):
             inserts.append(slot_output)
             output.extend(slot_output)
 
-        log.debug('%s\n%s' % (slots, output))
+        log.debug(f'{slots}\n{output}')
         return matches, inserts, output
 
 
@@ -76,12 +74,11 @@ class Cyclic(Insertion):
                                      'matches': matching})
 
                 if not matching:
-                    log.debug(' %s inserted %s no more matches'
-                        % (head, head_output))
+                    log.debug(f' {head} inserted {head_output} no more matches')
                     break
 
-                log.debug(' %s matches\n%s'
-                    % (head, '\n'.join('    %s' % m for m in matching)))
+                matching_str = '\n'.join(f'    {m}' for m in matching)
+                log.debug(f' {head} matches\n{matching_str}')
                 most_specific = matching[0]
                 head.consume(most_specific.features)
                 head_output.append(most_specific)
@@ -114,16 +111,16 @@ class Flat(Insertion):
             matches.append(matching.as_dicts())
 
             if not matching:
-                log.debug(' inserted %s no more matches'
-                    % (output if output else 'nothing'))
+                output_str = output if output else 'nothing'
+                log.debug(f' inserted {output_str} no more matches')
                 break
 
-            log.debug(' matches\n   %s'
-                % '\n   '.join('%s %s' % (head, vi) for head, vi in matching))
+            matching_str = '\n   '.join(f'{head} {vi}' for head, vi in matching)
+            log.debug(f' matches\n   {matching_str}')
             head, most_specific = matching[0]
             head.consume(most_specific.features)
 
-            log.debug(' %s' % slot)
+            log.debug(f' {slot}')
             output.append(most_specific)
 
         return matches, output
@@ -140,12 +137,12 @@ class Once(Insertion):
 
         for head, up in tools.curr_other(slot):
             matching = self.vis.matching(head, left, right, up)
-            log.debug(' %s matches\n%s' %
-                (head, '\n'.join('    %s' % m for m in matching)))
+            matching_str = '\n'.join(f'    {m}' for m in matching)
+            log.debug(f' {head} matches\n{matching_str}')
 
             head_matches = [{'head': head.values, 'matches': matching}]
             head_output = matching
-            log.debug(' %s inserted %s' % (head, head_output))
+            log.debug(f' {head} inserted {head_output}')
 
             slot_matches.append(head_matches)
             slot_output.extend(head_output)

@@ -1,7 +1,5 @@
 # paradigms.py
 
-from .._compat import range, map, zip
-
 from .common import tabular
 from .features import render_features
 from .inputs import render_slotlist

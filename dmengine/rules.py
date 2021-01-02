@@ -9,8 +9,6 @@ import collections
 from itertools import chain, islice
 import operator
 
-from ._compat import map, iteritems, with_metaclass
-
 from . import contexts
 from . import features
 from . import meta
@@ -21,7 +19,7 @@ __all__ = ['Rule', 'Rules']
 
 
 @meta.serializable
-class Rule(with_metaclass(meta.FactoryMeta('kind'), object)):
+class Rule(metaclass=meta.FactoryMeta('kind')):
     """Abtstract base class and factory for operations on a sequence of slots containing heads."""
 
     Features = features.FeatureSet
@@ -33,8 +31,8 @@ class Rule(with_metaclass(meta.FactoryMeta('kind'), object)):
         fields = ('features', 'this_head', 'first_head', 'second_head', 'into_first')
         result.update((f, self.__dict__[f]) for f in fields if f in self.__dict__)
         if 'contexts' in self.__dict__:
-            result.update(iteritems(self.contexts))
-        return dumper.represent_mapping('tag:yaml.org,2002:map', iteritems(result))
+            result.update(self.contexts.items())
+        return dumper.represent_mapping('tag:yaml.org,2002:map', result.items())
 
     @staticmethod
     def loop_heads(slots):
@@ -76,15 +74,15 @@ class Impoverishment(Rule):
         self.features = self.Features(features)
         self.contexts = self.Contexts(**kwcontexts)
         if not self.features:
-            raise ValueError('%r empty features.' % self)
+            raise ValueError(f'{self!r} empty features.')
 
     def __repr__(self):
         features = str(self.features)
         contexts = self.contexts._kwstr()
-        return '%s(features=%r%s)' % (self.__class__.__name__, features, contexts)
+        return f'{self.__class__.__name__}(features={features!r}{contexts})'
 
     def __str__(self):
-        return '%s -> 0%s' % (self.features, self.contexts)
+        return f'{self.features} -> 0{self.contexts}'
 
     def __call__(self, slots):
         applied = False
@@ -103,14 +101,14 @@ class Obliteration(Rule):
     def __init__(self, **kwcontexts):
         self.contexts = self.Contexts(**kwcontexts)
         if not self.contexts:
-            raise ValueError('%r no context.' % self)
+            raise ValueError(f'{self!r} no context.')
 
     def __repr__(self):
         contexts = self.contexts._kwstr(plain=True)
-        return '%s(%s)' % (self.__class__.__name__, contexts)
+        return f'{self.__class__.__name__}({contexts})'
 
     def __str__(self):
-        return '[] -> 0%s' % self.contexts
+        return f'[] -> 0{self.contexts}'
 
     def __call__(self, slots):
         for i_s, i_h, slot, head in self.all_contexts_match(slots):
@@ -130,17 +128,16 @@ class Fission(Rule):
         self.this_head = self.Features(this_head)
         self.features = self.Features(features)
         if not (self.features and self.this_head):
-            raise ValueError('%s empty features or this head.' % self)
+            raise ValueError(f'{self!r} empty features or this head.')
 
     def __repr__(self):
-        features = str(self.features)
-        this_head = str(self.this_head)
-        return '%s(features=%r, this_head=%r)' % (self.__class__.__name__,
-            features, this_head)
+        return (f'{self.__class__.__name__}('
+                f'features={str(self.features)!r},'
+                f' this_head={str(self.this_head)!r})')
 
     def __str__(self):
-        return '[%s,%s...] -> [%s...][%s]' % (self.features, self.this_head,
-            self.this_head, self.features)
+        return (f'[{self.features},{self.this_head}...] ->'
+                f' [{self.this_head}...][{self.features}]')
 
     def __call__(self, slots):
         for i_s, i_h, slot, head in self.loop_heads(slots):
@@ -162,15 +159,15 @@ class Fusion(Rule):
         self.second_head = self.Features(second_head)
         self.into_first = into_first
         if not (self.first_head and self.second_head):
-            raise ValueError('%r empty first or second head.' % self)
+            raise ValueError(f'{self!r} empty first or second head.')
 
     def __repr__(self):
         first_head = str(self.first_head)
         second_head = str(self.second_head)
         into_first = '' if not self.into_first else ', into_first=False'
-        return '%s(first_head=%r, second_head=%r%s)' % (self.__class__.__name__,
-                                                        first_head, second_head,
-                                                        into_first)
+        return (f'{self.__class__.__name__}('
+                f'first_head={first_head!r}, second_head={second_head!r}'
+                f'{into_first})')
 
     def __str__(self):
         tmpl = '[%s]...[%s] -> '
@@ -196,14 +193,14 @@ class CopyHead(Rule):
     def __init__(self, **kwcontexts):
         self.contexts = self.Contexts(**kwcontexts)
         if not self.contexts:
-            raise ValueError('%r no context.' % self)
+            raise ValueError(f'{self!r} no context.')
 
     def __repr__(self):
         contexts = self.contexts._kwstr(plain=True)
-        return '%s(%s)' % (self.__class__.__name__, contexts)
+        return f'{self.__class__.__name__}({contexts})'
 
     def __str__(self):
-        return '[...] -> [...][...]%s' % self.contexts
+        return f'[...] -> [...][...]{self.contexts}'
 
     def __call__(self, slots):
         for i_s, i_h, slot, head in self.all_contexts_match(slots):
@@ -222,16 +219,15 @@ class AddFeatures(Rule):
         self.features = self.Features(features)
         self.contexts = self.Contexts(**kwcontexts)
         if not self.contexts:
-            raise ValueError('%r no context.' % self)
+            raise ValueError(f'{self!r} no context.')
 
     def __repr__(self):
-        features = str(self.features)
         contexts = self.contexts._kwstr()
-        return '%s(features=%r%s)' % (self.__class__.__name__, features,
-                                      contexts)
+        return (f'{self.__class__.__name__}('
+                f'features={str(self.features)!r}{contexts})')
 
     def __str__(self):
-        return '[...] -> [...,%s]%s' % (self.features, self.contexts)
+        return f'[...] -> [...,{self.features}]{self.contexts}'
 
     def __call__(self, slots):
         for i_s, i_h, slot, head in self.all_contexts_match(slots):
@@ -249,17 +245,16 @@ class Metathesis(Rule):
         self.first_head = self.Features(first_head)
         self.second_head = self.Features(second_head)
         if not (self.first_head and self.second_head):
-            raise ValueError('%r empty first or second head.' % self)
+            raise ValueError(f'{self!r} empty first or second head.')
 
     def __repr__(self):
-        first_head = str(self.first_head)
-        second_head = str(self.second_head)
-        return '%s(first_head=%r, second_head=%r)' % (self.__class__.__name__,
-            first_head, second_head)
+        return (f'{self.__class__.__name__}('
+                f'first_head={str(self.first_head)!r},'
+                f' second_head={str(self.second_head)!r})')
 
     def __str__(self):
-        return '[%s]...[%s] -> [%s]...[%s]' % (self.first_head, self.second_head,
-                                               self.second_head, self.first_head)
+        return (f'[{self.first_head}]...[{self.second_head}] ->'
+                f' [{self.second_head}]...[{self.first_head}]')
 
     def __call__(self, slots):
         for i_s, i_h, head, o_s, o_h, other_head in self.two_candidates(slots):

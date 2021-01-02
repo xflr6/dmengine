@@ -2,8 +2,6 @@
 
 from itertools import repeat, product
 
-from .._compat import zip
-
 from .features import render_features
 from .inputs import render_slotlist, render_slot, render_head
 from .paradigms import is_transitive, para_logs

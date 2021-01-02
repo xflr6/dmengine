@@ -29,7 +29,7 @@ class Calculator(object):
         self.spellouts = spellouts = []
 
         for input_pre in self.inputs:
-            log.debug('-- \n%s' % input_pre)
+            log.debug(f'-- \n{input_pre}')
 
             input_pro, input_pst = self.rules(input_pre)
 
@@ -39,7 +39,7 @@ class Calculator(object):
 
             spellout = output_pst.exponents.spellout
 
-            log.debug('"%s"' % spellout.encode('ascii', 'backslashreplace'))
+            log.debug('"{}"'.format(spellout.encode('ascii', 'backslashreplace')))
             logs.append({
                 'input_pre': input_pre, 'input_pro': input_pro, 'input_pst': input_pst,
                 'matches': matches, 'inserts': inserts,
@@ -69,7 +69,7 @@ class Executor(object):
             copy = item.copy()
             if r(copy):
                 item = copy
-                log.debug(' %s\n%s' % (r, item))
+                log.debug(f' {r}\n{item}')
 
             outputs.append(item)
 

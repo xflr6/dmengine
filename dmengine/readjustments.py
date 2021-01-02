@@ -10,8 +10,6 @@ from itertools import permutations
 import operator
 import re
 
-from ._compat import map, iteritems, with_metaclass
-
 from . import exponents
 from . import meta
 from . import outcontexts
@@ -22,7 +20,7 @@ __all__ = ['Readjustment', 'Readjustments']
 
 
 @meta.serializable
-class Readjustment(with_metaclass(meta.FactoryMeta('kind'), object)):
+class Readjustment(metaclass=meta.FactoryMeta('kind')):
     """Abtstract base class and factory for post-insertion operations on a vi sequence."""
 
     Exponent = exponents.Exponent
@@ -35,8 +33,8 @@ class Readjustment(with_metaclass(meta.FactoryMeta('kind'), object)):
         fields = ('exponent', 'first_exponent', 'second_exponent', 'search', 'replace')
         result.update((f, self.__dict__[f]) for f in fields if f in self.__dict__)
         if 'contexts' in self.__dict__:
-            result.update(iteritems(self.contexts))
-        return dumper.represent_mapping('tag:yaml.org,2002:map', iteritems(result))
+            result.update(self.contexts.items())
+        return dumper.represent_mapping('tag:yaml.org,2002:map', result.items())
 
     def __init__(self, exponent, **kwcontexts):
         self.exponent = self.Exponent(exponent)
@@ -45,7 +43,7 @@ class Readjustment(with_metaclass(meta.FactoryMeta('kind'), object)):
     def __repr__(self):
         exponent = self.exponent.value
         contexts = self.contexts._kwstr()
-        return '%s(exponent=%r%s)' % (self.__class__.__name__, exponent, contexts)
+        return f'{self.__class__.__name__}(exponent={exponent!r}{contexts})'
 
     def all_contexts_and_exp_match(self, vis):
         for i, (vi, left, right) in enumerate(tools.curr_pred_succ(vis)):
@@ -75,7 +73,7 @@ class DeleteExponent(Readjustment):
     kind = 'delete'
 
     def __str__(self):
-        return '%s -> 0%s' % (self.exponent, self.contexts)
+        return f'{self.exponent} -> 0{self.contexts}'
 
     def __call__(self, vis):
         for i, vi in self.all_contexts_and_exp_match(vis):
@@ -90,8 +88,7 @@ class CopyExponent(Readjustment):
     kind = 'copy'
 
     def __str__(self):
-        return '%s -> %s %s%s' % (self.exponent, self.exponent, self.exponent,
-                                  self.contexts)
+        return f'{self.exponent} -> {self.exponent} {self.exponent}{self.contexts}'
 
     def __call__(self, vis):
         for i, vi in self.all_contexts_and_exp_match(vis):
@@ -112,12 +109,12 @@ class MetatheseExponents(Readjustment):
     def __repr__(self):
         first = self.first_exponent.value
         second = self.second_exponent.value
-        tmpl = '%s(first_exponent=%r, second_exponent=%r)'
-        return tmpl % (self.__class__.__name__, first, second)
+        return (f'{self.__class__.__name__}('
+                f'first_exponent={first!r}, second_exponent={second!r})')
 
     def __str__(self):
-        return '%s...%s-> %s...%s' % (self.first_exponent, self.second_exponent,
-                                      self.second_exponent, self.first_exponent)
+        return (f'{self.first_exponent}...{self.second_exponent}->'
+                f' {self.second_exponent}...{self.first_exponent}')
 
     def __call__(self, vis):
         fe, se = self.first_exponent, self.second_exponent
@@ -141,12 +138,11 @@ class TransformExponent(Readjustment):
 
     def __repr__(self):
         contexts = self.contexts._kwstr()
-        return '%s(search=%r, replace=%r%s)' % (self.__class__.__name__,
-                                                self.search, self.replace,
-                                                contexts)
+        return (f'{self.__class__.__name__}('
+                f'search={self.search!r}, replace={self.replace!r}{contexts})')
 
     def __str__(self):
-        return '%s ~> %s%s' % (self.search, self.replace, self.contexts)
+        return f'{self.search} ~> {self.replace}{self.contexts}'
 
     def __call__(self, vis):
         applied = False

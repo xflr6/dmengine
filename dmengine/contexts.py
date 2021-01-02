@@ -12,8 +12,6 @@ InsertContext
 import collections
 from itertools import chain
 
-from ._compat import map, with_metaclass
-
 from . import features
 from . import meta
 from . import types
@@ -21,7 +19,7 @@ from . import types
 __all__ = ['Context', 'Contexts']
 
 
-class Context(with_metaclass(meta.FactoryMeta('scope', collections.OrderedDict), object)):
+class Context(metaclass=meta.FactoryMeta('scope', collections.OrderedDict)):
     """Abstract base class and factory for contexts matching features under defined conditions."""
 
     Features = features.FeatureSet
@@ -29,11 +27,11 @@ class Context(with_metaclass(meta.FactoryMeta('scope', collections.OrderedDict),
     def __init__(self, features):
         self.features = self.Features(features)
         if not self.features:
-            raise ValueError('%r empty features.' % self)
+            raise ValueError(f'{self!r} empty features.')
 
     def __repr__(self):
         features = str(self.features)
-        return 'Context(scope=%r, features=%r)' % (self.scope, features)
+        return f'Context(scope={self.scope!r}, features={features!r})'
 
     def match(self, head, left_context, right_context, up_context):
         raise NotImplementedError
@@ -57,11 +55,11 @@ class Contexts(types.Instances):
 
     def _kwstr(self, plain=False):
         ctx = ', '.join('%s=%r' % (c.scope, str(c.features)) for c in self)
-        return ctx if plain else ', %s' % ctx if ctx else ''
+        return ctx if plain else f', {ctx}' if ctx else ''
 
     def __str__(self):
         ctx = ' & '.join(map(str, self))
-        return ' / %s' % ctx if ctx else ''
+        return f' / {ctx}' if ctx else ''
 
 
 class HeadContext(Context):
@@ -74,7 +72,7 @@ class ThisHead(HeadContext):
     scope = 'this_head'
 
     def __str__(self):
-        return '[__,%s]' % self.features
+        return f'[__,{self.features}]'
 
     def match(self, head, left_context, right_context, up_context):
         return self.features.issubset(head)
@@ -86,7 +84,7 @@ class LeftHead(HeadContext):
     scope = 'left_head'
 
     def __str__(self):
-        return '[%s][__]' % self.features
+        return f'[{self.features}][__]'
 
     def match(self, head, left_context, right_context, up_context):
         return (left_context
@@ -99,7 +97,7 @@ class RightHead(HeadContext):
     scope = 'right_head'
 
     def __str__(self):
-        return '[__][%s]' % self.features
+        return f'[__][{self.features}]'
 
     def match(self, head, left_context, right_context, up_context):
         return (right_context
@@ -112,7 +110,7 @@ class OtherHead(HeadContext):
     scope = 'other_head'
 
     def __str__(self):
-        return '__...[%s]' % self.features
+        return f'__...[{self.features}]'
 
     def match(self, head, left_context, right_context, up_context):
         contexts = left_context + [up_context] + right_context
@@ -126,7 +124,7 @@ class AnyHead(HeadContext):
     scope = 'any_head'
 
     def __str__(self):
-        return '[%s]' % self.features
+        return f'[{self.features}]'
 
     def match(self, head, left_context, right_context, up_context):
         contexts = left_context + [[head]] + [up_context] + right_context
@@ -140,7 +138,7 @@ class Anywhere(HeadContext):
     scope = 'anywhere'
 
     def __str__(self):
-        return '%s' % self.features
+        return f'{self.features}'
 
     def match(self, head, left_context, right_context, up_context):
         contexts = left_context + [[head]] + [up_context] + right_context

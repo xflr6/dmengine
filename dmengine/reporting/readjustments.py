@@ -1,7 +1,5 @@
 # readjustments.py
 
-from .._compat import zip
-
 from .common import translate
 from .contexts import render_expcontexts
 from .examples import render_example

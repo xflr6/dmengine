@@ -1,6 +1,5 @@
 # report.py
 
-import io
 import logging
 import string
 
@@ -36,9 +35,9 @@ class Report(object):
             pdfname = tools.swapext(analysis, 'pdf')
         self.pdfname = pdfname
 
-        log.info('%r' % self)
+        log.info(f'{self!r}')
 
-        with io.open(self.analysis, encoding=encoding) as fd:
+        with open(self.analysis, encoding=encoding) as fd:
             analysis = yaml.safe_load(fd)
 
         log.info('\tcreate..')
@@ -64,19 +63,19 @@ class Report(object):
             self.sections['LOG'] = ''
 
     def __repr__(self):
-        return '%s(%r)' % (self.__class__.__name__, self.analysis)
+        return f'{self.__class__.__name__}({self.analysis!r})'
 
     def save(self, encoding='utf-8', newline=''):
-        log.info('\tsave to %r..' % self.filename)
-        with io.open(self.template, encoding=encoding) as fd:
+        log.info(f'\tsave to {self.filename!r}..')
+        with open(self.template, encoding=encoding) as fd:
             template = fd.read()
 
         template = string.Template(template)
         document = template.safe_substitute(self.sections)
 
-        with io.open(self.filename, 'w', encoding=encoding, newline=newline) as fd:
+        with open(self.filename, 'w', encoding=encoding, newline=newline) as fd:
             fd.write(document)
 
     def render(self, view=False):
-        log.info('\trender to %r..' % self.pdfname)
+        log.info(f'\trender to {self.pdfname!r}..')
         backend.compile(self.filename, view=view)

@@ -2,8 +2,6 @@
 
 import collections
 
-from ._compat import iteritems
-
 import yaml
 
 __all__ = ['serializable', 'lazyproperty', 'EmptySlotsMeta', 'FactoryMeta']
@@ -20,7 +18,7 @@ def serializes(data_type):
 @serializes(collections.OrderedDict)
 def odict_representer(dumper, self):
     """Serialize OrderedDict items in their order."""
-    return dumper.represent_mapping('tag:yaml.org,2002:map', iteritems(self))
+    return dumper.represent_mapping('tag:yaml.org,2002:map', self.items())
 
 
 def serializable(cls):
@@ -72,7 +70,7 @@ class EmptySlotsMeta(type):
 
     def __new__(cls, name, bases, dct):
         dct['__slots__'] = ()
-        return super(EmptySlotsMeta, cls).__new__(cls, name, bases, dct)
+        return super().__new__(cls, name, bases, dct)
 
 
 def FactoryMeta(key_attr, mapping_type=dict):  # noqa: N802
@@ -87,7 +85,7 @@ def FactoryMeta(key_attr, mapping_type=dict):  # noqa: N802
                 key = dct.get(key_attr)
                 if key:
                     self.__mapping[key] = self
-            super(FactoryMeta, self).__init__(name, bases, dct)
+            super().__init__(name, bases, dct)
 
         def __call__(self, *args, **kwargs):  # noqa: N804
             if self is self.__factory:
@@ -97,19 +95,19 @@ def FactoryMeta(key_attr, mapping_type=dict):  # noqa: N802
                     try:
                         key = kwargs.pop(key_attr)
                     except KeyError:
-                        raise TypeError('%r is a factory, must specify '
-                            '%s keyword of the class to instanciate'
-                            % (self, key_attr))
+                        raise TypeError(f'{self!r} is a factory, must specify'
+                                        f' {key_attr} keyword of the class'
+                                        ' to instantiate')
 
                 try:
                     cls = self.__mapping[key]
                 except (KeyError, TypeError):
-                    raise TypeError('%r is not a registered %s keyword for %r'
-                        % (key, key_attr, self))
+                    raise TypeError(f'{key!r} is not a registered'
+                                    f' {key_attr} keyword for {self!r}')
 
                 assert issubclass(cls, self)
                 self = cls
-            return super(FactoryMeta, self).__call__(*args, **kwargs)
+            return super().__call__(*args, **kwargs)
 
         @property
         def subclasses(self):  # noqa: N804

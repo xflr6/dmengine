@@ -3,10 +3,7 @@
 """Load an analysis config file, calculate it, and save the results."""
 
 import collections
-import io
 import logging
-
-from ._compat import map
 
 import yaml
 
@@ -41,9 +38,9 @@ class Analysis(object):
         self.filename = filename
         self.results = tools.derive_filename(filename, '-results', 'yaml', directory)
 
-        log.info('%r' % self)
+        log.info(f'{self!r}')
 
-        with io.open(self.filename, encoding=encoding) as fd:
+        with open(self.filename, encoding=encoding) as fd:
             cfg = yaml.safe_load(fd)
 
         self.author = cfg.get('author', 'Anomymous')
@@ -71,14 +68,14 @@ class Analysis(object):
             self.inputs, self.rules, self.vis, self.readjustments)
 
     def __repr__(self):
-        return '%s(%r)' % (self.__class__.__name__, self.filename)
+        return f'{self.__class__.__name__}({self.filename!r})'
 
     def calculate(self):
         log.info('\tcalculate..')
         self.worklog, self.outputs, self.spellouts = self.calculator()
 
     def save(self, encoding='utf-8', newline=''):
-        log.info('\tsave to %r..' % self.results)
+        log.info(f'\tsave to {self.results!r}..')
 
         data = collections.OrderedDict([
             ('author', self.author),
@@ -93,7 +90,7 @@ class Analysis(object):
             ('worklog', self.worklog),
         ])
 
-        with io.open(self.results, 'w', encoding=encoding, newline=newline) as fd:
+        with open(self.results, 'w', encoding=encoding, newline=newline) as fd:
             yaml.dump(data, fd)
 
 
@@ -105,18 +102,18 @@ class SlotList(types.FlowList):
         return cls(Slot([Head(h)]) for h in heads)
 
     def __str__(self):
-        return '%s' % ' '.join(map(str, self))
+        return ' '.join(map(str, self))
 
 
 class Slot(types.List):
     """Sequence of heads that have been fused."""
 
     def __str__(self):
-        return '#%s#' % ' '.join(map(str, self))
+        return '#{}#'.format(' '.join(map(str, self)))
 
 
 class Head(features.FeatureSet):
     """Head (morpheme, lexical item) as a (multi)set of morphosyntactic features."""
 
     def __str__(self):
-        return '[%s]' % super(Head, self).__str__()
+        return '[{}]'.format(super().__str__())

@@ -6,8 +6,6 @@ import collections
 from itertools import groupby
 import operator
 
-from ._compat import map, filter, iteritems, text_type, py3_unicode_to_str
-
 from . import contexts
 from . import exponents
 from . import features
@@ -19,7 +17,6 @@ __all__ = ['VocabularyItem', 'VocabularyItems', 'ViList']
 
 
 @meta.serializable
-@py3_unicode_to_str
 class VocabularyItem(object):
     """Holds the exponent, its substantial features, and other contexts for insertion."""
 
@@ -33,16 +30,15 @@ class VocabularyItem(object):
     def _representer(dumper, self):
         result = collections.OrderedDict([('exponent', self.exponent),
                                           ('features', self.features)])
-        result.update(iteritems(self.contexts))
-        return dumper.represent_mapping('tag:yaml.org,2002:map',
-                                        iteritems(result))
+        result.update(self.contexts.items())
+        return dumper.represent_mapping('tag:yaml.org,2002:map', result.items())
 
     def __init__(self, exponent, features, **kwcontexts):
         self.exponent = self.Exponent(exponent)
         self.features = self.Features(features)
         self.contexts = self.Contexts(**kwcontexts)
         if not self.features:
-            raise ValueError('%r empty features.' % self)
+            raise ValueError(f'{self!r} empty features.')
 
     def copy(self, form=None):
         exponent = self.exponent.copy(form=form)
@@ -51,17 +47,13 @@ class VocabularyItem(object):
         return self.__class__(exponent, features, **contexts)
 
     def __repr__(self):
-        exponent = self.exponent.value
-        features = str(self.features)
         contexts = self.contexts._kwstr()
-        return '%s(exponent=%r, features=%r%s)' % (self.__class__.__name__,
-                                                   exponent, features, contexts)
-
-    def __unicode__(self):
-        return u'%s <-> %s%s' % (self.exponent, self.features, self.contexts)
+        return (f'{self.__class__.__name__}('
+                f'exponent={self.exponent.value!r},'
+                f' features={str(self.features)!r}{contexts})')
 
     def __str__(self):
-        return text_type(self).encode('ascii', 'backslashreplace')
+        return f'{self.exponent} <-> {self.features}{self.contexts}'
 
     def match(self, head, left_context, right_context, up_context):
         matching = operator.methodcaller('match', head,
@@ -110,7 +102,7 @@ class ViList(types.List):
         return ' '.join(map(str, (vi.exponent for vi in self)))
 
     def sort(self, key=sortkey, reverse=True):
-        super(ViList, self).sort(key=key, reverse=reverse)
+        super().sort(key=key, reverse=reverse)
 
     def by_specificty(self, sortkey=sortkey, reverse=True):
         vis = sorted(self, key=sortkey, reverse=reverse)
@@ -133,7 +125,7 @@ class Matching(types.StarInstances):
     sortkey = lambda m: m.vi.specificity  # noqa: E731
 
     def sort(self, key=sortkey, reverse=True):
-        super(Matching, self).sort(key=key, reverse=reverse)
+        super().sort(key=key, reverse=reverse)
 
     @property
     def most_specific(self, sortkey=sortkey):

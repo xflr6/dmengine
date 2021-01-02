@@ -6,8 +6,6 @@ import collections
 from itertools import chain, groupby
 import operator
 
-from ._compat import PY2, string_types, apply, map, itervalues, with_metaclass
-
 import oset
 
 from . import meta
@@ -27,10 +25,10 @@ class FeatureMeta(type):
         if value:
             key = self.system.get_key(value)
             self = self.system.mapping[key]
-        return super(FeatureMeta, self).__call__()
+        return super().__call__()
 
 
-class Feature(with_metaclass(FeatureMeta, object)):
+class Feature(metaclass=FeatureMeta):
     """Hideable morphosyntactic feature."""
 
     __slots__ = ('visible',)
@@ -53,14 +51,14 @@ class Feature(with_metaclass(FeatureMeta, object)):
     def __repr__(self):
         hidden = '' if self.visible else 'hidden '
         category = ' ' + self.category if self.category else ''
-        return '<%s%s%s feature>' % (hidden, self.value, category)
+        return f'<{hidden}{self.value}{category} feature>'
 
     def __str__(self):
-        return self.value if self.visible else '_%s_' % self.value
+        return self.value if self.visible else f'_self.value_'
 
     def hide(self):
         if not self.visible:
-            raise ValueError('Unable to hide %r.' % self)
+            raise ValueError(f'Unable to hide {self!r}.')
         self.visible = False
 
 
@@ -72,16 +70,16 @@ class FeatureSetMeta(type):
         if isinstance(values, self):
             return values.copy()
 
-        if isinstance(values, string_types):
+        if isinstance(values, str):
             values = values.replace(',', ' ').split()
         keys = map(self.system.get_key, values)
-        features = map(apply, map(self.system.mapping.__getitem__, keys))
+        features = (f() for f in  map(self.system.mapping.__getitem__, keys))
         features = sorted(features, key=sortkey)
-        return super(FeatureSetMeta, self).__call__(features)
+        return super().__call__(features)
 
 
 @meta.serializable
-class FeatureSet(with_metaclass(FeatureSetMeta, object)):
+class FeatureSet(metaclass=FeatureSetMeta):
     """Ordered set of morphosyntactic features."""
 
     features = oset.oset
@@ -106,7 +104,8 @@ class FeatureSet(with_metaclass(FeatureSetMeta, object)):
         return self.from_features(f.__class__() for f in self.features)
 
     def __repr__(self):
-        return '%s(%r)' % (self.__class__.__name__, ' '.join(self.values))
+        values = ' '.join(self.values)
+        return f'{self.__class__.__name__}({values!r})'
 
     def __str__(self):
         return ' '.join(map(str, self.features))
@@ -241,7 +240,7 @@ class FeatureSystem(object):
                                            ('category', f.category),
                                            ('specificity', f.specificity),
                                            ('name', f.name)])
-                  for f in itervalues(self.mapping)]
+                  for f in self.mapping.values()]
         return dumper.represent_sequence('tag:yaml.org,2002:seq', result)
 
     def __init__(self, features_kwargs=(), always_bag=False):
@@ -256,13 +255,12 @@ class FeatureSystem(object):
             f = self.create_feature(index, **kwargs)
             self.mapping[f.key] = f
         if not len(self.mapping) == len(features_kwargs):
-            raise ValueError('%r no uniqueness.')
+            raise ValueError(f'{self!r} no uniqueness.')
 
-        self.specificities = sorted(set(f.specificity
-            for f in itervalues(self.mapping)), reverse=True)
+        self.specificities = sorted({f.specificity for f in self.mapping.values()},
+                                    reverse=True)
 
-        self.categories = tools.uniqued(f.category
-            for f in itervalues(self.mapping))
+        self.categories = tools.uniqued(f.category for f in self.mapping.values())
 
         class FeatureSet(self.FeatureSet):
             system = self
@@ -285,18 +283,18 @@ class FeatureSystem(object):
         return len(self.mapping)
 
     def __iter__(self):
-        return itervalues(self.mapping)
+        return iter(self.mapping.values())
 
     def __getitem__(self, index):
         return list(self.mapping.values())[index]
 
     _tdrop = ' ,;'
-    _trans = (None, _tdrop) if PY2 else (str.maketrans('', '', _tdrop),)
+    _trans = (str.maketrans('', '', _tdrop),)
 
     @staticmethod
     def create_value(value, _trans=_trans):
         if isinstance(value, int):
-            return '%+d' % value
+            return f'{value:+d}'
         return str(value).translate(*_trans)
 
     @staticmethod
@@ -306,14 +304,14 @@ class FeatureSystem(object):
     def create_feature(self, index, value, category=None, specificity=0, name=None):
         value = self.create_value(value)
         if not value:
-            raise ValueError('%r empty value.' % self)
+            raise ValueError(f'{self!r} empty value.')
 
         name = str(name).title() if name else self.derive_name(value)
 
         class Feature(self.Feature):
             __slots__ = ()
 
-        Feature.__name__ = '%sFeature' % name
+        Feature.__name__ = f'{name}Feature'
         Feature.name = name
         Feature.index = int(index)
         Feature.key = self.get_key(value)

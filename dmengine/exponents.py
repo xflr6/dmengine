@@ -4,8 +4,6 @@
 
 import operator
 
-from ._compat import text_type, map, with_metaclass, py3_unicode_to_str
-
 from . import meta
 from . import types
 
@@ -23,7 +21,7 @@ class ExponentMeta(type):
             if '-' in value:
                 raise ValueError
             form = value
-            value = self._template % form
+            value = self._template.format(form)
         elif value.count('-') > 1:
             raise ValueError
         elif value.startswith('-'):
@@ -38,25 +36,24 @@ class ExponentMeta(type):
         else:
             raise ValueError
 
-        return super(ExponentMeta, self).__call__(value, form)
+        return super().__call__(value, form)
 
 
 @meta.serializable
-@py3_unicode_to_str
-class Exponent(with_metaclass(ExponentMeta, object)):
+class Exponent(metaclass=ExponentMeta):
     """Prefix, stem, and suffix identified by value hyphen-position."""
 
     kind = None
 
     @staticmethod
     def _multi_representer(dumper, self):
-        return dumper.represent_scalar('tag:yaml.org,2002:str', text_type(self.value))
+        return dumper.represent_scalar('tag:yaml.org,2002:str', str(self.value))
 
     def __init__(self, value, form):
         self.value = value
         self.form = form
         if not form:
-            raise ValueError('%r empty form.' % self)
+            raise ValueError(f'{self!r} empty form.')
 
     def copy(self, form=None):
         if form is None:
@@ -64,13 +61,10 @@ class Exponent(with_metaclass(ExponentMeta, object)):
         return self.__class__(form)
 
     def __repr__(self):
-        return '%s(%r)' % (self.__class__.__name__, self.form)
-
-    def __unicode__(self):
-        return u'/%s/' % self.value
+        return f'{self.__class__.__name__}({self.form!r})'
 
     def __str__(self):
-        return text_type(self).encode('ascii', 'backslashreplace')
+        return f'/{self.value}/'
 
     def __eq__(self, other):
         return (isinstance(other, Exponent)
@@ -99,7 +93,7 @@ class Prefix(Exponent):
 
     kind = 'prefix'
 
-    _template = '%s-'
+    _template = '{}-'
 
     _sortslot = -1
 
@@ -109,7 +103,7 @@ class Stem(Exponent):
 
     kind = 'stem'
 
-    _template = '%s'
+    _template = '{}'
 
     _sortslot = 0
 
@@ -119,6 +113,6 @@ class Suffix(Exponent):
 
     kind = 'suffix'
 
-    _template = '-%s'
+    _template = '-{}'
 
     _sortslot = 1
