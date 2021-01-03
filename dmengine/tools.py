@@ -1,6 +1,6 @@
 # tools.py
 
-from collections import Sequence
+from collections.abc import Sequence
 import os
 
 __all__ = ['uniqued', 'curr_pred_succ', 'curr_other', 'derive_filename']
