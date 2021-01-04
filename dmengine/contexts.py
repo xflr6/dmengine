@@ -54,7 +54,7 @@ class Contexts(types.Instances):
     iteritems = items
 
     def _kwstr(self, plain=False):
-        ctx = ', '.join('%s=%r' % (c.scope, str(c.features)) for c in self)
+        ctx = ', '.join('{c.scope}={str(c.features)!r}' for c in self)
         return ctx if plain else f', {ctx}' if ctx else ''
 
     def __str__(self):
