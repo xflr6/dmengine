@@ -1,6 +1,6 @@
 # setup.py
 
-import io
+import pathlib
 from setuptools import setup, find_packages
 
 setup(
@@ -29,7 +29,7 @@ setup(
         'dev': ['flake8', 'pep8-naming', 'wheel', 'twine'],
         'test': ['pytest>=4', 'pytest-cov'],
     },
-    long_description=io.open('README.rst', encoding='utf-8').read(),
+    long_description=pathlib.Path('README.rst').read_text(encoding='utf-8'),
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Console',
