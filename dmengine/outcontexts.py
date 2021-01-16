@@ -43,7 +43,7 @@ class ViContexts(types.Instances):
 
     iteritems = items
 
-    def _kwstr(self, plain=False):
+    def _kwstr(self, *, plain=False):
         ctx = ', '.join(c._kwstr() for c in self)
         return ctx if plain else f', {ctx}' if ctx else ''
 

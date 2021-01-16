@@ -19,9 +19,9 @@ __copyright__ = 'Copyright (c) 2011-2021 Sebastian Bank'
 logging.basicConfig(format='%(message)s', level=logging.INFO)
 
 
-def calculate(filename, directory=None, report=False, pdf=False, view=False):
+def calculate(filename, *, directory=None, report=False, pdf=False, view=False):
     """Return calculated DM analysis from the given config filename."""
-    analysis = Analysis(filename, directory)
+    analysis = Analysis(filename, directory=directory)
     analysis.calculate()
     analysis.save()
 

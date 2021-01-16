@@ -26,7 +26,7 @@ class Report(object):
 
     template = tools.current_path('template.tex')
 
-    def __init__(self, analysis, filename=None, pdfname=None, encoding='utf-8'):
+    def __init__(self, analysis, *, filename=None, pdfname=None, encoding='utf-8'):
         self.analysis = analysis
         if filename is None:
             filename = tools.swapext(analysis, 'tex')
@@ -65,7 +65,7 @@ class Report(object):
     def __repr__(self):
         return f'{self.__class__.__name__}({self.analysis!r})'
 
-    def save(self, encoding='utf-8', newline=''):
+    def save(self, *, encoding='utf-8', newline=''):
         log.info(f'\tsave to {self.filename!r}..')
         with open(self.template, encoding=encoding) as fd:
             template = fd.read()
@@ -76,6 +76,6 @@ class Report(object):
         with open(self.filename, 'w', encoding=encoding, newline=newline) as fd:
             fd.write(document)
 
-    def render(self, view=False):
+    def render(self, *, view=False):
         log.info(f'\trender to {self.pdfname!r}..')
         backend.compile(self.filename, view=view)

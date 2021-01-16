@@ -40,7 +40,7 @@ class VocabularyItem(object):
         if not self.features:
             raise ValueError(f'{self!r} empty features.')
 
-    def copy(self, form=None):
+    def copy(self, *, form=None):
         exponent = self.exponent.copy(form=form)
         features = self.features.values
         contexts = {ctx.scope: ctx.features.values for ctx in self.contexts}
@@ -101,15 +101,15 @@ class ViList(types.List):
     def __str__(self):
         return ' '.join(map(str, (vi.exponent for vi in self)))
 
-    def sort(self, key=sortkey, reverse=True):
+    def sort(self, *, key=sortkey, reverse=True):
         super().sort(key=key, reverse=reverse)
 
-    def by_specificty(self, sortkey=sortkey, reverse=True):
+    def by_specificty(self, *, sortkey=sortkey, reverse=True):
         vis = sorted(self, key=sortkey, reverse=reverse)
         return [self.__class__(g) for k, g in groupby(vis, sortkey)]
 
     @property
-    def most_specific(self, sortkey=sortkey):
+    def most_specific(self, *, sortkey=sortkey):
         vis = sorted(self, key=sortkey, reverse=True)
         return next(self.__class__(g) for k, g in groupby(vis, sortkey))
 
@@ -124,11 +124,11 @@ class Matching(types.StarInstances):
 
     sortkey = lambda m: m.vi.specificity  # noqa: E731
 
-    def sort(self, key=sortkey, reverse=True):
+    def sort(self, *, key=sortkey, reverse=True):
         super().sort(key=key, reverse=reverse)
 
     @property
-    def most_specific(self, sortkey=sortkey):
+    def most_specific(self, *, sortkey=sortkey):
         matches = sorted(self, key=sortkey, reverse=True)
         return next(self.__class__(g) for k, g in groupby(matches, sortkey))
 

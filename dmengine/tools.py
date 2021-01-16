@@ -26,7 +26,7 @@ def curr_other(iterable):
         yield item, iterable[:i] + iterable[i + 1:]
 
 
-def derive_filename(filename, suffix=None, extension=None, directory=None):
+def derive_filename(filename, *, suffix=None, extension=None, directory=None):
     assert suffix or extension
 
     if directory:

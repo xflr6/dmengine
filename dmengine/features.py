@@ -66,7 +66,7 @@ class FeatureSetMeta(type):
 
     system = None
 
-    def __call__(self, values, sortkey=operator.attrgetter('index')):  # noqa: N804
+    def __call__(self, values, *, sortkey=operator.attrgetter('index')):  # noqa: N804
         if isinstance(values, self):
             return values.copy()
 
@@ -144,14 +144,14 @@ class FeatureSet(metaclass=FeatureSetMeta):
         return [f.value for f in self.features if f.visible]
 
     @property
-    def by_category(self, groupkey=operator.attrgetter('category')):
+    def by_category(self, *, groupkey=operator.attrgetter('category')):
         features = sorted(self.features, key=groupkey)
         mapping = {k: [f.value for f in g]
                    for k, g in groupby(features, groupkey)}
         return [mapping.get(c, []) for c in self.__class__.system.categories]
 
     @property
-    def by_specificity(self, groupkey=operator.attrgetter('specificity')):
+    def by_specificity(self, *, groupkey=operator.attrgetter('specificity')):
         features = sorted(self.features, key=groupkey)
         mapping = {k: [f.value for f in g]
                    for k, g in groupby(features, groupkey)}
@@ -161,7 +161,7 @@ class FeatureSet(metaclass=FeatureSetMeta):
         self._clearlazy()
         self.features |= other.features
 
-    def remove(self, other, discard=False):
+    def remove(self, other, *, discard=False):
         if not discard and not other.features <= self.features:
             raise KeyError
         self._clearlazy()
@@ -193,7 +193,7 @@ class FeatureBag(FeatureSet):
         self._clearlazy()
         self.features += other.features
 
-    def remove(self, other, discard=False):
+    def remove(self, other, *, discard=False):
         if not discard and not self.issubset(other):
             raise KeyError
         self._clearlazy()
@@ -243,7 +243,7 @@ class FeatureSystem(object):
                   for f in self.mapping.values()]
         return dumper.represent_sequence('tag:yaml.org,2002:seq', result)
 
-    def __init__(self, features_kwargs=(), always_bag=False):
+    def __init__(self, features_kwargs=(), *, always_bag=False):
         class Feature(self.Feature):
             __slots__ = ()
             system = self
@@ -320,11 +320,9 @@ class FeatureSystem(object):
         Feature.specificity = int(specificity)
         return Feature
 
-    _derive_replaces = [
-        [('+', 'plus'), ('-', 'minus')],
-        [('1', 'first'), ('2', 'second'), ('3', 'third')],
-        [('sg', 'singular'), ('du', 'dual'), ('pl', 'plural')],
-    ]
+    _derive_replaces = [[('+', 'plus'), ('-', 'minus')],
+                        [('1', 'first'), ('2', 'second'), ('3', 'third')],
+                        [('sg', 'singular'), ('du', 'dual'), ('pl', 'plural')]]
 
     @classmethod
     def derive_name(cls, value):

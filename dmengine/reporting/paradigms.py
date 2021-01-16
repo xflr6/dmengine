@@ -12,12 +12,12 @@ def is_transitive(paradigm):
     return {(True, False): False, (True, True): True}[filled_headers]
 
 
-def intrans_paradigm(headers, cells, center=False):
+def intrans_paradigm(headers, cells, *, center=False):
     table = list(zip(headers[0], cells))
     return tabular(table, col_headings=False, cnt_table=center)
 
 
-def trans_paradigm(headers, cells, caption='', center=False):
+def trans_paradigm(headers, cells, *, caption='', center=False):
     hrows, hcols = headers
     ncols = len(hcols)
     table = [[caption] + hcols]
@@ -32,7 +32,7 @@ def collumns(cells, n_cols, n_rows):
         yield cells[i:n_cells:n_rows]
 
 
-def folded_paradigm(headers, cells, center=False):
+def folded_paradigm(headers, cells, *, center=False):
     r_headers, c_headers = headers
     n_rows, n_cols = map(len, headers)
     tabs = (tabular([['', h]] + list(zip(r_headers, col)), cnt_table=center)

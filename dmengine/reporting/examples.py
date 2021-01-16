@@ -3,7 +3,7 @@
 from itertools import count
 
 
-def render_example(content, caption=None, labelize=False):
+def render_example(content, *, caption=None, labelize=False):
     if labelize:
         assert not isinstance(content, list)
         label, ref = get_label()
@@ -14,7 +14,7 @@ def render_example(content, caption=None, labelize=False):
         return lines
 
 
-def get_label(index_counter=count(1)):
+def get_label(*, index_counter=count(1)):
     index = next(index_counter)
     label = '\\label{ex:%d} ' % index
     reference = '\\ref{ex:%d} ' % index

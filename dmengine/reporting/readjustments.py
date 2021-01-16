@@ -24,19 +24,19 @@ def register(func):
 
 
 @register
-def delete(read, tmpl=translate('%s -> \\0%s')):
+def delete(read, *, tmpl=translate('%s -> \\0%s')):
     return tmpl % (read['exponent'], render_expcontexts(read))
 
 
 @register
-def copy(read, tmpl=translate('%s -> %s %s%s')):
+def copy(read, *, tmpl=translate('%s -> %s %s%s')):
     exponent = read['exponent']
     contexts = render_expcontexts(read)
     return tmpl % (exponent, exponent, exponent, contexts)
 
 
 @register
-def metathesis(read, tmpl=translate('%s...%s-> %s...%s')):
+def metathesis(read, *, tmpl=translate('%s...%s-> %s...%s')):
     first_exponent = read['first_exponent']
     second_exponent = read['second_exponent']
     return tmpl % (first_exponent, second_exponent,
@@ -44,7 +44,7 @@ def metathesis(read, tmpl=translate('%s...%s-> %s...%s')):
 
 
 @register
-def transform(read, tmpl=translate('%s $\\sim$> %s%s')):
+def transform(read, *, tmpl=translate('%s $\\sim$> %s%s')):
     search = read['search']
     replace = read['replace'].replace('\\', '\\textbackslash')
     contexts = render_expcontexts(read)

@@ -154,7 +154,7 @@ class Fusion(Rule):
 
     kind = 'fusion'
 
-    def __init__(self, first_head, second_head, into_first=True):
+    def __init__(self, first_head, second_head, *, into_first=True):
         self.first_head = self.Features(first_head)
         self.second_head = self.Features(second_head)
         self.into_first = into_first

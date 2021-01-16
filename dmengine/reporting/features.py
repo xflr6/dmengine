@@ -9,7 +9,7 @@ def render_feature(f):
     return f.replace('-', '$-$')
 
 
-def render_features(features, brackets=False):
+def render_features(features, *, brackets=False):
     result = ','.join(render_feature(f) for f in features)
     if brackets:
         result = f'$[${result}$]$'

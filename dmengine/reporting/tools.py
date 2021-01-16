@@ -14,11 +14,11 @@ def pairwise(iterable):
     return zip(a, b)
 
 
-def grouper(n, iterable, fillvalue=None):
+def grouper(n, iterable, *, fillvalue=None):
     return zip_longest(*[iter(iterable)] * n, fillvalue=fillvalue)
 
 
-def swapext(filename, extension, delimiter='.'):
+def swapext(filename, extension, *, delimiter='.'):
     f_name, f_delim, _ = filename.rpartition(delimiter)
     return f'{f_name}{f_delim}{extension}'
 

@@ -34,9 +34,12 @@ class Analysis(object):
 
     Calculator = calculation.Calculator
 
-    def __init__(self, filename, directory=None, encoding='utf-8'):
+    def __init__(self, filename, *, directory=None, encoding='utf-8'):
         self.filename = filename
-        self.results = tools.derive_filename(filename, '-results', 'yaml', directory)
+        self.results = tools.derive_filename(filename,
+                                             suffix='-results',
+                                             extension='yaml',
+                                             directory=directory)
 
         log.info(f'{self!r}')
 
@@ -74,7 +77,7 @@ class Analysis(object):
         log.info('\tcalculate..')
         self.worklog, self.outputs, self.spellouts = self.calculator()
 
-    def save(self, encoding='utf-8', newline=''):
+    def save(self, *, encoding='utf-8', newline=''):
         log.info(f'\tsave to {self.results!r}..')
 
         data = collections.OrderedDict([

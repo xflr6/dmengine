@@ -150,5 +150,5 @@ class TransformExponent(Readjustment):
             new_form, subbed = self._subn(self.replace, vi.exponent.form)
             applied = True
             if subbed:
-                vis[i] = vi.copy(new_form)
+                vis[i] = vi.copy(form=new_form)
         return applied

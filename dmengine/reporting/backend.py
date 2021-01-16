@@ -15,11 +15,11 @@ def apply(f, *args, **kwargs):
     return f(*args, **kwargs)
 
 
-def no_compile(filename, view=False):
+def no_compile(filename, *, view=False):
     raise NotImplementedError('platform not supported')
 
 
-def pdflatex_compile(filename, view=False):
+def pdflatex_compile(filename, *, view=False):
     """Compile LaTeX file by running pdflatex three times."""
     pdflatex = ['pdflatex', '-output-format=pdf', '-interaction=batchmode', '-halt-on-error']
     compile_dir = os.path.dirname(filename)
@@ -33,7 +33,7 @@ def pdflatex_compile(filename, view=False):
         open_viewer(tools.swapext(filename, 'pdf'))
 
 
-def latexmk_compile(filename, view=False):
+def latexmk_compile(filename, *, view=False):
     """Compile LaTeX file with the latexmk perl script."""
     compile_dir, filename = os.path.split(filename)
 
@@ -46,7 +46,7 @@ def latexmk_compile(filename, view=False):
         subprocess.check_call(latexmk)
 
 
-def texify_compile(filename, view=False):
+def texify_compile(filename, *, view=False):
     """Compile LaTeX file using MikTeX's texify utility."""
     compile_dir, filename = os.path.split(filename)  # texify has issues with remote directory
 
@@ -61,11 +61,9 @@ def texify_compile(filename, view=False):
 
 @apply
 def compile(platform=PLATFORM):
-    compile_funcs = {
-        'darwin': pdflatex_compile,
-        'linux': pdflatex_compile,
-        'windows': texify_compile,
-    }
+    compile_funcs = {'darwin': pdflatex_compile,
+                     'linux': pdflatex_compile,
+                     'windows': texify_compile}
     return compile_funcs.get(platform, no_compile)
 
 
@@ -90,9 +88,7 @@ def view_windows(filepath):
 
 @apply
 def open_viewer(platform=PLATFORM):
-    view_funcs = {
-        'darwin': view_darwin,
-        'linux': view_linux,
-        'windows': view_windows,
-    }
+    view_funcs = {'darwin': view_darwin,
+                  'linux': view_linux,
+                  'windows': view_windows}
     return view_funcs.get(platform, no_view)

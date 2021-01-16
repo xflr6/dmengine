@@ -1,12 +1,10 @@
 # common.py
 
-TRANSLATE = [
-    ('->', '$\\rightarrow$'),
-    ('...', '\\dots '),
-    ('[', '$[$'),
-    (']', '$]$'),
-    ('_', '\\_'),
-]
+TRANSLATE = [('->', '$\\rightarrow$'),
+             ('...', '\\dots '),
+             ('[', '$[$'),
+             (']', '$]$'),
+             ('_', '\\_')]
 
 
 def translate(string):
@@ -15,7 +13,8 @@ def translate(string):
     return string
 
 
-def tabular(table, row_headings=True, col_headings=True, cnt_content=False, cnt_table=False):
+def tabular(table, *, row_headings=True, col_headings=True,
+            cnt_content=False, cnt_table=False):
     n_cols = len(table[0])
     result = ['\\begin{tabular}[t]{l%s*{%d}{%s}}\n' %
         ('|' if row_headings else '', n_cols - 1, 'c' if cnt_content else 'l')]

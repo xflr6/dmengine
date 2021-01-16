@@ -25,17 +25,17 @@ def register(func):
 
 
 @register
-def impoverishment(rule, tmpl=translate('%s -> \\0%s')):
+def impoverishment(rule, *, tmpl=translate('%s -> \\0%s')):
     return tmpl % (render_features(rule['features']), render_contexts(rule))
 
 
 @register
-def obliteration(rule, tmpl=translate('[] -> \\0%s')):
+def obliteration(rule, *, tmpl=translate('[] -> \\0%s')):
     return tmpl % render_contexts(rule)
 
 
 @register
-def fission(rule, tmpl=translate('[%s,%s...] -> [%s...][%s]')):
+def fission(rule, *, tmpl=translate('[%s,%s...] -> [%s...][%s]')):
     features = render_features(rule['features'])
     this_head = render_features(rule['this_head'])
     return tmpl % (features, this_head, this_head, features)
@@ -55,17 +55,17 @@ def fusion(rule):
 
 
 @register
-def copy(rule, tmpl=translate('[...] -> [...][...]%s')):
+def copy(rule, *, tmpl=translate('[...] -> [...][...]%s')):
     return tmpl % render_contexts(rule)
 
 
 @register
-def add(rule, tmpl=translate('[...] -> [...,%s]%s')):
+def add(rule, *, tmpl=translate('[...] -> [...,%s]%s')):
     return tmpl % (render_features(rule['features']), render_contexts(rule))
 
 
 @register
-def metathesis(rule, tmpl=translate('[%s]...[%s] -> [%s]...[%s]')):
+def metathesis(rule, *, tmpl=translate('[%s]...[%s] -> [%s]...[%s]')):
     first_head = render_features(rule['first_head'])
     second_head = render_features(rule['second_head'])
     return tmpl % (first_head, second_head, second_head, first_head)

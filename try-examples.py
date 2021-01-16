@@ -12,4 +12,4 @@ DIRECTORY = 'examples-output'
 PDF = True
 
 for filename in glob.glob(EXAMPLES):
-    analysis = dmengine.calculate(filename, DIRECTORY, pdf=PDF)
+    analysis = dmengine.calculate(filename, directory=DIRECTORY, pdf=PDF)

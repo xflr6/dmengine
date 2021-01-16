@@ -55,7 +55,7 @@ class Exponent(metaclass=ExponentMeta):
         if not form:
             raise ValueError(f'{self!r} empty form.')
 
-    def copy(self, form=None):
+    def copy(self, *, form=None):
         if form is None:
             form = self.form
         return self.__class__(form)
