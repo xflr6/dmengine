@@ -14,6 +14,7 @@ setup(
     url='https://github.com/xflr6/dmengine',
     project_urls={
         'Issue Tracker': 'https://github.com/xflr6/dmengine/issues',
+        'CI': 'https://github.com/xflr6/dmengine/actions',
     },
     packages=find_packages(),
     entry_points={'console_scripts': ['dmengine=dmengine.__main__:main']},

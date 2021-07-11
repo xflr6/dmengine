@@ -3,6 +3,8 @@ dmengine
 
 |PyPI version| |License| |Supported Python| |Format|
 
+|Build|
+
 DM-engine is a Python implementation of **Distributed Morphology** (DM_).
 
 Distributed Morphology is a framework from theoretical linguistics that is used
@@ -235,3 +237,7 @@ License
 .. |Format| image:: https://img.shields.io/pypi/format/dmengine.svg
     :target: https://pypi.org/project/dmengine/
     :alt: Format
+
+.. |Build| image:: https://github.com/xflr6/csv23/actions/workflows/build.yaml/badge.svg
+    :target: https://github.com/xflr6/csv23/actions/workflows/build.yaml?query=branch%3Amaster
+    :alt: Build
