@@ -238,6 +238,6 @@ License
     :target: https://pypi.org/project/dmengine/
     :alt: Format
 
-.. |Build| image:: https://github.com/xflr6/csv23/actions/workflows/build.yaml/badge.svg
+.. |Build| image:: https://github.com/xflr6/csv23/actions/workflows/build.yaml/badge.svg?branch=master
     :target: https://github.com/xflr6/csv23/actions/workflows/build.yaml?query=branch%3Amaster
     :alt: Build
