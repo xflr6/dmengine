@@ -6,7 +6,7 @@ import collections
 from itertools import chain, groupby
 import operator
 
-import oset
+from dmengine.vendor import oset
 
 from . import meta
 from . import tools
