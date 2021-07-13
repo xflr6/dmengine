@@ -7,13 +7,7 @@ from __future__ import absolute_import
 
 import sys
 
-if sys.version_info < (2, 6):
-    # Running in Python <= 2.5
-    from ._abc import MutableSet
-    def next(it):
-        return it.next()
-else:
-    from collections import MutableSet
+from collections.abc import MutableSet
 
 KEY, PREV, NEXT = range(3)
 
