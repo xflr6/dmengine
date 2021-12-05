@@ -1,5 +1,3 @@
-# inputs.py
-
 from .features import render_features
 
 

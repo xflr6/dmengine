@@ -1,4 +1,4 @@
-# types.py - customized collection classes
+"""Customized collection classes."""
 
 from itertools import starmap
 

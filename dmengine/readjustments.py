@@ -1,5 +1,3 @@
-# readjustments.py - post-insertion readjustment rules
-
 """Readjustment rules applying after insertion.
 
 DeleteExponent, CopyExponent, MetatheseExponents, TransformExponent

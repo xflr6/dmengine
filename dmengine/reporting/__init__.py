@@ -1,5 +1,3 @@
-# reporting - create PDF from analysis results
-
 """Create LaTeX reports from analysis results YAML file and render to PDF."""
 
 from .report import Report

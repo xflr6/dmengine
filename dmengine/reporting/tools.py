@@ -1,5 +1,3 @@
-# tools.py
-
 import contextlib
 from itertools import tee, zip_longest
 import os

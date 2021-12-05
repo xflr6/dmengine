@@ -1,6 +1,4 @@
-# vis.py - vocabulary items, match against slot, sort by specificity
-
-"""Vocabulary items: exponent, features, contexts."""
+"""Vocabulary items: exponent, features, contexts (match against slot, sort by specificity)."""
 
 import collections
 from itertools import groupby

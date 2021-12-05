@@ -1,5 +1,3 @@
-# report.py
-
 import logging
 import string
 

@@ -1,5 +1,3 @@
-# rules.py - pre-insertion rules
-
 """Rules applying before insertion.
 
 Impoverishment, Obliteration, Fission, Fusion, CopyHead, AddFeatures, Metathesis

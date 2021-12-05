@@ -1,9 +1,4 @@
-# insertion.py - vocabulary item insertion
-
-"""Insert vocabulary items.
-
-Cyclic, Single, Flat, Once
-"""
+"""Insert vocabulary items: Cyclic, Single, Flat, Once."""
 
 import logging
 import operator

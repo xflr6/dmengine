@@ -1,5 +1,3 @@
-# contexts.py - vocabulary item insertion and rule contexts
-
 """Contexts for vocabulary item insertion and pre-insertion rules.
 
 HeadContext
@@ -45,7 +43,7 @@ class Contexts(types.Instances):
     def __init__(self, **kwcontexts):
         scopes = iter(self.new_item.subclasses)
         items = (self.new_item(s, kwcontexts[s])
-            for s in scopes if s in kwcontexts)
+                 for s in scopes if s in kwcontexts)
         super(types.Instances, self).__init__(items)
 
     def items(self):

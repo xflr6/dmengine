@@ -1,5 +1,3 @@
-# log.py
-
 from itertools import repeat, product
 
 from .features import render_features

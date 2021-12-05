@@ -1,5 +1,3 @@
-# analysis.py - load, calculate, save
-
 """Load an analysis config file, calculate it, and save the results."""
 
 import collections
@@ -49,7 +47,8 @@ class Analysis(object):
         self.author = cfg.get('author', 'Anomymous')
         self.title = cfg.get('title', 'DM-Analyis')
 
-        self.features = self.Features(cfg['features'], always_bag=cfg.get('multisets'))
+        self.features = self.Features(cfg['features'],
+                                      always_bag=cfg.get('multisets'))
 
         self.vis = self.Vis(cfg['vis'])
 

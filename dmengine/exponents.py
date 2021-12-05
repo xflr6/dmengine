@@ -1,6 +1,4 @@
-# exponents.py - prefix, stem, suffix
-
-"""Prefix, Stem, Suffix."""
+"""Exponents: Prefix, Stem, Suffix."""
 
 import operator
 

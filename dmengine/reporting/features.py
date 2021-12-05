@@ -1,5 +1,3 @@
-# features.py
-
 from .common import tabular
 
 

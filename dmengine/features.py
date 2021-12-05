@@ -1,6 +1,4 @@
-# features.py - sets and bags of morphosyntactic features
-
-"""Sets and multisets of predefined feature values."""
+"""Sets and multisets (bags) of predefined morphosyntactic feature values."""
 
 import collections
 from itertools import chain, groupby

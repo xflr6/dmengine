@@ -1,4 +1,4 @@
-# backend.py - compile LaTeX file to PDF, optionally open in viewer
+"""Compile LaTeX file to PDF, optionally open in viewer."""
 
 import os
 import platform

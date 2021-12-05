@@ -1,5 +1,3 @@
-# vis.py
-
 import re
 
 from .contexts import render_contexts

@@ -1,6 +1,4 @@
-# outcontexts.py - readjustment contexts matching vocabulary items
-
-"""Contexts for post-insertion readjustments.
+"""Contexts for post-insertion readjustments matching vocabulary items.
 
 ExponentContext
     ThisExponent, LeftExponent, RightExponent, OtherExponent

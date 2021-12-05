@@ -1,5 +1,3 @@
-# calculation.py - rules, vocabulary item insertion, readjustments
-
 """Calculate the outputs for rules, vocabulary item insertion, readjustments."""
 
 import logging
@@ -40,12 +38,15 @@ class Calculator(object):
             spellout = output_pst.exponents.spellout
 
             log.debug('"{}"'.format(spellout.encode('ascii', 'backslashreplace')))
-            logs.append({
-                'input_pre': input_pre, 'input_pro': input_pro, 'input_pst': input_pst,
-                'matches': matches, 'inserts': inserts,
-                'output_pre': output_pre, 'output_pro': output_pro, 'output_pst': output_pst,
-                'spellout': spellout,
-            })
+            logs.append({'input_pre': input_pre,
+                         'input_pro': input_pro,
+                         'input_pst': input_pst,
+                         'matches': matches,
+                         'inserts': inserts,
+                         'output_pre': output_pre,
+                         'output_pro': output_pro,
+                         'output_pst': output_pst,
+                         'spellout': spellout})
 
             outputs.append(output_pst)
 

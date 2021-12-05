@@ -1,5 +1,3 @@
-# common.py
-
 TRANSLATE = [('->', '$\\rightarrow$'),
              ('...', '\\dots '),
              ('[', '$[$'),

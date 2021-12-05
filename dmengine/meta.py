@@ -1,4 +1,4 @@
-# meta.py - meta-programming tools
+"""Meta-programming tools."""
 
 import collections
 

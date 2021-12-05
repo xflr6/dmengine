@@ -1,5 +1,3 @@
-# paradigms.py
-
 from .common import tabular
 from .features import render_features
 from .inputs import render_slotlist

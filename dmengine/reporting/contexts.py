@@ -1,5 +1,3 @@
-# contexts.py
-
 import collections
 
 from .common import translate

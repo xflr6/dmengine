@@ -1,5 +1,3 @@
-# readjustments.py
-
 from .common import translate
 from .contexts import render_expcontexts
 from .examples import render_example

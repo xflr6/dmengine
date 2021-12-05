@@ -1,4 +1,4 @@
-# tools.py
+"""Generic re-useable functions."""
 
 from collections.abc import Sequence
 import os

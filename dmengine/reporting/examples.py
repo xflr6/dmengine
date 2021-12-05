@@ -1,5 +1,3 @@
-# examples.py
-
 from itertools import count
 
 

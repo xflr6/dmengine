@@ -1,5 +1,3 @@
-# test_features.py
-
 import pytest
 
 from dmengine.features import FeatureSystem
@@ -7,18 +5,16 @@ from dmengine.features import FeatureSystem
 
 @pytest.fixture(scope='session')
 def fs():
-    features = [
-        {'value': '+1', 'category': 'person'},
-        {'value': '-1', 'category': 'person'},
-        {'value': '+2', 'category': 'person'},
-        {'value': '-2', 'category': 'person'},
-        {'value': '+3', 'category': 'person'},
-        {'value': '-3', 'category': 'person'},
-        {'value': '+sg', 'category': 'number'},
-        {'value': '+pl', 'category': 'number'},
-        {'value': '-sg', 'category': 'number'},
-        {'value': '-pl', 'category': 'number'},
-    ]
+    features = [{'value': '+1', 'category': 'person'},
+                {'value': '-1', 'category': 'person'},
+                {'value': '+2', 'category': 'person'},
+                {'value': '-2', 'category': 'person'},
+                {'value': '+3', 'category': 'person'},
+                {'value': '-3', 'category': 'person'},
+                {'value': '+sg', 'category': 'number'},
+                {'value': '+pl', 'category': 'number'},
+                {'value': '-sg', 'category': 'number'},
+                {'value': '-pl', 'category': 'number'}]
     return FeatureSystem(features)
 
 
