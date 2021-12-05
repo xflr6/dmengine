@@ -32,6 +32,13 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
+      - name: Apt install system dependencies (linux)
+        if: ${{ startsWith(matrix.os, 'ubuntu-') }}
+        run: |
+          echo ::group::Run sudo apt-get update; sudo apt-get update; echo ::endgroup::
+          echo ::group::Run sudo apt-get install texlive texlive-fonts-extra texlive-humanities latexmk;
+          sudo apt-get install texlive texlive-fonts-extra texlive-humanities latexmk;
+          echo ::endgroup::
       - name: Setup Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
         with:
@@ -41,8 +48,28 @@ jobs:
           echo ::group::Run python -m pip install --upgrade pip setuptools wheel
           python -m pip install --upgrade pip setuptools wheel
           echo ::endgroup::
-          echo ::group::Run pip install .[test]
-          pip install .[test]
+          echo ::group::Run pip install .[test] coverage
+          pip install .[test] coverage
           echo ::endgroup::
       - name: Run tests
         run: python run-tests.py
+      - name: Run try-examples.py (linux)
+        if: ${{ startsWith(matrix.os, 'ubuntu-') }}
+        run: |
+          echo ::group::Run try-examples.py; FAILED=0;
+          coverage run --append try-examples.py || FAILED=$?
+          echo ::endgroup::
+          echo ::group::Check coverage; coverage report; coverage html; echo ::endgroup::
+          [ $FAILED -eq 0 ] || echo ::warning::try-examples.py failed with exit code $FAILED
+        shell: bash
+      - name: Upload coverage
+        uses: codecov/codecov-action@v1
+      - name: Upload artifacts ${{ matrix.name }} (linux)
+        if: ${{ startsWith(matrix.os, 'ubuntu-') }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.os }}-${{ matrix.python-version }}
+          path: |
+            examples-output/*.yaml
+            examples-output/*.tex
+            examples-output/*.pdf

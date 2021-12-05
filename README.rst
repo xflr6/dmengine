@@ -3,7 +3,7 @@ dmengine
 
 |PyPI version| |License| |Supported Python| |Wheel|
 
-|Build|
+|Build| |Codecov|
 
 DM-engine is a Python implementation of **Distributed Morphology** (DM_).
 
@@ -241,3 +241,6 @@ License
 .. |Build| image:: https://github.com/xflr6/csv23/actions/workflows/build.yaml/badge.svg?branch=master
     :target: https://github.com/xflr6/csv23/actions/workflows/build.yaml?query=branch%3Amaster
     :alt: Build
+.. |Codecov| image:: https://codecov.io/gh/xflr6/dmengine/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/xflr6/dmengine
+    :alt: Codecov
