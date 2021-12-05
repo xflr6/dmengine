@@ -16,6 +16,7 @@ PDF = True
 
 
 print('run', [SELF.name] + sys.argv[1:])
+
 for filename in glob.glob(EXAMPLES):
     print()
     print(f'dmengine.calculate({filename!r}, directory={DIRECTORY!r}, pdf={PDF!r})')
