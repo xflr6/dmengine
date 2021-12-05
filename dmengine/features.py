@@ -52,7 +52,7 @@ class Feature(metaclass=FeatureMeta):
         return f'<{hidden}{self.value}{category} feature>'
 
     def __str__(self):
-        return self.value if self.visible else f'_self.value_'
+        return self.value if self.visible else f'_{self.value}_'
 
     def hide(self):
         if not self.visible:
