@@ -1,5 +1,3 @@
-# setup.py
-
 import pathlib
 from setuptools import setup, find_packages
 
@@ -22,10 +20,7 @@ setup(
     zip_safe=False,
     platforms='any',
     python_requires='>=3.6',
-    install_requires=[
-        'oset',
-        'PyYAML',
-    ],
+    install_requires=['PyYAML'],
     extras_require={
         'dev': ['flake8', 'pep8-naming', 'wheel', 'twine'],
         'test': ['pytest>=6', 'pytest-cov'],
