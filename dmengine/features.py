@@ -71,7 +71,7 @@ class FeatureSetMeta(type):
         if isinstance(values, str):
             values = values.replace(',', ' ').split()
         keys = map(self.system.get_key, values)
-        features = (f() for f in  map(self.system.mapping.__getitem__, keys))
+        features = (f() for f in map(self.system.mapping.__getitem__, keys))
         features = sorted(features, key=sortkey)
         return super().__call__(features)
 
