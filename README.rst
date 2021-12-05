@@ -1,7 +1,7 @@
 dmengine
 ========
 
-|PyPI version| |License| |Supported Python| |Format|
+|PyPI version| |License| |Supported Python| |Wheel|
 
 |Build|
 
@@ -229,14 +229,14 @@ License
     :target: https://pypi.org/project/dmengine/
     :alt: Latest PyPI Version
 .. |License| image:: https://img.shields.io/pypi/l/dmengine.svg
-    :target: https://pypi.org/project/dmengine/
+    :target: https://github.com/xflr6/dmengine/blob/master/LICENSE.txt
     :alt: License
 .. |Supported Python| image:: https://img.shields.io/pypi/pyversions/dmengine.svg
     :target: https://pypi.org/project/dmengine/
     :alt: Supported Python Versions
-.. |Format| image:: https://img.shields.io/pypi/format/dmengine.svg
-    :target: https://pypi.org/project/dmengine/
-    :alt: Format
+.. |Wheel| image:: https://img.shields.io/pypi/wheel/graphviz.svg
+    :target: https://pypi.org/project/dmengine/#files
+    :alt: Wheel format
 
 .. |Build| image:: https://github.com/xflr6/csv23/actions/workflows/build.yaml/badge.svg?branch=master
     :target: https://github.com/xflr6/csv23/actions/workflows/build.yaml?query=branch%3Amaster
