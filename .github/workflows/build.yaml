@@ -59,7 +59,7 @@ jobs:
         if: ${{ startsWith(matrix.os, 'ubuntu-') }}
         run: |
           echo "::group::Run try-examples.py"
-          FAILED=0;
+          FAILED=0
           coverage run --append try-examples.py || FAILED=$?
           echo "::endgroup::"
           echo "::group::Check coverage"
