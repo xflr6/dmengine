@@ -5,6 +5,8 @@ Changelog
 Version 0.3.2 (in development)
 ------------------------------
 
+Drop Python 3.7 support.
+
 Tag Python 3.11 support.
 
 
