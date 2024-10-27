@@ -29,7 +29,7 @@ jobs:
             os: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Apt install system dependencies (linux)
         if: ${{ startsWith(matrix.os, 'ubuntu-') }}
         run: |
@@ -40,7 +40,7 @@ jobs:
           sudo apt-get install texlive texlive-fonts-extra texlive-humanities latexmk;
           echo "::endgroup::"
       - name: Setup Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
       - name: Pip install dependencies
@@ -67,10 +67,12 @@ jobs:
           [ $FAILED -eq 0 ] || echo "::warning::try-examples.py failed with exit code $FAILED"
         shell: bash
       - name: Upload coverage
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       - name: Upload artifacts ${{ matrix.name }} (linux)
         if: ${{ startsWith(matrix.os, 'ubuntu-') }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.os }}-${{ matrix.python-version }}
           path: |
