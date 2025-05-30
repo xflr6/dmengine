@@ -1,7 +1,7 @@
 dmengine
 ========
 
-|PyPI version| |License| |Supported Python| |Wheel|
+|PyPI version| |License| |Supported Python| |Downloads|
 
 |Build| |Codecov|
 
@@ -234,9 +234,9 @@ License
 .. |Supported Python| image:: https://img.shields.io/pypi/pyversions/dmengine.svg
     :target: https://pypi.org/project/dmengine/
     :alt: Supported Python Versions
-.. |Wheel| image:: https://img.shields.io/pypi/wheel/graphviz.svg
-    :target: https://pypi.org/project/dmengine/#files
-    :alt: Wheel format
+.. |Downloads| image:: https://img.shields.io/pypi/dm/dmengine.svg
+    :target: https://pypistats.org/packages/dmengine
+    :alt: Monthly downloads
 
 .. |Build| image:: https://github.com/xflr6/csv23/actions/workflows/build.yaml/badge.svg?branch=master
     :target: https://github.com/xflr6/csv23/actions/workflows/build.yaml?query=branch%3Amaster
