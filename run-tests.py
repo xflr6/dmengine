@@ -19,6 +19,7 @@ ARGS = [#'--verbose',
 if 'idlelib' in sys.modules:
     ARGS += ['--capture=sys', '--color=no']
 
+
 print('run', [SELF.name] + sys.argv[1:])
 args = ARGS + sys.argv[1:]
 

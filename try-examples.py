@@ -18,6 +18,5 @@ PDF = True
 print('run', [SELF.name] + sys.argv[1:])
 
 for filename in glob.glob(EXAMPLES):
-    print()
-    print(f'dmengine.calculate({filename!r}, directory={DIRECTORY!r}, pdf={PDF!r})')
+    print('', f'dmengine.calculate({filename!r}, directory={DIRECTORY!r}, pdf={PDF!r})', sep='\n')
     analysis = dmengine.calculate(filename, directory=DIRECTORY, pdf=PDF)
