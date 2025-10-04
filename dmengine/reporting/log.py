@@ -1,9 +1,8 @@
-from itertools import repeat, product
+from itertools import pairwise, product, repeat
 
 from .features import render_features
 from .inputs import render_slotlist, render_slot, render_head
 from .paradigms import is_transitive, para_logs
-from .tools import pairwise
 from .vis import render_exponent, render_vi
 
 
