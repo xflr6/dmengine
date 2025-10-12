@@ -2,6 +2,7 @@
 
 import collections
 from collections.abc import Container
+import functools
 from itertools import chain, groupby
 import operator
 
@@ -130,15 +131,15 @@ class FeatureSet(metaclass=FeatureSetMeta):
             if name in attrs:
                 del attrs[name]
 
-    @meta.lazyproperty
+    @functools.cached_property
     def values(self):
         return [f.value for f in self.features]
 
-    @meta.lazyproperty
+    @functools.cached_property
     def visible(self):
         return self.features.__class__(f for f in self.features if f.visible)
 
-    @meta.lazyproperty
+    @functools.cached_property
     def values_visible(self):
         return [f.value for f in self.features if f.visible]
 

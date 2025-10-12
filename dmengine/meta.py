@@ -4,7 +4,7 @@ import collections
 
 import yaml
 
-__all__ = ['serializable', 'lazyproperty', 'EmptySlotsMeta', 'FactoryMeta']
+__all__ = ['serializable', 'EmptySlotsMeta', 'FactoryMeta']
 
 
 def serializes(data_type):
@@ -30,39 +30,6 @@ def serializable(cls):
     else:
         raise RuntimeError
     return cls
-
-
-class lazyproperty(object):  # noqa: N801
-    """Non-data descriptor caching the computed result as instance attribute.
-
-    >>> class Spam(object):
-    ...     @lazyproperty
-    ...     def eggs(self):
-    ...         return 'spamspamspam'
-
-    >>> spam=Spam(); spam.eggs
-    'spamspamspam'
-
-    >>> spam.eggs='eggseggseggs'; spam.eggs
-    'eggseggseggs'
-
-    >>> Spam().eggs
-    'spamspamspam'
-
-    >>> Spam.eggs  # doctest: +ELLIPSIS
-    <...lazyproperty object at 0x...>
-    """
-
-    def __init__(self, fget):
-        self.fget = fget
-        for attr in ('__module__', '__name__', '__doc__'):
-            setattr(self, attr, getattr(fget, attr))
-
-    def __get__(self, instance, owner):
-        if instance is None:
-            return self
-        result = instance.__dict__[self.__name__] = self.fget(instance)
-        return result
 
 
 class EmptySlotsMeta(type):

@@ -1,6 +1,7 @@
 """Vocabulary items: exponent, features, contexts (match against slot, sort by specificity)."""
 
 import collections
+import functools
 from itertools import groupby
 import operator
 
@@ -60,7 +61,7 @@ class VocabularyItem(object):
         return (self.features.issubset_visible(head)
                 and all(map(matching, self.contexts)))
 
-    @meta.lazyproperty
+    @functools.cached_property
     def specificity(self):
         mueller_specificity = tuple(map(len, self.features.by_specificity))
         return mueller_specificity + (sum(len(c.features) for c in self.contexts),)
