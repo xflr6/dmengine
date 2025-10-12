@@ -18,7 +18,7 @@ from . import types
 __all__ = ['ViContext', 'ViContexts']
 
 
-class ViContext(metaclass=meta.FactoryMeta('scope', collections.OrderedDict)):
+class ViContext(metaclass=meta.FactoryMeta('scope', collections.OrderedDict)):  # type: ignore[metaclass]  # noqa: E501
     """Context matching vis under defined conditions."""
 
     def match(self, vi, left_context, right_context):

@@ -41,7 +41,7 @@ class FlowList(List):
 class Instances(List):
     """List of instances created applying **kwargs to factory function."""
 
-    new_item = None
+    new_item: type
 
     def __init__(self, items_kwargs=()):
         new_item = self.new_item

@@ -18,7 +18,7 @@ __all__ = ['Readjustment', 'Readjustments']
 
 
 @meta.serializable
-class Readjustment(metaclass=meta.FactoryMeta('kind')):
+class Readjustment(metaclass=meta.FactoryMeta('kind')):  # type: ignore[metaclass]  # noqa: E501
     """Abtstract base class and factory for post-insertion operations on a vi sequence."""
 
     Exponent = exponents.Exponent

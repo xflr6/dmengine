@@ -17,7 +17,7 @@ from . import types
 __all__ = ['Context', 'Contexts']
 
 
-class Context(metaclass=meta.FactoryMeta('scope', collections.OrderedDict)):
+class Context(metaclass=meta.FactoryMeta('scope', collections.OrderedDict)):  # type: ignore[metaclass]  # noqa: E501
     """Abstract base class and factory for contexts matching features under defined conditions."""
 
     Features = features.FeatureSet

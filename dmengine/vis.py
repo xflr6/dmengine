@@ -118,7 +118,7 @@ class ViList(types.List):
 
 class Matching(types.StarInstances):
 
-    new_item = collections.namedtuple('Match', ['head', 'vi'])
+    new_item = collections.namedtuple('Match', ['head', 'vi'])  # type: ignore[name-match]  # noqa: E501
 
     sortkey = lambda m: m.vi.specificity  # noqa: E731
 

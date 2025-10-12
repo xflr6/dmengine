@@ -1,9 +1,12 @@
+from collections.abc import Callable
+from typing import Any
+
 from .common import translate
 from .contexts import render_contexts
 from .examples import render_example
 from .features import render_features
 
-MAP = {}
+MAP: dict[str, Callable[..., Any]] = {}
 
 
 def render_rules(rules):

@@ -13,7 +13,7 @@ __all__ = ['Insertion']
 log = logging.getLogger()
 
 
-class Insertion(metaclass=meta.FactoryMeta('kind')):
+class Insertion(metaclass=meta.FactoryMeta('kind')):  # type: ignore[metaclass]  # noqa: E501
     """Insertion of vocabulary items into hierarchies of potentially fused heads."""
 
     single = False

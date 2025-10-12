@@ -20,13 +20,13 @@ def swapext(filename, extension, *, delimiter: str = '.'):
 def chdir(path: os.PathLike[str] | str) -> Iterator[str | None]:
     """Change the current working directory, restore on context exit."""
     if not path:
-        yield
+        yield None
         return
 
     oldwd = os.getcwd()
     os.chdir(path)
     try:
-        yield path
+        yield os.fspath(path)
     finally:
         os.chdir(oldwd)
 

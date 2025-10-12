@@ -41,7 +41,7 @@ class ExponentMeta(type):
 class Exponent(metaclass=ExponentMeta):
     """Prefix, stem, and suffix identified by value hyphen-position."""
 
-    kind = None
+    kind: str | None = None
 
     @staticmethod
     def _multi_representer(dumper, self):

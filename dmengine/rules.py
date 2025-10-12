@@ -17,7 +17,7 @@ __all__ = ['Rule', 'Rules']
 
 
 @meta.serializable
-class Rule(metaclass=meta.FactoryMeta('kind')):
+class Rule(metaclass=meta.FactoryMeta('kind')):  # type: ignore[metaclass]  # noqa: E501
     """Abtstract base class and factory for operations on a sequence of slots containing heads."""
 
     Features = features.FeatureSet

@@ -1,6 +1,7 @@
 """Sets and multisets (bags) of predefined morphosyntactic feature values."""
 
 import collections
+from collections.abc import Container
 from itertools import chain, groupby
 import operator
 
@@ -80,7 +81,7 @@ class FeatureSetMeta(type):
 class FeatureSet(metaclass=FeatureSetMeta):
     """Ordered set of morphosyntactic features."""
 
-    features = oset.oset
+    features: type[Container] = oset.oset
 
     @staticmethod
     def _multi_representer(dumper, self):
@@ -176,7 +177,7 @@ class FeatureSet(metaclass=FeatureSetMeta):
 class FeatureBag(FeatureSet):
     """Ordered bag of morphosyntactic features."""
 
-    features = list
+    features: type[Container] = list
 
     def issubset(self, other):
         return all(map(other.features.__contains__, self.features))
@@ -216,10 +217,6 @@ class FeatureBag(FeatureSet):
                     break
             else:
                 raise ValueError
-
-
-class FeatureSet(FeatureSet):
-    """Ordered set or bag of morphosyntactic features."""
 
 
 @meta.serializable
