@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-Version 0.4 (in development)
-----------------------------
+Version 0.4
+-----------
 
 Switch to pyproject.toml.
 
