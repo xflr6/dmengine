@@ -12,7 +12,7 @@ EXAMPLES = 'examples/*.yaml'
 
 DIRECTORY = 'examples-output'
 
-PDF = True
+PDF = False
 
 
 print('run', [SELF.name] + sys.argv[1:])
