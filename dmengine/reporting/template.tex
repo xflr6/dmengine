@@ -4,6 +4,22 @@
   headings=small,%
 ]{scrartcl}
 
+% pdf settings
+\usepackage[%
+  pdfauthor={$AUTHOR},%
+  pdftitle={$TITLE},%
+  pdfsubject={Distributed Morphology analysis calculated with dmengine},%
+  breaklinks,%
+  hidelinks,%
+  bookmarks,%
+  bookmarksnumbered,%
+  bookmarksopen,%
+  bookmarksopenlevel=2,%
+  pdfpagelabels,%
+  pdfstartview=FitH,%
+  pdfpagemode=UseOutlines,%
+]{hyperref}
+
 % input encoding
 \usepackage[tipa]{ucs}
 \usepackage[utf8x]{inputenc}
@@ -36,21 +52,6 @@
 \clearpairofpagestyles
 \cfoot[\pagemark]{\pagemark}\cehead{$AUTHOR}\cohead{$TITLE}
 
-% pdf settings
-\usepackage[%
-  pdfauthor={$AUTHOR},%
-  pdftitle={$TITLE},%
-  pdfsubject={Distributed Morphology analysis calculated with dmengine},%
-  breaklinks,%
-  hidelinks,%
-  bookmarks,%
-  bookmarksnumbered,%
-  bookmarksopen,%
-  bookmarksopenlevel=2,%
-  pdfpagelabels,%
-  pdfstartview=FitH,%
-  pdfpagemode=UseOutlines,%
-]{hyperref}
 
 % landscape pages
 \usepackage{pdflscape}
