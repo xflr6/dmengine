@@ -10,7 +10,7 @@ EXAMPLES = 'examples/*.yaml'
 
 DIRECTORY = 'examples-output'
 
-PDF = False
+PDF = True
 
 
 print('run', [pathlib.Path(__file__).name] + sys.argv[1:])
