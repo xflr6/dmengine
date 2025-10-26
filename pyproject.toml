@@ -25,15 +25,13 @@ classifiers = [
 
 [project.urls]
 Homepage = "https://github.com/xflr6/dmengine"
+Changelog = "https://github.com/xflr6/dmengine/blob/master/CHANGES.rst"
 "Issue Tracker" = "https://github.com/xflr6/dmengine/issues"
 CI = "https://github.com/xflr6/dmengine/actions"
+Coverage = "https://app.codecov.io/gh/xflr6/dmengine"
 
 [project.scripts]
 dmengine = "dmengine.__main__:main"
-
-[project.optional-dependencies]
-dev = ["build", "wheel", "twine", "mypy", "types-PyYAML", "flake8", "Flake8-pyproject", "pep8-naming"]
-test = ["pytest>=7", "pytest-cov"]
 
 [build-system]
 requires = ["setuptools"]
@@ -47,6 +45,30 @@ dmengine = ["reporting/template.tex"]
 
 [tool.setuptools.dynamic]
 version = {attr = "dmengine.__version__"}
+
+[dependency-groups]
+dev = [  # $ pip install -e . --group dev
+  "build",
+  "twine",
+  "wheel",
+  { include-group = "lint" },
+  { include-group = "test" },
+  { include-group = "typing" },
+]
+lint = [
+  "flake8",
+  "Flake8-pyproject",
+  "pep8-naming",
+]
+test = [
+  "coverage",
+  "pytest>=7",
+  "pytest-cov",
+]
+typing = [
+  "mypy",
+  "types-PyYAML",
+]
 
 [tool.mypy]
 packages = ["dmengine"]
