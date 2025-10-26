@@ -90,6 +90,5 @@ jobs:
         run: |
           FAILED=0
           python -m mypy || FAILED=$?
-          echo "::endgroup::"
           [ $FAILED -eq 0 ] || echo "::warning::mypy failed with exit code $FAILED"
         shell: bash
