@@ -1,6 +1,6 @@
 from collections.abc import Iterator
 import contextlib
-from itertools import tee, zip_longest
+from itertools import zip_longest
 import os
 import sys
 
