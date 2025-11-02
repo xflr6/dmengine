@@ -48,38 +48,25 @@ version = {attr = "dmengine.__version__"}
 
 [dependency-groups]
 dev = [  # $ pip install -e . --group dev
-  "build",
-  "twine",
-  "wheel",
+  "build", "tox", "twine", "wheel",
   { include-group = "lint" },
   { include-group = "test" },
   { include-group = "typing" },
 ]
-lint = [
-  "flake8",
-  "Flake8-pyproject",
-  "pep8-naming",
-]
-test = [
-  "coverage",
-  "pytest>=7",
-  "pytest-cov",
-]
-typing = [
-  "mypy",
-  "types-PyYAML",
-]
+lint = ["flake8", "Flake8-pyproject", "pep8-naming"]
+test = ["coverage", "pytest>=8", "pytest-cov"]
+typing = ["mypy", "types-PyYAML"]
 
 [tool.mypy]
 packages = ["dmengine"]
 
 [tool.flake8]
-exclude = [".tox"]
+exclude = [".tox", "build"]
 ignore = ["E126", "E128", "W503"]
 max-line-length = 100
 
 [tool.pytest.ini_options]
-minversion = "6"
+minversion = "8"
 testpaths = ["dmengine", "tests"]
 addopts = [
   "--doctest-modules",
@@ -94,3 +81,12 @@ log_file_level = "DEBUG"
 [tool.coverage.run]
 source = ["dmengine"]
 branch = false
+
+[tool.tox]
+requires = ["tox>=4.22"]
+env_list = ["3.14", "3.13", "3.12", "3.11", "3.10"]
+skip_missing_interpreters = true
+
+[tool.tox.env_run_base]
+dependency_groups = ["test"]
+commands = [["python", "-X", "dev", "run-tests.py", { replace = "posargs", extend = true }]]
