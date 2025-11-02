@@ -41,7 +41,7 @@ class EmptySlotsMeta(type):
 
 
 def FactoryMeta(key_attr, mapping_type=dict):  # noqa: N802
-    """Return a metaclass that registers and retrieves subclasses by nonempty key_attr class attribute."""
+    """Return a metaclass registering/getting subclasses by nonempty key_attr class attribute."""
     class FactoryMeta(type):
 
         def __init__(self, name, bases, dct):  # noqa: N804

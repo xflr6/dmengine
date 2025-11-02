@@ -61,7 +61,7 @@ typing = ["mypy", "types-PyYAML"]
 packages = ["dmengine"]
 
 [tool.flake8]
-exclude = [".tox", "build"]
+exclude = [".tox", "build", "dmengine/vendor"]
 ignore = ["E126", "E128", "W503"]
 max-line-length = 100
 

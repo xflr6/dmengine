@@ -41,7 +41,8 @@ class Rule(metaclass=meta.FactoryMeta('kind')):  # type: ignore[metaclass]  # no
     @classmethod
     def two_candidates(cls, slots):
         for i_s, i_h, slot, head in cls.loop_heads(slots):
-            other = chain(islice(enumerate(slots), None, i_s), islice(enumerate(slots), i_s + 1, None))
+            other = chain(islice(enumerate(slots), None, i_s),
+                          islice(enumerate(slots), i_s + 1, None))
             for o_s, other_slot in other:
                 for o_h, other_head in enumerate(other_slot):
                     yield i_s, i_h, head, o_s, o_h, other_head
@@ -118,7 +119,7 @@ class Obliteration(Rule):
 
 
 class Fission(Rule):
-    """Move the given features from the first context matching head to a new right-adjacent single head slot."""
+    """Move features from first context matching head to new right-adjacent single head slot."""
 
     kind = 'fission'
 

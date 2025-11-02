@@ -49,7 +49,7 @@ def para_logs(paradigms, worklog):
 def paradigms(paradigms, worklog):
     tabs = []
     for paradigm, logs in para_logs(paradigms, worklog):
-        spellouts = [l['spellout'] for l in logs]
+        spellouts = [l['spellout'] for l in logs]  # noqa: E741
         para_func = trans_paradigm if is_transitive(paradigm) else intrans_paradigm
         tabs.append('\\subsection{%s}\n' % paradigm['name'])
         tabs.append(para_func(paradigm['headers'],
