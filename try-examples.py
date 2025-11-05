@@ -6,8 +6,6 @@ import sys
 
 import dmengine
 
-SELF = pathlib.Path(__file__)
-
 EXAMPLES = 'examples/*.yaml'
 
 DIRECTORY = 'examples-output'
@@ -15,7 +13,7 @@ DIRECTORY = 'examples-output'
 PDF = False
 
 
-print('run', [SELF.name] + sys.argv[1:])
+print('run', [pathlib.Path(__file__).name] + sys.argv[1:])
 
 for filename in glob.glob(EXAMPLES):
     print('', f'dmengine.calculate({filename!r}, directory={DIRECTORY!r}, pdf={PDF!r})', sep='\n')
