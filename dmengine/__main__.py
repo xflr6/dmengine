@@ -30,8 +30,8 @@ def main():
                         help='open the report in viewer app (implies --pdf)')
 
     args = parser.parse_args()
-    calculate(args.filename, args.directory,
-              args.report, args.pdf, args.view)
+    calculate(args.filename, directory=args.directory,
+              report=args.report, pdf=args.pdf, view=args.view)
 
 
 def _version():
