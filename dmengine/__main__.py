@@ -36,7 +36,8 @@ def main():
 
 def _version():
     pkg_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    return f'{__version__} from {pkg_dir} (python {sys.version[:3]})'
+    (python_version, *_) = sys.version.partition(' ')
+    return f'{__version__} from {pkg_dir} (Python {python_version})'
 
 
 if __name__ == '__main__':
