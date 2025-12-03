@@ -5,7 +5,7 @@ Changelog
 Version 0.4.2 (in development)
 ------------------------------
 
-
+Fix Python version reported in ``--version`` output.
 
 
 Version 0.4.1
