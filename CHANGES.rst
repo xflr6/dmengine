@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-Version 0.4.1 (in development)
-------------------------------
+Version 0.4.1
+-------------
 
 Fix command-line usage broken in version 0.3, i.e.
 ``TypeError: calculate() takes 1 positional argument but 5 were given``
