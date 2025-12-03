@@ -54,7 +54,7 @@ jobs:
           coverage report
           coverage html
           echo "::endgroup::"
-          [ $FAILED -eq 0 ] || echo "::warning::try-examples.py failed with exit code $FAILED"
+          [ $FAILED -eq 0 ] || echo "::error::try-examples.py failed with exit code $FAILED"
         shell: bash
       - name: Upload coverage
         uses: codecov/codecov-action@v4

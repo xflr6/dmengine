@@ -6,7 +6,8 @@ Version 0.4.1 (in development)
 ------------------------------
 
 Fix command-line usage broken in version 0.3, i.e.
-``TypeError: calculate() takes 1 positional argument but 5 were given``.
+``TypeError: calculate() takes 1 positional argument but 5 were given``
+and cover ``__main__.py`` in ``try-examples.py`` used by CI.
 
 
 Version 0.4
