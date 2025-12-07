@@ -1,0 +1,35 @@
+# specificity.yaml - toy example illustrating impact of specificity with single insertion
+title: (Pseudo-)English pronouns
+insertion: single
+features:
+- value: +1
+  category: person
+- value: +2
+  category: person
+  specificity: 1  # makes <you, +2> bleed <all, +pl> in 2pl cell
+- value: -pl
+  category: number
+- value: +pl
+  category: number
+vis:
+- exponent: I
+  features: [ +1, -pl ]
+- exponent: we
+  features: [ +1, +pl ]
+- exponent: all
+  features: [ +pl ]
+- exponent: you
+  features: [ +2 ]
+paradigms:
+- name: SAP Pronouns
+  headers: [ [1, 2], [sg, pl] ]
+  inputs:
+  - [ [+1, -pl] ]
+  - [ [+1, +pl] ]
+  - [ [+2, -pl] ]
+  - [ [+2, +pl] ]
+  spellouts_expected:
+  - I
+  - we
+  - you
+  - you
