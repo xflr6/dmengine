@@ -136,7 +136,7 @@ vis:
   anywhere: [ +past ]
 # accusative suffixes
 - exponent: -ki
-  features: [ +1 ] # -sg?
+  features: [ +1 ]  # -sg?
   this_head: [ P ]
 - exponent: -ŋi
   features: [ +1, +sg ]
@@ -151,7 +151,7 @@ vis:
   this_head: [ P ]
   anywhere: [ +past ]
 - exponent: -sa
-  features: [ +1, +2 ] #changed
+  features: [ +1, +2 ]  # changed
   this_head: [ P ]
   anywhere: [ -past ]
 - exponent: -saɖɖa
@@ -199,7 +199,7 @@ rules:
   this_head: [ P ]
   other_head: [ A, +1, -2, -sg ]
   
-#1->3 2->3 3->3
+# 1->3 2->3 3->3
 # impoverish 3 object number with 1di 2du subject
 - kind: impoverishment
   features: [ +sg,-sg,+du,-du,+pl,-pl ]
@@ -243,7 +243,7 @@ rules:
   anywhere: [ +past ]
 
 
-#3 inverse
+# 3 inverse
 # impoverish 3 person with other head 1 2 (counterbleeding)
 - kind: impoverishment
   features: [ +3 ]
@@ -251,7 +251,7 @@ rules:
   other_head: [ -3 ]
 
 
-#2 inverse
+# 2 inverse
 # impoverish 2sg person with other argument 1sg
 - kind: impoverishment
   features: [ +2 ]
@@ -259,7 +259,7 @@ rules:
   other_head: [ +1, -2, +sg ]
 
 
-#1 object
+# 1 object
 # impoverish past non plural subject with 1 non sg object
 - kind: impoverishment
   features: [ +1,-1,+2,-2,+3,-3,+sg,-sg,+du,-du,+pl,-pl ]
@@ -319,7 +319,7 @@ rules:
 
 # nonpast 3sg->1di -sa -> -tsi-ki
 - kind: impoverishment
-  features: [ +2 ] #changed
+  features: [ +2 ]  # changed
   this_head: [ P, +1, +2, +du ]
   other_head: [ A, -1, -2, +sg ]
   anywhere: [ -past ]
@@ -331,7 +331,7 @@ rules:
   this_head: [ SA, +2, +du ]
 
 
-#3->2
+# 3->2
 # impoverish 3du->2du subject dual (*tsi-tsi)
 - kind: impoverishment
   features: [ +du ]

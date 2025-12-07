@@ -78,7 +78,7 @@ vis:
   features: [ N, Akk, +2, +pl ]
 #- exponent: -test
 #  features: [ +pl ]
-#  this_head: [ +Akk,-1,-2,+3,+N ]
+#  this_head: [ +Akk, -1, -2, +3, +N ]
 rules:
 - kind: copy
   this_head: [ Nom ]
@@ -101,7 +101,7 @@ readjustments:
   features: [ V ]
 paradigms:
 - name: Intransitive
-  headers: [ [ 1sg, 1pl, 2sg, 2pl, 3sg, 3pl ], [] ]
+  headers: [ [1sg, 1pl, 2sg, 2pl, 3sg, 3pl], [] ]
   inputs:
   - [ [V], [Nom, +1, -2, -3, -pl] ]
   - [ [V], [Nom, +1, -2, -3, +pl] ]
@@ -117,7 +117,7 @@ paradigms:
   - ihr-schnarch-t
   - sie-schnarch-en  
 - name: Transitive
-  headers: [ [ 1sg, 1pl, 2sg, 2pl, 3sg, 3pl ], [ 1sg, 1pl, 2sg, 2pl, 3sg, 3pl ] ]
+  headers: [ [1sg, 1pl, 2sg, 2pl, 3sg, 3pl], [1sg, 1pl, 2sg, 2pl, 3sg, 3pl] ]
   inputs:
   - [ [V], [Nom, +1, -2, -3, -pl], [Akk, +1, -2, -3, -pl] ]
   - [ [V], [Nom, +1, -2, -3, -pl], [Akk, +1, -2, -3, +pl] ]
