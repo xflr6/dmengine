@@ -195,6 +195,17 @@ TODO
 - set_delete: global, slot, vi
 
 
+Publications
+------------
+
+This package has been used in the following paper(s):
+
+- Henze, Daniela & Zimmermann, Eva. 2010.
+  `Hierarchy-governed insertion and CFD-markers in Potawatomi`_.
+  In: Sebastian Bank, Doreen Georgi & Jochen Trommer (eds.),
+  2 in Agreement, Linguistische Arbeits Berichte 88, Universität Leipzig, 23-63.
+
+
 See also
 --------
 
@@ -217,6 +228,7 @@ License
 .. _TeX Live: https://www.tug.org/texlive/
 .. _MikTeX: https://miktex.org
 
+.. _Hierarchy-governed insertion and CFD-markers in Potawatomi: https://www.philol.uni-leipzig.de/fileadmin/Fakult%C3%A4t_Philo/Linguistik/Forschung/LAB/LAB_88/LAB88_02_henze_zimmermann.pdf
 .. _web-based engines: https://www.cs.uky.edu/~raphael/linguistics/claw.html
 
 .. _MIT license: https://opensource.org/licenses/MIT
