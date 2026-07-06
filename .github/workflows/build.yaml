@@ -19,7 +19,7 @@ jobs:
           - python-version: pypy-3.10
     steps:
       - name: Checkout source repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Apt install system dependencies (linux)
         if: ${{ matrix.os == 'ubuntu' || !matrix.os }}
         run: |
@@ -57,12 +57,12 @@ jobs:
           [ $FAILED -eq 0 ] || echo "::error::try-examples.py failed with exit code $FAILED"
         shell: bash
       - name: Upload coverage
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v7
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       - name: Upload artifacts ${{ matrix.name }} (linux)
         if: ${{ matrix.os == 'ubuntu' || !matrix.os }}
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.os || 'linux' }}-${{ matrix.python-version }}
           path: |
@@ -77,7 +77,7 @@ jobs:
           - python-version: "3.14"
     steps:
       - name: Checkout source repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Setup Python ${{ matrix.python-version }}
         uses: actions/setup-python@v6
         with:
@@ -98,7 +98,7 @@ jobs:
           - python-version: "3.14"
     steps:
       - name: Checkout source repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Setup Python ${{ matrix.python-version }}
         uses: actions/setup-python@v6
         with:
