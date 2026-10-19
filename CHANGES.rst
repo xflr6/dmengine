@@ -7,6 +7,10 @@ Version 0.4.2 (in development)
 
 Fix Python version reported in ``--version`` output.
 
+Drop Python 3.10 support.
+
+Tag Python 3.15 support.
+
 
 Version 0.4.1
 -------------
