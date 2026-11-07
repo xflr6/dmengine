@@ -4,13 +4,13 @@ from .contexts import render_contexts
 from .examples import render_example
 from .features import render_features
 
-SUBSCRIPT = re.compile(r'/(\d+)')
+SUBSCRIPT = re.compile(r'/(\d+)', flags=re.ASCII)
 
 VI = '/%s/\t$\\leftrightarrow$\t%s%s'
 
 
-def render_exponent(exponent: str, *, regex=SUBSCRIPT) -> str:
-    return regex.sub(r'\\textsubscript{\1}', exponent)
+def render_exponent(exponent: str, *, pattern=SUBSCRIPT) -> str:
+    return pattern.sub(r'\\textsubscript{\1}', exponent)
 
 
 def render_vi(vi, *, tmpl=VI) -> str:
@@ -23,7 +23,7 @@ def render_vi(vi, *, tmpl=VI) -> str:
 def render_vis(vis) -> str:
     example_refs = (render_example(render_vi(vi), labelize=True)
                     for vi in vis)
-    examples, refs = zip(*example_refs)
+    (examples, refs) = zip(*example_refs)
     for vi, ref in zip(vis, refs):
         vi['ref'] = ref
     return ''.join(examples)

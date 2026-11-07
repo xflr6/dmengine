@@ -57,7 +57,7 @@ def FactoryMeta(key_attr, mapping_type=dict):  # noqa: N802
         def __call__(self, *args, **kwargs):  # noqa: N804
             if self is self.__factory:
                 try:
-                    key, args = args[0], args[1:]
+                    (key, args) = args[0], args[1:]
                 except IndexError:
                     try:
                         key = kwargs.pop(key_attr)

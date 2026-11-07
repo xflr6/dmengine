@@ -6,7 +6,7 @@ from .vis import render_exponent
 
 
 def is_transitive(paradigm) -> bool:
-    filled_headers = tuple(bool(h) for h in paradigm['headers'])
+    filled_headers = tuple(map(bool, paradigm['headers']))
     return {(True, False): False, (True, True): True}[filled_headers]
 
 
@@ -18,11 +18,11 @@ def intrans_paradigm(headers, cells, *,
 
 def trans_paradigm(headers, cells, *,
                    caption: str = '', center: bool = False) -> str:
-    hrows, hcols = headers
+    (hrows, hcols) = headers
     ncols = len(hcols)
     table = [[caption] + hcols]
     table.extend([head] + list(row)
-        for head, row in zip(hrows, grouper(ncols, cells)))
+                 for head, row in zip(hrows, grouper(ncols, cells)))
     return tabular(table, cnt_table=center)
 
 
@@ -34,8 +34,8 @@ def collumns(cells, n_cols, n_rows):
 
 def folded_paradigm(headers, cells, *,
                     center: bool = False) -> str:
-    r_headers, c_headers = headers
-    n_rows, n_cols = map(len, headers)
+    (r_headers, c_headers) = headers
+    (n_rows, n_cols) = map(len, headers)
     tabs = (tabular([['', h]] + list(zip(r_headers, col)), cnt_table=center)
             for h, col in zip(c_headers, collumns(cells, n_rows, n_cols)))
     return '\n'.join(tabs)

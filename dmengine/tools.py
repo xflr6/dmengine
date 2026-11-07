@@ -29,11 +29,10 @@ def curr_other(iterable):
 def derive_filename(filename, *,
                     suffix=None, extension=None, directory=None) -> str:
     assert suffix or extension
-
     if directory:
         filename = os.path.basename(filename)
 
-    name, delim, ext = filename.partition('.')
+    (name, delim, ext) = filename.partition('.')
     if suffix:
         name += suffix
     if extension:

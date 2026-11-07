@@ -24,8 +24,8 @@ class Report:
 
     template = tools.current_path('template.tex')
 
-    def __init__(self, analysis, *,
-                 filename=None, pdfname=None, encoding: str = 'utf-8') -> None:
+    def __init__(self, analysis, *, filename=None, pdfname=None,
+                 encoding: str = 'utf-8') -> None:
         self.analysis = analysis
         if filename is None:
             filename = tools.swapext(analysis, 'tex')
@@ -34,7 +34,7 @@ class Report:
             pdfname = tools.swapext(analysis, 'pdf')
         self.pdfname = pdfname
 
-        log.info(f'{self!r}')
+        log.info('%r', self)
 
         with open(self.analysis, encoding=encoding) as f:
             analysis = yaml.safe_load(f)
@@ -65,7 +65,7 @@ class Report:
         return f'{self.__class__.__name__}({self.analysis!r})'
 
     def save(self, *, encoding: str = 'utf-8', newline: str = '') -> None:
-        log.info(f'\tsave to {self.filename!r}..')
+        log.info('\tsave to %r..', self.filename)
         with open(self.template, encoding=encoding) as f:
             raw_template = f.read()
 
@@ -77,5 +77,5 @@ class Report:
             f.write(document)
 
     def render(self, *, view: bool = False) -> None:
-        log.info(f'\trender to {self.pdfname!r}..')
+        log.info('\trender to %r..', self.pdfname)
         backend.compile(self.filename, view=view)

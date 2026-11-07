@@ -2,7 +2,7 @@
 
 import collections
 import functools
-from itertools import groupby
+import itertools
 import operator
 from typing import Self
 
@@ -106,12 +106,14 @@ class ViList(types.List):
 
     def by_specificty(self, *, sortkey=sortkey, reverse: bool = True):
         vis = sorted(self, key=sortkey, reverse=reverse)
-        return [self.__class__(g) for k, g in groupby(vis, sortkey)]
+        return [self.__class__(g)
+                for _, g in itertools.groupby(vis, sortkey)]
 
     @property
     def most_specific(self, *, sortkey=sortkey):
         vis = sorted(self, key=sortkey, reverse=True)
-        return next(self.__class__(g) for k, g in groupby(vis, sortkey))
+        return next(self.__class__(g)
+                    for _, g in itertools.groupby(vis, sortkey))
 
     @property
     def exponents(self):
@@ -130,7 +132,8 @@ class Matching(types.StarInstances):
     @property
     def most_specific(self, *, sortkey=sortkey):
         matches = sorted(self, key=sortkey, reverse=True)
-        return next(self.__class__(g) for k, g in groupby(matches, sortkey))
+        return next(self.__class__(g)
+                    for _, g in itertools.groupby(matches, sortkey))
 
     def as_dicts(self):
         return [{'head': m.head.values_visible, 'matching': m.vi} for m in self]

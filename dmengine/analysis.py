@@ -41,7 +41,7 @@ class Analysis:
                                              extension='yaml',
                                              directory=directory)
 
-        log.info(f'{self!r}')
+        log.info('%r', self)
 
         with open(self.filename, encoding=encoding) as f:
             cfg = yaml.safe_load(f)
@@ -69,17 +69,18 @@ class Analysis:
         self.inputs = list(map(SlotList.from_heads, inputs))
 
         self.calculator = self.Calculator(cfg.get('insertion', 'cyclic'),
-            self.inputs, self.rules, self.vis, self.readjustments)
+                                          self.inputs, self.rules, self.vis,
+                                          self.readjustments)
 
     def __repr__(self) -> str:
         return f'{self.__class__.__name__}({self.filename!r})'
 
     def calculate(self) -> None:
         log.info('\tcalculate..')
-        self.worklog, self.outputs, self.spellouts = self.calculator()
+        (self.worklog, self.outputs, self.spellouts) = self.calculator()
 
     def save(self, *, encoding: str = 'utf-8', newline: str = '') -> None:
-        log.info(f'\tsave to {self.results!r}..')
+        log.info('\tsave to %r..', self.results)
 
         data = collections.OrderedDict([
             ('author', self.author),

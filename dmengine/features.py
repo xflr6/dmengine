@@ -3,7 +3,7 @@
 import collections
 from collections.abc import Container
 import functools
-from itertools import chain, groupby
+import itertools
 import operator
 from typing import Self
 
@@ -95,7 +95,7 @@ class FeatureSet(metaclass=FeatureSetMeta):
 
     @classmethod
     def from_featuresets(cls, featuresets) -> Self:
-        features = chain.from_iterable(fs.features for fs in featuresets)
+        features = itertools.chain.from_iterable(fs.features for fs in featuresets)
         return cls.from_features(features)
 
     def __init__(self, features) -> None:
@@ -148,14 +148,14 @@ class FeatureSet(metaclass=FeatureSetMeta):
     def by_category(self, *, groupkey=operator.attrgetter('category')):
         features = sorted(self.features, key=groupkey)
         mapping = {k: [f.value for f in g]
-                   for k, g in groupby(features, groupkey)}
+                   for k, g in itertools.groupby(features, groupkey)}
         return [mapping.get(c, []) for c in self.__class__.system.categories]
 
     @property
     def by_specificity(self, *, groupkey=operator.attrgetter('specificity')):
         features = sorted(self.features, key=groupkey)
         mapping = {k: [f.value for f in g]
-                   for k, g in groupby(features, groupkey)}
+                   for k, g in itertools.groupby(features, groupkey)}
         return [mapping.get(c, []) for c in self.__class__.system.specificities]
 
     def add(self, other) -> None:

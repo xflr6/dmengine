@@ -1,4 +1,4 @@
-from itertools import zip_longest
+import itertools
 import os
 import sys
 
@@ -6,7 +6,7 @@ __all__ = ['grouper', 'swapext', 'current_path']
 
 
 def grouper(n, iterable, *, fillvalue=None):
-    return zip_longest(*[iter(iterable)] * n, fillvalue=fillvalue)
+    return itertools.zip_longest(*[iter(iterable)] * n, fillvalue=fillvalue)
 
 
 def swapext(filename, extension, *, delimiter: str = '.') -> str:

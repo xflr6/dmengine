@@ -4,7 +4,7 @@ Impoverishment, Obliteration, Fission, Fusion, CopyHead, AddFeatures, Metathesis
 """
 
 import collections
-from itertools import chain, islice
+import itertools
 import operator
 
 from . import contexts
@@ -41,8 +41,9 @@ class Rule(metaclass=meta.FactoryMeta('kind')):  # type: ignore[metaclass]  # no
     @classmethod
     def two_candidates(cls, slots):
         for i_s, i_h, slot, head in cls.loop_heads(slots):
-            other = chain(islice(enumerate(slots), None, i_s),
-                          islice(enumerate(slots), i_s + 1, None))
+            other = itertools.chain(
+                itertools.islice(enumerate(slots), None, i_s),
+                itertools.islice(enumerate(slots), i_s + 1, None))
             for o_s, other_slot in other:
                 for o_h, other_head in enumerate(other_slot):
                     yield i_s, i_h, head, o_s, o_h, other_head
@@ -178,7 +179,7 @@ class Fusion(Rule):
         for i_s, i_h, head, o_s, o_h, other_head in self.two_candidates(slots):
             if self.first_head.issubset(head) and self.second_head.issubset(other_head):
                 if not self.into_first:
-                    i_s, i_h, o_s, o_h = o_s, o_h, i_s, i_h
+                    (i_s, i_h, o_s, o_h) = o_s, o_h, i_s, i_h
                 slots[i_s].extend(slots[o_s])
                 del slots[o_s]
                 return True

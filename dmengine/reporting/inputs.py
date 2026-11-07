@@ -2,11 +2,11 @@ from .features import render_features
 
 
 def render_slotlist(slots) -> str:
-    return '\\quad '.join(render_slot(s) for s in slots)
+    return '\\quad '.join(map(render_slot, slots))
 
 
 def render_slot(slot) -> str:
-    return '\\#%s\\#' % ' '.join(render_head(h) for h in slot)
+    return '\\#%s\\#' % ' '.join(map(render_head, slot))
 
 
 def render_head(head):

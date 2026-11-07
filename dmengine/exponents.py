@@ -10,7 +10,7 @@ __all__ = ['Exponent', 'ExponentList']
 
 
 class ExponentMeta(type):
-    """Pick and verify Prefix/Stem/Suffix by hypen position in value."""
+    """Pick and verify Prefix/Stem/Suffix by hyphen position in value."""
 
     def __call__(self, value):  # noqa: N804
         if isinstance(value, self):
@@ -48,13 +48,13 @@ class Exponent(metaclass=ExponentMeta):
     def _multi_representer(dumper, self):
         return dumper.represent_scalar('tag:yaml.org,2002:str', str(self.value))
 
-    def __init__(self, value, form) -> None:
-        self.value = value
-        self.form = form
+    def __init__(self, value: str, form: str) -> None:
         if not form:
             raise ValueError(f'{self!r} empty form.')
+        self.value = value
+        self.form = form
 
-    def copy(self, *, form=None) -> Self:
+    def copy(self, *, form: str | None = None) -> Self:
         if form is None:
             form = self.form
         return self.__class__(form)

@@ -1,27 +1,27 @@
 from collections.abc import Iterator
-from itertools import count
+import itertools
 
 
 def render_example(content, *,
                    caption=None, labelize: bool = False):
     if labelize:
         assert not isinstance(content, list)
-        label, ref = get_label()
-        lines = '\n'.join(get_lines(content, caption, label))
+        (label, ref) = get_label()
+        lines = '\n'.join(get_lines(content, caption, label=label))
         return lines, ref
     else:
-        lines = '\n'.join(get_lines(content, caption, None))
+        lines = '\n'.join(get_lines(content, caption, label=None))
         return lines
 
 
-def get_label(*, index_counter=count(1)):
+def get_label(*, index_counter=itertools.count(start=1)):
     index = next(index_counter)
     label = '\\label{ex:%d} ' % index
     reference = '\\ref{ex:%d} ' % index
     return label, reference
 
 
-def get_lines(content, caption, label) -> Iterator[str]:
+def get_lines(content, caption, *, label) -> Iterator[str]:
     itemize = isinstance(content, list)
     yield '\\ex.'
     if label:

@@ -8,7 +8,7 @@ InsertContext
 """
 
 import collections
-from itertools import chain
+import itertools
 
 from . import features
 from . import meta
@@ -29,7 +29,7 @@ class Context(metaclass=meta.FactoryMeta('scope', collections.OrderedDict)):  # 
 
     def __repr__(self) -> str:
         features = str(self.features)
-        return f'Context(scope={self.scope!r}, features={features!r})'
+        return f'Context(scope={self.scope!r}, {features=})'
 
     def match(self, head, left_context, right_context, up_context) -> bool:
         raise NotImplementedError
@@ -47,7 +47,8 @@ class Contexts(types.Instances):
         super(types.Instances, self).__init__(items)
 
     def items(self):
-        return ((c.scope, c.features) for c in self)
+        for c in self:
+            yield c.scope, c.features
 
     iteritems = items
 
@@ -112,7 +113,7 @@ class OtherHead(HeadContext):
 
     def match(self, head, left_context, right_context, up_context) -> bool:
         contexts = left_context + [up_context] + right_context
-        other_heads = chain.from_iterable(contexts)
+        other_heads = itertools.chain.from_iterable(contexts)
         return any(map(self.features.issubset, other_heads))
 
 
@@ -126,7 +127,7 @@ class AnyHead(HeadContext):
 
     def match(self, head, left_context, right_context, up_context) -> bool:
         contexts = left_context + [[head]] + [up_context] + right_context
-        all_heads = chain.from_iterable(contexts)
+        all_heads = itertools.chain.from_iterable(contexts)
         return any(map(self.features.issubset, all_heads))
 
 
@@ -140,7 +141,7 @@ class Anywhere(HeadContext):
 
     def match(self, head, left_context, right_context, up_context) -> bool:
         contexts = left_context + [[head]] + [up_context] + right_context
-        all_heads = chain.from_iterable(contexts)
+        all_heads = itertools.chain.from_iterable(contexts)
         all_features = self.features.from_featuresets(all_heads)
         return self.features.issubset(all_features)
 

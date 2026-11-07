@@ -27,13 +27,13 @@ class Calculator:
         self.spellouts = spellouts = []
 
         for input_pre in self.inputs:
-            log.debug(f'-- \n{input_pre}')
+            log.debug('-- \n%s', input_pre)
 
-            input_pro, input_pst = self.rules(input_pre)
+            (input_pro, input_pst) = self.rules(input_pre)
 
-            matches, inserts, output_pre = self.insertion(input_pst)
+            (matches, inserts, output_pre) = self.insertion(input_pst)
 
-            output_pro, output_pst = self.readjustments(output_pre)
+            (output_pro, output_pst) = self.readjustments(output_pre)
 
             spellout = output_pst.exponents.spellout
 
@@ -70,7 +70,7 @@ class Executor:
             copy = item.copy()
             if r(copy):
                 item = copy
-                log.debug(f' {r}\n{item}')
+                log.debug(' %s\n%s', r, item)
 
             outputs.append(item)
 

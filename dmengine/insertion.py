@@ -44,7 +44,7 @@ class Insertion(metaclass=meta.FactoryMeta('kind')):  # type: ignore[metaclass] 
             inserts.append(slot_output)
             output.extend(slot_output)
 
-        log.debug(f'{slots}\n{output}')
+        log.debug('%s\n%s', slots, output)
         return matches, inserts, output
 
 
@@ -69,11 +69,12 @@ class Cyclic(Insertion):
                                      'matches': matching})
 
                 if not matching:
-                    log.debug(f' {head} inserted {head_output} no more matches')
+                    log.debug(' %s inserted %s no more matches',
+                              head, head_matches)
                     break
 
                 matching_str = '\n'.join(f'    {m}' for m in matching)
-                log.debug(f' {head} matches\n{matching_str}')
+                log.debug(' %s matches\n%s', head, matching_str)
                 most_specific = matching[0]
                 head.consume(most_specific.features)
                 head_output.append(most_specific)
@@ -107,15 +108,15 @@ class Flat(Insertion):
 
             if not matching:
                 output_str = output if output else 'nothing'
-                log.debug(f' inserted {output_str} no more matches')
+                log.debug(' inserted %s no more matches', output_str)
                 break
 
             matching_str = '\n   '.join(f'{head} {vi}' for head, vi in matching)
-            log.debug(f' matches\n   {matching_str}')
-            head, most_specific = matching[0]
+            log.debug(' matches\n   %s', matching_str)
+            (head, most_specific) = matching[0]
             head.consume(most_specific.features)
 
-            log.debug(f' {slot}')
+            log.debug(' %s', slot)
             output.append(most_specific)
 
         return matches, output
@@ -133,11 +134,11 @@ class Once(Insertion):
         for head, up in tools.curr_other(slot):
             matching = self.vis.matching(head, left, right, up)
             matching_str = '\n'.join(f'    {m}' for m in matching)
-            log.debug(f' {head} matches\n{matching_str}')
+            log.debug(' %s matches\n%s', head, matching_str)
 
             head_matches = [{'head': head.values, 'matches': matching}]
             head_output = matching
-            log.debug(f' {head} inserted {head_output}')
+            log.debug(' %s inserted %s', head, head_output)
 
             slot_matches.append(head_matches)
             slot_output.extend(head_output)

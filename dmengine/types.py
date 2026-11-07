@@ -1,6 +1,6 @@
 """Customized collection classes."""
 
-from itertools import starmap
+import itertools
 from typing import Self
 
 from . import meta
@@ -59,7 +59,7 @@ class StarInstances(List):
     new_item = None
 
     def __init__(self, items_args=()) -> None:
-        items = starmap(self.new_item, items_args)
+        items = itertools.starmap(self.new_item, items_args)
         super().__init__(items)
 
     def __repr__(self) -> str:

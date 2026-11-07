@@ -4,7 +4,7 @@ DeleteExponent, CopyExponent, MetatheseExponents, TransformExponent
 """
 
 import collections
-from itertools import permutations
+import itertools
 import operator
 import re
 
@@ -116,7 +116,8 @@ class MetatheseExponents(Readjustment):
 
     def __call__(self, vis) -> bool:
         fe, se = self.first_exponent, self.second_exponent
-        for ((f_i, first), (s_i, second)) in permutations(enumerate(vis), 2):
+        permutations = itertools.permutations(enumerate(vis), r=2)
+        for ((f_i, first), (s_i, second)) in permutations:
             if first.exponent == fe and second.exponent == se:
                 vis[f_i], vis[s_i] = vis[s_i], vis[f_i]
                 return True
@@ -145,7 +146,7 @@ class TransformExponent(Readjustment):
     def __call__(self, vis) -> bool:
         applied = False
         for i, vi in self.all_contexts_match(vis):
-            new_form, subbed = self._subn(self.replace, vi.exponent.form)
+            (new_form, subbed) = self._subn(self.replace, vi.exponent.form)
             applied = True
             if subbed:
                 vis[i] = vi.copy(form=new_form)

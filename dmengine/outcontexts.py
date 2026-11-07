@@ -8,7 +8,7 @@ FeaturesContext
 """
 
 import collections
-from itertools import chain
+import itertools
 
 from . import exponents
 from . import features
@@ -37,7 +37,8 @@ class ViContexts(types.Instances):
         super(types.Instances, self).__init__(items)
 
     def items(self):
-        return ((c.scope, c.target) for c in self)
+        for c in self:
+            yield c.scope, c.target
 
     iteritems = items
 
@@ -114,7 +115,7 @@ class OtherExponent(ExponentContext):
         return f'__...{self.exponent}'
 
     def match(self, vi, left_context, right_context) -> bool:
-        other = chain(left_context.exponents, right_context.exponents)
+        other = itertools.chain(left_context.exponents, right_context.exponents)
         return self.exponent in other
 
 
@@ -185,5 +186,5 @@ class OtherFeatures(FeaturesContext):
         return f'__...[{self.features}]'
 
     def match(self, vi, left_context, right_context) -> bool:
-        other = chain(left_context, right_context)
+        other = itertools.chain(left_context, right_context)
         return any(self.features.issubset(o.features) for o in other)

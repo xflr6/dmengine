@@ -1,5 +1,5 @@
 from collections.abc import Iterator
-from itertools import pairwise, product, repeat
+import itertools
 
 from .features import render_features
 from .inputs import render_slotlist, render_slot, render_head
@@ -16,9 +16,9 @@ def lines(paradigms, worklog, rules, readjustments) -> Iterator[str]:
     for paradigm, logs in para_logs(paradigms, worklog):
         yield '\\subsection{%s}' % paradigm['name']
         if is_transitive(paradigm):
-            sub_obj = product(*paradigm['headers'])
+            sub_obj = itertools.product(*paradigm['headers'])
         else:
-            sub_obj = zip(paradigm['headers'][0], repeat(''))
+            sub_obj = zip(paradigm['headers'][0], itertools.repeat(''))
         for log, (sub, obj) in zip(logs, sub_obj):
             if obj:
                 yield '\\minisec{%s:%s}' % (sub, obj)
@@ -27,7 +27,8 @@ def lines(paradigms, worklog, rules, readjustments) -> Iterator[str]:
             yield 'Input (Rule applied)'
             yield '\\begin{itemize}'
             yield '\\item %s' % render_slotlist(log['input_pre'])
-            for i, (pre, pst) in enumerate(pairwise([log['input_pre']] + log['input_pro'])):
+            pairs = itertools.pairwise([log['input_pre']] + log['input_pro'])
+            for i, (pre, pst) in enumerate(pairs):
                 if pst is not pre:
                     rule = rules[i]
                     yield '\\item %s %s' % (render_slotlist(pst), rule['ref'])
@@ -60,7 +61,8 @@ def lines(paradigms, worklog, rules, readjustments) -> Iterator[str]:
             yield 'Output (Readjustment applied)'
             yield '\\begin{itemize}'
             yield '\\item %s' % vilist(log['output_pre'])
-            for i, (pre, pst) in enumerate(pairwise([log['output_pre']] + log['output_pro'])):
+            pairs = itertools.pairwise([log['output_pre']] + log['output_pro'])
+            for i, (pre, pst) in enumerate(pairs):
                 if pst is not pre:
                     readjustment = readjustments[i]
                     yield '\\item %s %s' % (vilist(pst), readjustment['ref'])
@@ -72,7 +74,7 @@ def lines(paradigms, worklog, rules, readjustments) -> Iterator[str]:
 
 
 def explist(exponents) -> str:
-    return '\\quad '.join(render_exponent(e) for e in exponents)
+    return '\\quad '.join(map(render_exponent, exponents))
 
 
 def insertlist(slots) -> str:
