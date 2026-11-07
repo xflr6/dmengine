@@ -1,5 +1,6 @@
 """Compile LaTeX file to PDF, optionally open in viewer."""
 
+import contextlib
 import operator
 import os
 import platform
@@ -39,7 +40,7 @@ def latexmk_compile(filename, *, view: bool = False) -> None:
         latexmk.append('-pv')
     latexmk.append(filename)
 
-    with tools.chdir(compile_dir):
+    with contextlib.chdir(compile_dir):
         subprocess.check_call(latexmk)
 
 
@@ -52,7 +53,7 @@ def texify_compile(filename, *, view: bool = False) -> None:
         texify.append('--run-viewer')
     texify.append(filename)
 
-    with tools.chdir(compile_dir):
+    with contextlib.chdir(compile_dir):
         subprocess.check_call(texify)
 
 
