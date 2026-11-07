@@ -19,19 +19,22 @@ __copyright__ = 'Copyright (c) 2011-2025 Sebastian Bank'
 logging.basicConfig(format='%(message)s', level=logging.INFO)
 
 
-def calculate(filename, *, directory=None, report=False, pdf=False, view=False):
+def calculate(filename, *, directory=None,
+              report: bool = False,
+              pdf: bool = False,
+              view: bool = False) -> Analysis:
     """Return calculated DM analysis from the given config filename."""
     analysis = Analysis(filename, directory=directory)
     analysis.calculate()
     analysis.save()
 
     if report or pdf or view:
-        report = Report(analysis.results)
-        report.save()
+        report_obj = Report(analysis.results)
+        report_obj.save()
 
         if pdf or view:
-            report.render(view=view)
+            report_obj.render(view=view)
 
-        analysis.report = report
+        analysis.report = report_obj
 
     return analysis

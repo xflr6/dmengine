@@ -10,12 +10,12 @@ __all__ = ['Calculator']
 log = logging.getLogger()
 
 
-class Calculator(object):
+class Calculator:
     """Execute pre-insertion rules, vocabulary item insertion, post-insertion readjustments."""
 
     Insertion = insertion.Insertion
 
-    def __init__(self, insertion, inputs, rules, vis, readjustments):
+    def __init__(self, insertion, inputs, rules, vis, readjustments) -> None:
         self.insertion = self.Insertion(insertion, vis)
         self.inputs = inputs
         self.rules = Rules(rules)
@@ -55,12 +55,12 @@ class Calculator(object):
         return logs, outputs, spellouts
 
 
-class Executor(object):
+class Executor:
     """Sequentially compute outputs for each rule to the given input item."""
 
     Outputs = list
 
-    def __init__(self, rules):
+    def __init__(self, rules) -> None:
         self.rules = rules
 
     def __call__(self, item):

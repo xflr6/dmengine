@@ -5,17 +5,19 @@ from .tools import grouper
 from .vis import render_exponent
 
 
-def is_transitive(paradigm):
+def is_transitive(paradigm) -> bool:
     filled_headers = tuple(bool(h) for h in paradigm['headers'])
     return {(True, False): False, (True, True): True}[filled_headers]
 
 
-def intrans_paradigm(headers, cells, *, center=False):
+def intrans_paradigm(headers, cells, *,
+                     center: bool = False) -> str:
     table = list(zip(headers[0], cells))
     return tabular(table, col_headings=False, cnt_table=center)
 
 
-def trans_paradigm(headers, cells, *, caption='', center=False):
+def trans_paradigm(headers, cells, *,
+                   caption: str = '', center: bool = False) -> str:
     hrows, hcols = headers
     ncols = len(hcols)
     table = [[caption] + hcols]
@@ -30,7 +32,8 @@ def collumns(cells, n_cols, n_rows):
         yield cells[i:n_cells:n_rows]
 
 
-def folded_paradigm(headers, cells, *, center=False):
+def folded_paradigm(headers, cells, *,
+                    center: bool = False) -> str:
     r_headers, c_headers = headers
     n_rows, n_cols = map(len, headers)
     tabs = (tabular([['', h]] + list(zip(r_headers, col)), cnt_table=center)
@@ -57,11 +60,11 @@ def paradigms(paradigms, worklog):
     return ''.join(tabs)
 
 
-def trans_inp(inp):
+def trans_inp(inp) -> str:
     return ''.join(render_features(f, brackets=True) for f in inp)
 
 
-def input_paradigms(paradigms):
+def input_paradigms(paradigms) -> str:
     tabs = ['\\small\n']
     for paradigm in paradigms:
         tab = ['\\subsection{%s}\n' % paradigm['name']]
@@ -73,7 +76,7 @@ def input_paradigms(paradigms):
     return ''.join(tabs)
 
 
-def input_paradigms_processed(paradigms, worklog):
+def input_paradigms_processed(paradigms, worklog) -> str:
     tabs = ['\\small\n']
     for paradigm, logs in para_logs(paradigms, worklog):
         tab = ['\\subsection{%s}\n' % paradigm['name']]

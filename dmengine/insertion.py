@@ -24,7 +24,7 @@ class Insertion(metaclass=meta.FactoryMeta('kind')):  # type: ignore[metaclass] 
 
     Output = vis.ViList
 
-    def __init__(self, vis):
+    def __init__(self, vis) -> None:
         self.vis = vis
 
     def __call__(self, slots):

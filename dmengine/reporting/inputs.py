@@ -1,11 +1,11 @@
 from .features import render_features
 
 
-def render_slotlist(slots):
+def render_slotlist(slots) -> str:
     return '\\quad '.join(render_slot(s) for s in slots)
 
 
-def render_slot(slot):
+def render_slot(slot) -> str:
     return '\\#%s\\#' % ' '.join(render_head(h) for h in slot)
 
 

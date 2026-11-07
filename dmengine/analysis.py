@@ -2,6 +2,7 @@
 
 import collections
 import logging
+from typing import Self
 
 import yaml
 
@@ -19,7 +20,7 @@ __all__ = ['Analysis']
 log = logging.getLogger()
 
 
-class Analysis(object):
+class Analysis:
     """Distibuted Morphology (DM) analyis from YAML configuration file."""
 
     Features = features.FeatureSystem
@@ -32,7 +33,8 @@ class Analysis(object):
 
     Calculator = calculation.Calculator
 
-    def __init__(self, filename, *, directory=None, encoding='utf-8'):
+    def __init__(self, filename, *, directory=None,
+                 encoding: str = 'utf-8') -> None:
         self.filename = filename
         self.results = tools.derive_filename(filename,
                                              suffix='-results',
@@ -41,8 +43,8 @@ class Analysis(object):
 
         log.info(f'{self!r}')
 
-        with open(self.filename, encoding=encoding) as fd:
-            cfg = yaml.safe_load(fd)
+        with open(self.filename, encoding=encoding) as f:
+            cfg = yaml.safe_load(f)
 
         self.author = cfg.get('author', 'Anomymous')
         self.title = cfg.get('title', 'DM-Analyis')
@@ -69,14 +71,14 @@ class Analysis(object):
         self.calculator = self.Calculator(cfg.get('insertion', 'cyclic'),
             self.inputs, self.rules, self.vis, self.readjustments)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'{self.__class__.__name__}({self.filename!r})'
 
-    def calculate(self):
+    def calculate(self) -> None:
         log.info('\tcalculate..')
         self.worklog, self.outputs, self.spellouts = self.calculator()
 
-    def save(self, *, encoding='utf-8', newline=''):
+    def save(self, *, encoding: str = 'utf-8', newline: str = '') -> None:
         log.info(f'\tsave to {self.results!r}..')
 
         data = collections.OrderedDict([
@@ -92,30 +94,31 @@ class Analysis(object):
             ('worklog', self.worklog),
         ])
 
-        with open(self.results, 'w', encoding=encoding, newline=newline) as fd:
-            yaml.dump(data, fd)
+        with open(self.results, mode='w',
+                  encoding=encoding, newline=newline) as f:
+            yaml.dump(data, f)
 
 
 class SlotList(types.FlowList):
     """Hierarchy of potentially fused heads represented as sequence."""
 
     @classmethod
-    def from_heads(cls, heads):
+    def from_heads(cls, heads) -> Self:
         return cls(Slot([Head(h)]) for h in heads)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return ' '.join(map(str, self))
 
 
 class Slot(types.List):
     """Sequence of heads that have been fused."""
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '#{}#'.format(' '.join(map(str, self)))
 
 
 class Head(features.FeatureSet):
     """Head (morpheme, lexical item) as a (multi)set of morphosyntactic features."""
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '[{}]'.format(super().__str__())

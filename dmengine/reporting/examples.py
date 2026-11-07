@@ -1,7 +1,9 @@
+from collections.abc import Iterator
 from itertools import count
 
 
-def render_example(content, *, caption=None, labelize=False):
+def render_example(content, *,
+                   caption=None, labelize: bool = False):
     if labelize:
         assert not isinstance(content, list)
         label, ref = get_label()
@@ -19,7 +21,7 @@ def get_label(*, index_counter=count(1)):
     return label, reference
 
 
-def get_lines(content, caption, label):
+def get_lines(content, caption, label) -> Iterator[str]:
     itemize = isinstance(content, list)
     yield '\\ex.'
     if label:

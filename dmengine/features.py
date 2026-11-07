@@ -5,6 +5,7 @@ from collections.abc import Container
 import functools
 from itertools import chain, groupby
 import operator
+from typing import Self
 
 from dmengine.vendor import oset
 
@@ -33,30 +34,30 @@ class Feature(metaclass=FeatureMeta):
 
     __slots__ = ('visible',)
 
-    def __init__(self, visible=True):
+    def __init__(self, visible: bool = True) -> None:
         self.visible = visible
 
-    def __nonempty__(self):
+    def __nonempty__(self) -> bool:
         return self.visible
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         return self.__class__ is other.__class__
 
-    def __ne__(self, other):
+    def __ne__(self, other) -> bool:
         return self.__class__ is not other.__class__
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash(self.__class__)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         hidden = '' if self.visible else 'hidden '
         category = ' ' + self.category if self.category else ''
         return f'<{hidden}{self.value}{category} feature>'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.value if self.visible else f'_{self.value}_'
 
-    def hide(self):
+    def hide(self) -> None:
         if not self.visible:
             raise ValueError(f'Unable to hide {self!r}.')
         self.visible = False
@@ -89,40 +90,40 @@ class FeatureSet(metaclass=FeatureSetMeta):
         return dumper.represent_sequence('tag:yaml.org,2002:seq', self.values)
 
     @classmethod
-    def from_features(cls, features):
+    def from_features(cls, features) -> Self:
         return super(cls.__class__, cls).__call__(features)
 
     @classmethod
-    def from_featuresets(cls, featuresets):
+    def from_featuresets(cls, featuresets) -> Self:
         features = chain.from_iterable(fs.features for fs in featuresets)
         return cls.from_features(features)
 
-    def __init__(self, features):
+    def __init__(self, features) -> None:
         self.features = self.features(features)
 
-    def copy(self):
+    def copy(self) -> Self:
         return self.from_features(f.__class__() for f in self.features)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         values = ' '.join(self.values)
         return f'{self.__class__.__name__}({values!r})'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return ' '.join(map(str, self.features))
 
-    def __nonzero__(self):
+    def __nonzero__(self) -> bool:
         return bool(self.features)
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.features)
 
-    def issubset(self, other):
+    def issubset(self, other) -> bool:
         return self.features <= other.features
 
-    def issubset_visible(self, other):
+    def issubset_visible(self, other) -> bool:
         return self.features <= other.visible
 
-    def hascommon(self, other):
+    def hascommon(self, other) -> bool:
         return not self.features.isdisjoint(other.features)
 
     def _clearlazy(self):
@@ -157,17 +158,17 @@ class FeatureSet(metaclass=FeatureSetMeta):
                    for k, g in groupby(features, groupkey)}
         return [mapping.get(c, []) for c in self.__class__.system.specificities]
 
-    def add(self, other):
+    def add(self, other) -> None:
         self._clearlazy()
         self.features |= other.features
 
-    def remove(self, other, *, discard=False):
+    def remove(self, other, *, discard: bool = False) -> None:
         if not discard and not other.features <= self.features:
             raise KeyError
         self._clearlazy()
         self.features -= other.features
 
-    def consume(self, other):
+    def consume(self, other) -> None:
         if not other.features <= self.features:
             raise KeyError
         self._clearlazy()
@@ -180,20 +181,20 @@ class FeatureBag(FeatureSet):
 
     features: type[Container] = list
 
-    def issubset(self, other):
+    def issubset(self, other) -> bool:
         return all(map(other.features.__contains__, self.features))
 
-    def issubset_visible(self, other):
+    def issubset_visible(self, other) -> bool:
         return all(map(other.visible.__contains__, self.features))
 
-    def hascommon(self, other):
+    def hascommon(self, other) -> bool:
         return any(map(other.features.__contains__, self.features))
 
-    def add(self, other):
+    def add(self, other) -> None:
         self._clearlazy()
         self.features += other.features
 
-    def remove(self, other, *, discard=False):
+    def remove(self, other, *, discard: bool = False) -> None:
         if not discard and not self.issubset(other):
             raise KeyError
         self._clearlazy()
@@ -207,7 +208,7 @@ class FeatureBag(FeatureSet):
             for f in other.features:
                 self.features.remove(f)
 
-    def consume(self, other):
+    def consume(self, other) -> None:
         if not self.issubset(other):
             raise KeyError
         self._clearlazy()
@@ -221,7 +222,7 @@ class FeatureBag(FeatureSet):
 
 
 @meta.serializable
-class FeatureSystem(object):
+class FeatureSystem:
     """Collection of defined morphosyntactic features values."""
 
     Feature = Feature
@@ -239,7 +240,7 @@ class FeatureSystem(object):
                   for f in self.mapping.values()]
         return dumper.represent_sequence('tag:yaml.org,2002:seq', result)
 
-    def __init__(self, features_kwargs=(), *, always_bag=False):
+    def __init__(self, features_kwargs=(), *, always_bag: bool = False) -> None:
         class Feature(self.Feature):
             __slots__ = ()
             system = self
@@ -275,7 +276,7 @@ class FeatureSystem(object):
             FeatureSet.__bases__ = (FeatureBag,)
             FeatureSet.__name__ = 'FeatureBag'
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.mapping)
 
     def __iter__(self):
@@ -288,13 +289,13 @@ class FeatureSystem(object):
     _trans = (str.maketrans('', '', _tdrop),)
 
     @staticmethod
-    def create_value(value, _trans=_trans):
+    def create_value(value, _trans=_trans) -> str:
         if isinstance(value, int):
             return f'{value:+d}'
         return str(value).translate(*_trans)
 
     @staticmethod
-    def get_key(value):
+    def get_key(value) -> str:
         return str(value).lower().lstrip('+')
 
     def create_feature(self, index, value, category=None, specificity=0, name=None):
@@ -321,7 +322,7 @@ class FeatureSystem(object):
                         [('sg', 'singular'), ('du', 'dual'), ('pl', 'plural')]]
 
     @classmethod
-    def derive_name(cls, value):
+    def derive_name(cls, value) -> str:
         parts = []
         for srpl in cls._derive_replaces:
             for s, r in srpl:

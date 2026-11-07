@@ -21,7 +21,7 @@ __all__ = ['ViContext', 'ViContexts']
 class ViContext(metaclass=meta.FactoryMeta('scope', collections.OrderedDict)):  # type: ignore[metaclass]  # noqa: E501
     """Context matching vis under defined conditions."""
 
-    def match(self, vi, left_context, right_context):
+    def match(self, vi, left_context, right_context) -> bool:
         raise NotImplementedError
 
 
@@ -30,7 +30,7 @@ class ViContexts(types.Instances):
 
     new_item = ViContext
 
-    def __init__(self, **kwcontexts):
+    def __init__(self, **kwcontexts) -> None:
         scopes = iter(self.new_item.subclasses)
         items = (self.new_item(s, kwcontexts[s])
                  for s in scopes if s in kwcontexts)
@@ -41,11 +41,11 @@ class ViContexts(types.Instances):
 
     iteritems = items
 
-    def _kwstr(self, *, plain=False):
+    def _kwstr(self, *, plain: bool = False) -> str:
         ctx = ', '.join(c._kwstr() for c in self)
         return ctx if plain else f', {ctx}' if ctx else ''
 
-    def __str__(self):
+    def __str__(self) -> str:
         ctx = ' & '.join(map(str, self))
         return f' / {ctx}' if ctx else ''
 
@@ -55,15 +55,15 @@ class ExponentContext(ViContext):
 
     Exponent = exponents.Exponent
 
-    def __init__(self, exponent):
+    def __init__(self, exponent) -> None:
         self.target = self.exponent = self.Exponent(exponent)
         if not self.exponent:
             raise ValueError(f'{self!r} no exponent.')
 
-    def _kwstr(self):
+    def _kwstr(self) -> str:
         return f'{self.scope}={self.exponent.value!r}'
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         exponent = self.exponent.value
         return (f'self.__class__.__base__.__name__('
                 f'scope={self.scope!r}, exponent={exponent!r})')
@@ -74,10 +74,10 @@ class ThisExponent(ExponentContext):
 
     scope = 'exponent'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'{self.exponent}'
 
-    def match(self, vi, left_context, right_context):
+    def match(self, vi, left_context, right_context) -> bool:
         return self.exponent == vi.exponent
 
 
@@ -86,10 +86,10 @@ class LeftExponent(ExponentContext):
 
     scope = 'left_exponent'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'{self.exponent}__'
 
-    def match(self, vi, left_context, right_context):
+    def match(self, vi, left_context, right_context) -> bool:
         return left_context and self.exponent == left_context[-1].exponent
 
 
@@ -98,10 +98,10 @@ class RightExponent(ExponentContext):
 
     scope = 'right_exponent'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'__{self.exponent}'
 
-    def match(self, vi, left_context, right_context):
+    def match(self, vi, left_context, right_context) -> bool:
         return right_context and self.exponent == right_context[0].exponent
 
 
@@ -110,10 +110,10 @@ class OtherExponent(ExponentContext):
 
     scope = 'other_exponent'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'__...{self.exponent}'
 
-    def match(self, vi, left_context, right_context):
+    def match(self, vi, left_context, right_context) -> bool:
         other = chain(left_context.exponents, right_context.exponents)
         return self.exponent in other
 
@@ -123,16 +123,16 @@ class FeaturesContext(ViContext):
 
     Features = features.FeatureSet
 
-    def __init__(self, features):
+    def __init__(self, features) -> None:
         self.target = self.features = self.Features(features)
         if not self.features:
             raise ValueError(f'{self!r} no features.')
 
-    def _kwstr(self):
+    def _kwstr(self) -> str:
         features = str(self.features)
         return f'{self.scope}={features!r}'
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         features = str(self.features)
         return (f'self.__class__.__base__.__name__('
                 f'scope={self.scope!r}, features={features!r})')
@@ -143,10 +143,10 @@ class ThisFeatures(FeaturesContext):
 
     scope = 'features'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'[{self.features}]'
 
-    def match(self, vi, left_context, right_context):
+    def match(self, vi, left_context, right_context) -> bool:
         return self.features.issubset(vi.features)
 
 
@@ -155,10 +155,10 @@ class LeftFeatures(FeaturesContext):
 
     scope = 'left_features'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'[{self.features}]__'
 
-    def match(self, vi, left_context, right_context):
+    def match(self, vi, left_context, right_context) -> bool:
         return (left_context
                 and self.features.issubset(left_context[-1].features))
 
@@ -168,10 +168,10 @@ class RightFeatures(FeaturesContext):
 
     scope = 'right_features'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'__[{self.features}]'
 
-    def match(self, vi, left_context, right_context):
+    def match(self, vi, left_context, right_context) -> bool:
         return (right_context
                 and self.features.issubset(right_context[0].features))
 
@@ -181,9 +181,9 @@ class OtherFeatures(FeaturesContext):
 
     scope = 'other_features'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'__...[{self.features}]'
 
-    def match(self, vi, left_context, right_context):
+    def match(self, vi, left_context, right_context) -> bool:
         other = chain(left_context, right_context)
         return any(self.features.issubset(o.features) for o in other)

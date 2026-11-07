@@ -24,14 +24,14 @@ EXPCONTEXTS = collections.OrderedDict((key, translate(tmpl)) for key, tmpl in [
 ])
 
 
-def render_contexts(item):
+def render_contexts(item) -> str:
     if not any(key in item for key in CONTEXTS):
         return ''
     return ' $/$ %s' % ' \\& '.join(tmpl % render_features(item[key])
         for key, tmpl in CONTEXTS.items() if key in item)
 
 
-def render_expcontexts(item):
+def render_expcontexts(item) -> str:
     if not any(key in item for key in EXPCONTEXTS):
         return ''
     return ' $/$ %s' % ' \\& '.join(tmpl % item[key]

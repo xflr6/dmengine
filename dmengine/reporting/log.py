@@ -1,3 +1,4 @@
+from collections.abc import Iterator
 from itertools import pairwise, product, repeat
 
 from .features import render_features
@@ -6,11 +7,11 @@ from .paradigms import is_transitive, para_logs
 from .vis import render_exponent, render_vi
 
 
-def render_log(paradigms, worklog, rules, readjustments):
+def render_log(paradigms, worklog, rules, readjustments) -> str:
     return '\n'.join(lines(paradigms, worklog, rules, readjustments))
 
 
-def lines(paradigms, worklog, rules, readjustments):
+def lines(paradigms, worklog, rules, readjustments) -> Iterator[str]:
     yield '\\footnotesize'
     for paradigm, logs in para_logs(paradigms, worklog):
         yield '\\subsection{%s}' % paradigm['name']
@@ -70,11 +71,11 @@ def lines(paradigms, worklog, rules, readjustments):
             yield '\\end{itemize}\n'
 
 
-def explist(exponents):
+def explist(exponents) -> str:
     return '\\quad '.join(render_exponent(e) for e in exponents)
 
 
-def insertlist(slots):
+def insertlist(slots) -> str:
     return '\\quad '.join(
             '\\#%s\\#' % ','.join(
                 '%s %s' % (render_exponent(vi['exponent']), vi['ref'].rstrip())
@@ -82,5 +83,5 @@ def insertlist(slots):
            for slot in slots)
 
 
-def vilist(vis):
+def vilist(vis) -> str:
     return explist(vi['exponent'] for vi in vis)

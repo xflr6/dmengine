@@ -9,7 +9,7 @@ from . import __version__, calculate
 __all__ = ['main']
 
 
-def main():
+def main() -> None:
     """Execute the command-line interface."""
     parser = argparse.ArgumentParser(prog='dmengine',
         description='Calculates a given Distributed Morphology (DM) analysis')
@@ -34,7 +34,7 @@ def main():
               report=args.report, pdf=args.pdf, view=args.view)
 
 
-def _version():
+def _version() -> str:
     pkg_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     (python_version, *_) = sys.version.partition(' ')
     return f'{__version__} from {pkg_dir} (Python {python_version})'

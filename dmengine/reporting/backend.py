@@ -12,11 +12,11 @@ __all__ = ['compile']
 PLATFORM = platform.system().lower()
 
 
-def no_compile(filename, *, view=False):
+def no_compile(filename, *, view: bool = False) -> None:
     raise NotImplementedError('platform not supported')
 
 
-def pdflatex_compile(filename, *, view=False):
+def pdflatex_compile(filename, *, view: bool = False) -> None:
     """Compile LaTeX file by running pdflatex three times."""
     pdflatex = ['pdflatex', '-output-format=pdf', '-interaction=batchmode', '-halt-on-error']
     compile_dir = os.path.dirname(filename)
@@ -30,7 +30,7 @@ def pdflatex_compile(filename, *, view=False):
         open_viewer(tools.swapext(filename, 'pdf'))
 
 
-def latexmk_compile(filename, *, view=False):
+def latexmk_compile(filename, *, view: bool = False) -> None:
     """Compile LaTeX file with the latexmk perl script."""
     compile_dir, filename = os.path.split(filename)
 
@@ -43,7 +43,7 @@ def latexmk_compile(filename, *, view=False):
         subprocess.check_call(latexmk)
 
 
-def texify_compile(filename, *, view=False):
+def texify_compile(filename, *, view: bool = False) -> None:
     """Compile LaTeX file using MikTeX's texify utility."""
     compile_dir, filename = os.path.split(filename)  # texify has issues with remote directory
 
@@ -64,21 +64,21 @@ def compile(platform=PLATFORM):
     return compile_funcs.get(platform, no_compile)
 
 
-def no_view(filepath):
+def no_view(filepath) -> None:
     raise NotImplementedError('platform not supported')
 
 
-def view_darwin(filepath):
+def view_darwin(filepath) -> None:
     """Open filepath with its default application (mac)."""
     subprocess.Popen(['open', filepath])
 
 
-def view_linux(filepath):
+def view_linux(filepath) -> None:
     """Open filepath in the user's preferred application (linux)."""
     subprocess.Popen(['xdg-open', filepath])
 
 
-def view_windows(filepath):
+def view_windows(filepath) -> None:
     """Start filepath with its associated application (windows)."""
     os.startfile(os.path.normpath(filepath))
 

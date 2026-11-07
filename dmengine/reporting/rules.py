@@ -9,7 +9,7 @@ from .features import render_features
 MAP: dict[str, Callable[..., Any]] = {}
 
 
-def render_rules(rules):
+def render_rules(rules) -> str:
     if not rules:
         return ''
     example_refs = (render_example(MAP[r['kind']](r), labelize=True)

@@ -5,14 +5,17 @@ TRANSLATE = [('->', '$\\rightarrow$'),
              ('_', '\\_')]
 
 
-def translate(string):
+def translate(string: str) -> str:
     for old, new in TRANSLATE:
         string = string.replace(old, new)
     return string
 
 
-def tabular(table, *, row_headings=True, col_headings=True,
-            cnt_content=False, cnt_table=False):
+def tabular(table, *,
+            row_headings: bool = True,
+            col_headings: bool = True,
+            cnt_content: bool = False,
+            cnt_table: bool = False) -> str:
     n_cols = len(table[0])
     result = ['\\begin{tabular}[t]{l%s*{%d}{%s}}\n' %
         ('|' if row_headings else '', n_cols - 1, 'c' if cnt_content else 'l')]

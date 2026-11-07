@@ -4,6 +4,7 @@ import collections
 import functools
 from itertools import groupby
 import operator
+from typing import Self
 
 from . import contexts
 from . import exponents
@@ -16,7 +17,7 @@ __all__ = ['VocabularyItem', 'VocabularyItems', 'ViList']
 
 
 @meta.serializable
-class VocabularyItem(object):
+class VocabularyItem:
     """Holds the exponent, its substantial features, and other contexts for insertion."""
 
     Exponent = exponents.Exponent
@@ -32,29 +33,29 @@ class VocabularyItem(object):
         result.update(self.contexts.items())
         return dumper.represent_mapping('tag:yaml.org,2002:map', result.items())
 
-    def __init__(self, exponent, features, **kwcontexts):
+    def __init__(self, exponent, features, **kwcontexts) -> None:
         self.exponent = self.Exponent(exponent)
         self.features = self.Features(features)
         self.contexts = self.Contexts(**kwcontexts)
         if not self.features:
             raise ValueError(f'{self!r} empty features.')
 
-    def copy(self, *, form=None):
+    def copy(self, *, form=None) -> Self:
         exponent = self.exponent.copy(form=form)
         features = self.features.values
         contexts = {ctx.scope: ctx.features.values for ctx in self.contexts}
         return self.__class__(exponent, features, **contexts)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         contexts = self.contexts._kwstr()
         return (f'{self.__class__.__name__}('
                 f'exponent={self.exponent.value!r},'
                 f' features={str(self.features)!r}{contexts})')
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'{self.exponent} <-> {self.features}{self.contexts}'
 
-    def match(self, head, left_context, right_context, up_context):
+    def match(self, head, left_context, right_context, up_context) -> bool:
         matching = operator.methodcaller('match', head,
                                          left_context, right_context,
                                          up_context)
@@ -97,13 +98,13 @@ class ViList(types.List):
 
     sortkey = operator.attrgetter('specificity')
 
-    def __str__(self):
+    def __str__(self) -> str:
         return ' '.join(map(str, (vi.exponent for vi in self)))
 
-    def sort(self, *, key=sortkey, reverse=True):
+    def sort(self, *, key=sortkey, reverse: bool = True) -> None:
         super().sort(key=key, reverse=reverse)
 
-    def by_specificty(self, *, sortkey=sortkey, reverse=True):
+    def by_specificty(self, *, sortkey=sortkey, reverse: bool = True):
         vis = sorted(self, key=sortkey, reverse=reverse)
         return [self.__class__(g) for k, g in groupby(vis, sortkey)]
 
@@ -123,7 +124,7 @@ class Matching(types.StarInstances):
 
     sortkey = lambda m: m.vi.specificity  # noqa: E731
 
-    def sort(self, *, key=sortkey, reverse=True):
+    def sort(self, *, key=sortkey, reverse: bool = True) -> None:
         super().sort(key=key, reverse=reverse)
 
     @property

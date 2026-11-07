@@ -22,16 +22,16 @@ class Context(metaclass=meta.FactoryMeta('scope', collections.OrderedDict)):  # 
 
     Features = features.FeatureSet
 
-    def __init__(self, features):
+    def __init__(self, features) -> None:
         self.features = self.Features(features)
         if not self.features:
             raise ValueError(f'{self!r} empty features.')
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         features = str(self.features)
         return f'Context(scope={self.scope!r}, features={features!r})'
 
-    def match(self, head, left_context, right_context, up_context):
+    def match(self, head, left_context, right_context, up_context) -> bool:
         raise NotImplementedError
 
 
@@ -40,7 +40,7 @@ class Contexts(types.Instances):
 
     new_item = Context
 
-    def __init__(self, **kwcontexts):
+    def __init__(self, **kwcontexts) -> None:
         scopes = iter(self.new_item.subclasses)
         items = (self.new_item(s, kwcontexts[s])
                  for s in scopes if s in kwcontexts)
@@ -51,11 +51,11 @@ class Contexts(types.Instances):
 
     iteritems = items
 
-    def _kwstr(self, plain=False):
+    def _kwstr(self, plain: bool = False):
         ctx = ', '.join('{c.scope}={str(c.features)!r}' for c in self)
         return ctx if plain else f', {ctx}' if ctx else ''
 
-    def __str__(self):
+    def __str__(self) -> str:
         ctx = ' & '.join(map(str, self))
         return f' / {ctx}' if ctx else ''
 
@@ -72,7 +72,7 @@ class ThisHead(HeadContext):
     def __str__(self):
         return f'[__,{self.features}]'
 
-    def match(self, head, left_context, right_context, up_context):
+    def match(self, head, left_context, right_context, up_context) -> bool:
         return self.features.issubset(head)
 
 
@@ -81,10 +81,10 @@ class LeftHead(HeadContext):
 
     scope = 'left_head'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'[{self.features}][__]'
 
-    def match(self, head, left_context, right_context, up_context):
+    def match(self, head, left_context, right_context, up_context) -> bool:
         return (left_context
                 and any(map(self.features.issubset, left_context[-1])))
 
@@ -97,7 +97,7 @@ class RightHead(HeadContext):
     def __str__(self):
         return f'[__][{self.features}]'
 
-    def match(self, head, left_context, right_context, up_context):
+    def match(self, head, left_context, right_context, up_context) -> bool:
         return (right_context
                 and any(map(self.features.issubset, right_context[0])))
 
@@ -107,10 +107,10 @@ class OtherHead(HeadContext):
 
     scope = 'other_head'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'__...[{self.features}]'
 
-    def match(self, head, left_context, right_context, up_context):
+    def match(self, head, left_context, right_context, up_context) -> bool:
         contexts = left_context + [up_context] + right_context
         other_heads = chain.from_iterable(contexts)
         return any(map(self.features.issubset, other_heads))
@@ -124,7 +124,7 @@ class AnyHead(HeadContext):
     def __str__(self):
         return f'[{self.features}]'
 
-    def match(self, head, left_context, right_context, up_context):
+    def match(self, head, left_context, right_context, up_context) -> bool:
         contexts = left_context + [[head]] + [up_context] + right_context
         all_heads = chain.from_iterable(contexts)
         return any(map(self.features.issubset, all_heads))
@@ -138,7 +138,7 @@ class Anywhere(HeadContext):
     def __str__(self):
         return f'{self.features}'
 
-    def match(self, head, left_context, right_context, up_context):
+    def match(self, head, left_context, right_context, up_context) -> bool:
         contexts = left_context + [[head]] + [up_context] + right_context
         all_heads = chain.from_iterable(contexts)
         all_features = self.features.from_featuresets(all_heads)
@@ -154,7 +154,7 @@ class LastInsert(InsertContext):
 
     scope = 'last_insert'
 
-    def match(self, head, left_context, right_context, up_context):
+    def match(self, head, left_context, right_context, up_context) -> bool:
         raise NotImplementedError
 
 
@@ -163,5 +163,5 @@ class AnyInsert(InsertContext):
 
     scope = 'any_insert'
 
-    def match(self, head, left_context, right_context, up_context):
+    def match(self, head, left_context, right_context, up_context) -> bool:
         raise NotImplementedError

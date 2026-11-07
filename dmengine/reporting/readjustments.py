@@ -9,7 +9,7 @@ from .examples import render_example
 MAP: dict[str, Callable[..., Any]] = {}
 
 
-def render_readjustments(readjustments):
+def render_readjustments(readjustments) -> str:
     if not readjustments:
         return ''
     examples_refs = (render_example(MAP[r['kind']](r), labelize=True)

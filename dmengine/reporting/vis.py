@@ -9,18 +9,18 @@ SUBSCRIPT = re.compile(r'/(\d+)')
 VI = '/%s/\t$\\leftrightarrow$\t%s%s'
 
 
-def render_exponent(exponent, *, regex=SUBSCRIPT):
+def render_exponent(exponent: str, *, regex=SUBSCRIPT) -> str:
     return regex.sub(r'\\textsubscript{\1}', exponent)
 
 
-def render_vi(vi, *, tmpl=VI):
+def render_vi(vi, *, tmpl=VI) -> str:
     exponent = render_exponent(vi['exponent'])
     features = render_features(vi['features'], brackets=True)
     context = render_contexts(vi)
     return tmpl % (exponent, features, context)
 
 
-def render_vis(vis):
+def render_vis(vis) -> str:
     example_refs = (render_example(render_vi(vi), labelize=True)
                     for vi in vis)
     examples, refs = zip(*example_refs)

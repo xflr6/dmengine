@@ -19,12 +19,13 @@ __all__ = ['Report']
 log = logging.getLogger()
 
 
-class Report(object):
+class Report:
     """LaTeX source from DM analyis results YAML file."""
 
     template = tools.current_path('template.tex')
 
-    def __init__(self, analysis, *, filename=None, pdfname=None, encoding='utf-8'):
+    def __init__(self, analysis, *,
+                 filename=None, pdfname=None, encoding: str = 'utf-8') -> None:
         self.analysis = analysis
         if filename is None:
             filename = tools.swapext(analysis, 'tex')
@@ -35,8 +36,8 @@ class Report(object):
 
         log.info(f'{self!r}')
 
-        with open(self.analysis, encoding=encoding) as fd:
-            analysis = yaml.safe_load(fd)
+        with open(self.analysis, encoding=encoding) as f:
+            analysis = yaml.safe_load(f)
 
         log.info('\tcreate..')
         self.sections = {
@@ -60,20 +61,21 @@ class Report(object):
         else:
             self.sections['LOG'] = ''
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'{self.__class__.__name__}({self.analysis!r})'
 
-    def save(self, *, encoding='utf-8', newline=''):
+    def save(self, *, encoding: str = 'utf-8', newline: str = '') -> None:
         log.info(f'\tsave to {self.filename!r}..')
-        with open(self.template, encoding=encoding) as fd:
-            template = fd.read()
+        with open(self.template, encoding=encoding) as f:
+            raw_template = f.read()
 
-        template = string.Template(template)
+        template = string.Template(raw_template)
         document = template.safe_substitute(self.sections)
 
-        with open(self.filename, 'w', encoding=encoding, newline=newline) as fd:
-            fd.write(document)
+        with open(self.filename, mode='w',
+                  encoding=encoding, newline=newline) as f:
+            f.write(document)
 
-    def render(self, *, view=False):
+    def render(self, *, view: bool = False) -> None:
         log.info(f'\trender to {self.pdfname!r}..')
         backend.compile(self.filename, view=view)

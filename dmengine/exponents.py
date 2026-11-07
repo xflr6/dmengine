@@ -1,6 +1,7 @@
 """Exponents: Prefix, Stem, Suffix."""
 
 import operator
+from typing import Self
 
 from . import meta
 from . import types
@@ -47,28 +48,28 @@ class Exponent(metaclass=ExponentMeta):
     def _multi_representer(dumper, self):
         return dumper.represent_scalar('tag:yaml.org,2002:str', str(self.value))
 
-    def __init__(self, value, form):
+    def __init__(self, value, form) -> None:
         self.value = value
         self.form = form
         if not form:
             raise ValueError(f'{self!r} empty form.')
 
-    def copy(self, *, form=None):
+    def copy(self, *, form=None) -> Self:
         if form is None:
             form = self.form
         return self.__class__(form)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'{self.__class__.__name__}({self.form!r})'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'/{self.value}/'
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         return (isinstance(other, Exponent)
                 and self.kind == other.kind and self.value == other.value)
 
-    def __ne__(self, other):
+    def __ne__(self, other) -> bool:
         return not self == other
 
 
@@ -77,11 +78,11 @@ class ExponentList(types.List):
 
     sortkey = operator.attrgetter('_sortslot')
 
-    def __str__(self):
+    def __str__(self) -> str:
         return ' '.join(map(str, self))
 
     @property
-    def spellout(self):
+    def spellout(self) -> str:
         exponents = sorted(self, key=self.sortkey)
         return ''.join(e.value for e in exponents)
 

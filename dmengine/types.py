@@ -1,6 +1,7 @@
 """Customized collection classes."""
 
 from itertools import starmap
+from typing import Self
 
 from . import meta
 
@@ -15,16 +16,16 @@ class List(list, metaclass=meta.EmptySlotsMeta):
     def _multi_representer(dumper, self):
         return dumper.represent_sequence('tag:yaml.org,2002:seq', self)
 
-    def __init__(self, items=()):
+    def __init__(self, items=()) -> None:
         super().__init__(items)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'{self.__class__.__name__}({super().__repr__()})'
 
-    def __getslice__(self, start, end):
+    def __getslice__(self, start, end) -> Self:
         return self.__class__(super().__getslice__(start, end))
 
-    def copy(self):
+    def copy(self) -> Self:
         return self.__class__(item.copy() for item in self)
 
 
@@ -43,12 +44,12 @@ class Instances(List):
 
     new_item: type
 
-    def __init__(self, items_kwargs=()):
+    def __init__(self, items_kwargs=()) -> None:
         new_item = self.new_item
         items = (new_item(**kwargs) for kwargs in items_kwargs)
         super().__init__(items)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return '[{}]'.format(',\n '.join(map(repr, self)))
 
 
@@ -57,9 +58,9 @@ class StarInstances(List):
 
     new_item = None
 
-    def __init__(self, items_args=()):
+    def __init__(self, items_args=()) -> None:
         items = starmap(self.new_item, items_args)
         super().__init__(items)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return '[{}]'.format(',\n '.join(map(repr, self)))
