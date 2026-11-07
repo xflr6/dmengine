@@ -1,5 +1,6 @@
 """Compile LaTeX file to PDF, optionally open in viewer."""
 
+import operator
 import os
 import platform
 import subprocess
@@ -9,10 +10,6 @@ from . import tools
 __all__ = ['compile']
 
 PLATFORM = platform.system().lower()
-
-
-def apply(f, *args, **kwargs):
-    return f(*args, **kwargs)
 
 
 def no_compile(filename, *, view=False):
@@ -59,7 +56,7 @@ def texify_compile(filename, *, view=False):
         subprocess.check_call(texify)
 
 
-@apply
+@operator.call
 def compile(platform=PLATFORM):
     compile_funcs = {'darwin': pdflatex_compile,
                      'linux': pdflatex_compile,
@@ -86,7 +83,7 @@ def view_windows(filepath):
     os.startfile(os.path.normpath(filepath))
 
 
-@apply
+@operator.call
 def open_viewer(platform=PLATFORM):
     view_funcs = {'darwin': view_darwin,
                   'linux': view_linux,
