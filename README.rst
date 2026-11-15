@@ -35,7 +35,7 @@ Installation
 
 This package runs under Python 3.11+, use pip_ to install:
 
-.. code:: bash
+.. code:: shell
 
     $ pip install dmengine
 
@@ -98,7 +98,7 @@ definition file.
 Calculate the results of the analyis with the ``dmengine`` command creating a
 PDF report:
 
-.. code:: bash
+.. code:: shell
 
     $ dmengine example.yaml --pdf
 
@@ -128,12 +128,11 @@ Invocation options
 
 Check the **usage** of the ``dmengine`` command:
 
-.. code:: bash
+.. code:: shell
 
     $ dmengine --help
     
-    usage: dmengine [-h] [--version] [--report] [--pdf] [--view]
-                    filename [directory]
+    usage: dmengine [-h] [--report] [--pdf] [--view] [--version] filename [directory]
     
     Calculates a given Distributed Morphology (DM) analysis
     
@@ -141,12 +140,12 @@ Check the **usage** of the ``dmengine`` command:
       filename    dm analysis .yaml definition file
       directory   analysis results output directory
     
-    optional arguments:
+    options:
       -h, --help  show this help message and exit
-      --version   show program's version number and exit
       --report    create a LaTeX report from the results
       --pdf       render the report to PDF (implies --report)
       --view      open the report in viewer app (implies --pdf)
+      --version   show program's version number and exit
 
 
 Rules
