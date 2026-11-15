@@ -1,7 +1,6 @@
 from collections.abc import Callable
 from typing import Any
 
-
 from .common import translate
 from .contexts import render_expcontexts
 from .examples import render_example

@@ -9,8 +9,6 @@ def texify(filename=None, *,
            pdf: bool = False, view: bool = False) -> Report:
     report = Report(filename)
     report.save()
-
     if pdf or view:
         report.render(view=view)
-
     return report

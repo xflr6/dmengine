@@ -27,14 +27,9 @@ def calculate(filename, *, directory=None,
     analysis = Analysis(filename, directory=directory)
     analysis.calculate()
     analysis.save()
-
     if report or pdf or view:
-        report_obj = Report(analysis.results)
-        report_obj.save()
-
+        analysis.report = Report(analysis.results)
+        analysis.report.save()
         if pdf or view:
-            report_obj.render(view=view)
-
-        analysis.report = report_obj
-
+            analysis.report.render(view=view)
     return analysis
